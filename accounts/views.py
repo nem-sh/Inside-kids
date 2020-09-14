@@ -25,15 +25,18 @@ def kid_create_or_list(request):
         return Response(serializer.data)
 
 
-@api_view(['GET', 'PUT'])
+@api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
-def kid_detail_or_update(request, kid_id):
+def kid_detail_or_update_or_delete(request, kid_id):
     kid = get_object_or_404(Kid, id=kid_id)
     if request.method == 'GET':
         serializer = KidSerializer(kid)
         return Response(serializer.data)
-    else:
+    elif request.method == 'PUT':
         serializer = KidSerializer(kid, data=request.data, partial=True)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
+    else:
+        kid.delete()
+        return Response({'status': 'success'})
