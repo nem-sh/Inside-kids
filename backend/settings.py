@@ -38,11 +38,26 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
+    # django rest framework
+    'rest_framework',
+    'rest_framework.authtoken',
+
+    # all auth
+    'allauth',
+    'allauth.account',
+
+    # rest auth
+    'rest_auth',
+    'rest_auth.registration',
 
     # app
     'accounts',
     'contents',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
