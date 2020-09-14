@@ -23,3 +23,11 @@ def kid_create_or_list(request):
         kids = Kid.objects.filter(user=request.user)
         serializer = KidListSerializer(kids, many=True)
         return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def kid_detail(request, kid_id):
+    kid = get_object_or_404(Kid, id=kid_id)
+    serializer = KidSerializer(kid)
+    return Response(serializer.data)
