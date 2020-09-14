@@ -61,12 +61,14 @@
         </v-menu>
       </div>
       </v-app-bar>
+      <router-view></router-view>
     </div>
   </v-app>
 </template>
 
 <script>
   export default {
+    name: 'App',
     data: () => ({
       items: [
         { title: 'Click Me' },
@@ -77,7 +79,7 @@
     }),
     methods:{
       go(){
-        
+
       }
     },
   }
