@@ -7,13 +7,19 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Kid
-from .serializers import KidSerializer
+from .serializers import KidSerializer, KidListSerializer
 
 
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
-def create(request):
-    serializer = KidSerializer(data=request.data)
-    if serializer.is_valid(raise_exception=True):
-        serializer.save(user=request.user)
-        return Response({"status": "OK", **serializer.data})
+def kid_create_or_list(request):
+    if request.method == 'POST':
+        serializer = KidSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user=request.user)
+            return Response(serializer.data)
+
+    else:
+        kids = Kid.objects.filter(user=request.user)
+        serializer = KidListSerializer(kids, many=True)
+        return Response(serializer.data)

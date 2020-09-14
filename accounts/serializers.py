@@ -18,3 +18,9 @@ class KidSerializer(serializers.ModelSerializer):
     class Meta:
         model = Kid
         fields = '__all__'
+
+
+class KidListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Kid
+        fields = ('id', 'name')
