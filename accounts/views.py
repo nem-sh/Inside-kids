@@ -25,9 +25,15 @@ def kid_create_or_list(request):
         return Response(serializer.data)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
-def kid_detail(request, kid_id):
+def kid_detail_or_update(request, kid_id):
     kid = get_object_or_404(Kid, id=kid_id)
-    serializer = KidSerializer(kid)
-    return Response(serializer.data)
+    if request.method == 'GET':
+        serializer = KidSerializer(kid)
+        return Response(serializer.data)
+    else:
+        serializer = KidSerializer(kid, data=request.data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
