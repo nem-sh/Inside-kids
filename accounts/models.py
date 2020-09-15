@@ -1,6 +1,10 @@
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill, ResizeToFit, Thumbnail
+
 # Create your models here.
 
 
@@ -10,6 +14,13 @@ class User(AbstractUser):
 
 class Kid(models.Model):
     name = models.CharField(max_length=50)
+    image = models.ImageField()
+    image_resize = ImageSpecField(
+        source='image',
+        processors=[ResizeToFit(150, 150)],
+        format='JPEG',
+        options={'quality': 60}
+    )
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE, related_name='kid')
     created_at = models.DateTimeField(auto_now_add=True)
