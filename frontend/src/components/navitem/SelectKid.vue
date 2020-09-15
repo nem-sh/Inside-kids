@@ -1,10 +1,10 @@
 <template>
-  <v-btn>Recording</v-btn>
+  <div></div>
 </template>
 
 <script>
 export default {
-    name:"Recording"
+    name:"SelectKid"
 }
 </script>
 

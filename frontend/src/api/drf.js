@@ -6,5 +6,10 @@ export default {
     logout: "/accounts/logout/",
     signup: "/accounts/signup/",
     resetPwd: "/accounts/password/reset/",
+    getUserInfo: '/accounts/user/',
+    editUserInfo: '/accounts/user/',
+    passwordChange: '/accounts/password/change/',
+    deletAccount: '/accounts/delete/',
+    getKidInfo: '/accounts/kids/',
   },
 };
