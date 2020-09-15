@@ -80,3 +80,28 @@ def music_list(request):
     musics = Music.objects.all()
     serializer = MusicListSerializer(musics, many=True)
     return Response(serializer.data)
+
+
+# script
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def script_create(request, kid_id):
+    serializer = ScriptSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save(kid=kid_id)
+        return Response(serializer.data)
+    else:
+        return HttpResponse(status=400)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def script_delete(request, script_id):
+    script = get_object_or_404(Script, pk=script_id)
+    if request.user == script.kid.user:
+        script.delete()
+        return HttpResponse(status=204)
+    else:
+        return HttpResponse(status=403)

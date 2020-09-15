@@ -21,3 +21,10 @@ class MusicListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Music
         fields = ('title', 'file_source')
+
+
+class ScriptSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Script
+        fields = ('created_at', 'file_source')
