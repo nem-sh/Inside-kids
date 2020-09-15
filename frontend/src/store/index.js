@@ -49,6 +49,16 @@ export default new Vuex.Store({
           alert("아이디 혹은 비밀번호를 확인해주세요.");
         });
     },
+    resetPwd(email) {
+      axios
+        .post(SERVER.URL + SERVER.ROUTES.resetPwd, email)
+        .then(() => {
+          alert("비밀번호 초기화 메일을 전송했습니다.");
+        })
+        .catch(() => {
+          alert("존재하지 않는 이메일입니다.");
+        });
+    },
   },
   modules: {},
 });

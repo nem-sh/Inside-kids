@@ -5,5 +5,6 @@ export default {
     login: "/accounts/login/",
     logout: "/accounts/logout/",
     signup: "/accounts/signup/",
+    resetPwd: "/accounts/password/reset/",
   },
 };
