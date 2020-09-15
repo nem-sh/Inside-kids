@@ -28,7 +28,6 @@ export default new Vuex.Store({
       axios
         .post(SERVER.URL + SERVER.ROUTES.signup, signupData)
         .then((res) => {
-          console.log(res.data);
           commit("SET_TOKEN", res.data);
           router.push({ name: "BeforeEmailAuthView" });
         })
@@ -36,6 +35,18 @@ export default new Vuex.Store({
           for (const [key, value] of Object.entries(err.response.data)) {
             alert(`${key}: ${value}`);
           }
+        });
+    },
+    login({ commit }, loginData) {
+      axios
+        .post(SERVER.URL + SERVER.ROUTES.login, loginData)
+        .then((res) => {
+          console.log(res.data);
+          commit("SET_TOKEN", res.data);
+          router.push({ name: "KidsDetailView", params: { kidId: 0 } });
+        })
+        .catch(() => {
+          alert("아이디 혹은 비밀번호를 확인해주세요.");
         });
     },
   },
