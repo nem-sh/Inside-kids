@@ -23,7 +23,7 @@ urlpatterns = [
 
     # rest-auth
     path('accounts/', include('rest_auth.urls')),
-    path('accounts/', include('rest_auth.registration.urls')),
+    path('accounts/signup/', include('rest_auth.registration.urls')),
 
     # app
     path('accounts/', include('accounts.urls')),
