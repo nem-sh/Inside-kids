@@ -47,3 +47,26 @@ def paint_delete(request, paint_id):
         return HttpResponse(status=204)
     else:
         return HttpResponse(status=403)
+
+
+# picture
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def picture_list(request, kid_id):
+    kid = get_object_or_404(Kid, pk=kid_id)
+    pictures = kid.picture_set.order_by()
+    serializer = PictureListSerializer(pictures, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def picture_delete(request, picture_id):
+    picture = get_object_or_404(Picture, pk=picture_id)
+    if request.user == picture.kid.user:
+        picture.delete()
+        return HttpResponse(status=204)
+    else:
+        return HttpResponse(status=403)

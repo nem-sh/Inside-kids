@@ -7,3 +7,10 @@ class PaintListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Paint
         fields = ('created_at', 'file_source')
+
+
+class PictureListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Picture
+        fields = ('created_at', 'file_source')
