@@ -12,18 +12,30 @@
     </div>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="green darken-1" text @click="findPwd">Send email</v-btn>
+      <v-btn color="green darken-1" text @click="submit">Send email</v-btn>
     </v-card-actions>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
-  name: "FindPassword",
+  name: "ResetPassword",
   data() {
     return {
       email: "",
     };
+  },
+  methods: {
+    ...mapActions(["resetPwd"]),
+    submit() {
+      if (!this.email) {
+        alert("이메일을 입력해주세요.");
+      } else {
+        this.resetPwd(this.email);
+      }
+    },
   },
 };
 </script>
