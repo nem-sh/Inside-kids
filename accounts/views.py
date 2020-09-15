@@ -10,6 +10,13 @@ from .models import Kid
 from .serializers import KidSerializer, KidListSerializer
 
 
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete(request):
+    request.user.delete()
+    return Response({'status': 'success'})
+
+
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def kid_create_or_list(request):
