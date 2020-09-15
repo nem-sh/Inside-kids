@@ -27,4 +27,6 @@ urlpatterns = [
 
     # app
     path('accounts/', include('accounts.urls')),
+    path('contents/', include('contents.urls')),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
