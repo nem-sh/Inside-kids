@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Video, Paint, Picture, Music, Script, Script, Character
-from .serializers import PaintListSerializer, PictureListSerializer, MusicListSerializer, ScriptSerializer, CharacterSerializer
+from .serializers import VideoSerializer, PaintSerializer, PaintListSerializer, PictureSerializer, PictureListSerializer, MusicListSerializer, ScriptSerializer, CharacterSerializer
 
 
 # video
@@ -23,6 +23,17 @@ def video_delete(request, video_id):
         return HttpResponse(status=204)
     else:
         return HttpResponse(status=403)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def video_create(request, kid_id):
+    serializer = VideoSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save(kid=kid_id)
+        return Response(serializer.data)
+    else:
+        return HttpResponse(status=400)
 
 
 # paint
@@ -49,6 +60,17 @@ def paint_delete(request, paint_id):
         return HttpResponse(status=403)
 
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def paint_create(request, kid_id):
+    serializer = PaintSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save(kid=kid_id)
+        return Response(serializer.data)
+    else:
+        return HttpResponse(status=400)
+
+
 # picture
 
 
@@ -70,6 +92,17 @@ def picture_delete(request, picture_id):
         return HttpResponse(status=204)
     else:
         return HttpResponse(status=403)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def picture_create(request, kid_id):
+    serializer = PictureSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save(kid=kid_id)
+        return Response(serializer.data)
+    else:
+        return HttpResponse(status=400)
 
 
 # music

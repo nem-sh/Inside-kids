@@ -5,7 +5,8 @@ from django.db import models
 
 
 class Video(models.Model):
-    kid = models.ForeignKey("accounts.Kid", on_delete=models.CASCADE)
+    kid = models.ForeignKey(
+        "accounts.Kid", on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     file_source = models.FileField()
 
