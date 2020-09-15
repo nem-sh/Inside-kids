@@ -1,6 +1,9 @@
 <template>
   <div>
-    <v-card-title class="text-h4 d-flex justify-center green--text font-weight-bold">SIGN UP</v-card-title>
+    <v-card-title
+      class="text-h4 d-flex justify-center green--text font-weight-bold"
+      >SIGN UP</v-card-title
+    >
     <div class="pa-5">
       <v-text-field
         label="email"
@@ -46,6 +49,7 @@
 <script>
 import { validationMixin } from "vuelidate";
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+import { mapActions } from "vuex";
 
 export default {
   mixins: [validationMixin],
@@ -68,12 +72,18 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["signup"]),
     submit() {
       this.$v.$touch();
       if (this.$v.$invalid) {
         alert("입력한 내용을 다시 한번 확인해주세요.");
       } else {
-        console.log("유효성 검사 통과");
+        const signupData = {
+          email: this.email,
+          password1: this.password,
+          password2: this.repeatPassword,
+        };
+        this.signup(signupData);
       }
     },
   },
