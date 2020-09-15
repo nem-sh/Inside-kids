@@ -1,10 +1,15 @@
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from allauth.socialaccount.providers.oauth2.client import OAuth2Client
+from rest_auth.registration.views import SocialLoginView
+
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+
 
 from .models import Kid
 from .serializers import KidSerializer, KidListSerializer
@@ -47,3 +52,8 @@ def kid_detail_or_update_or_delete(request, kid_id):
     else:
         kid.delete()
         return Response({'status': 'success'})
+
+
+class GoogleLogin(SocialLoginView):
+    adapter_class = GoogleOAuth2Adapter
+    client_class = OAuth2Client
