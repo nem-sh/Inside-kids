@@ -70,3 +70,13 @@ def picture_delete(request, picture_id):
         return HttpResponse(status=204)
     else:
         return HttpResponse(status=403)
+
+
+# music
+
+
+@api_view(['GET'])
+def music_list(request):
+    musics = Music.objects.all()
+    serializer = MusicListSerializer(musics, many=True)
+    return Response(serializer.data)

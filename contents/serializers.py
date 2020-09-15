@@ -14,3 +14,10 @@ class PictureListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Picture
         fields = ('created_at', 'file_source')
+
+
+class MusicListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Music
+        fields = ('title', 'file_source')
