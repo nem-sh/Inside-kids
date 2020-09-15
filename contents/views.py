@@ -23,3 +23,27 @@ def video_delete(request, video_id):
         return HttpResponse(status=204)
     else:
         return HttpResponse(status=403)
+
+
+# paint
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def paint_list(request, kid_id):
+    kid = get_object_or_404(Kid, pk=kid_id)
+    paints = kid.paint_set.order_by()
+    serializer = PaintListSerializer(paints, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def paint_delete(request, paint_id):
+    paint = get_object_or_404(Paint, pk=paint_id)
+
+    if request.user == paint.kid.user:
+        paint.delete()
+        return HttpResponse(status=204)
+    else:
+        return HttpResponse(status=403)
