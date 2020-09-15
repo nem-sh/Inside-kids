@@ -1,9 +1,6 @@
 <template>
   <div>
-    <v-card-title
-      class="text-h4 d-flex justify-center green--text font-weight-bold"
-      >SIGN UP</v-card-title
-    >
+    <v-card-title class="text-h4 d-flex justify-center green--text font-weight-bold">SIGN UP</v-card-title>
     <div class="pa-5">
       <v-text-field
         label="email"
