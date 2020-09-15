@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 
     # rest auth
     'rest_auth',
@@ -160,6 +161,19 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     )
+}
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '356066814463-bsu1bq7npgqee92bhao0slaib1p5gvcg.apps.googleusercontent.com',
+            'secret': 'PvCdJpVK3kgGbaWjI3A6LAbq',
+            'key': ''
+        }
+    }
 }
 
 # MEDIA 설정
