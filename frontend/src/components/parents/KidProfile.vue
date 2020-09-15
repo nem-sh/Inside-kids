@@ -1,7 +1,9 @@
 <template>
   <div class="row my-5">
     <div class="col-lg-2 col-md-3 col-4 box">
-      <v-avatar size="120px"><img src="@/assets/default_image.jpg" alt=""></v-avatar>
+      <v-avatar size="120px"
+        ><img src="@/assets/default_image.jpg" alt=""
+      /></v-avatar>
     </div>
     <div class="col-10 text-left my-auto">
       <v-btn><i class="fas fa-edit"></i> 정보 수정</v-btn>
@@ -14,16 +16,15 @@
 <script>
 // import axios from 'axios'
 export default {
-  name: 'KidProfile'
-}
+  name: "KidProfile",
+};
 </script>
 
 <style>
-  .box {
-    width: 150px;
-    height: 150px;
-    border-radius: 70%;
-    overflow: hidden;
-
-  }
+.box {
+  width: 150px;
+  height: 150px;
+  border-radius: 70%;
+  overflow: hidden;
+}
 </style>

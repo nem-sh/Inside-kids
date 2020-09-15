@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import KidProfile from "@/components/parents/KidProfile.vue"
 import Recording from "@/components/parents/Recording.vue"
 import Photo from "@/components/parents/Photo.vue"
@@ -44,6 +45,13 @@ import Drawing from "@/components/parents/Drawing.vue"
         Photo,
         Recording
     },
+    methods: {
+    ...mapActions(['getUser','getKid']),
+    },
+    created() {
+        this.getUser()
+        this.getKid(this.$route.params.kidId)
+    }
   }
 </script>
 
