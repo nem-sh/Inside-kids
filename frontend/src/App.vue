@@ -1,5 +1,6 @@
 <template>
   <v-app id="app">
+    <!-- <div v-if="isLoggedIn"> -->
     <div>
       <v-app-bar dense dark>
         <v-toolbar-title>
@@ -12,21 +13,30 @@
           <span>도움말</span>
         </v-btn>
       <div class="text-center">
+        <SelectKid/>
+      </div>
+      <div class="text-center">
         <EditUser/>
       </div>
       </v-app-bar>
-      <router-view></router-view>
     </div>
+      <router-view></router-view>
   </v-app>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   import EditUser from "@/components/navitem/EditUser.vue"
+  import SelectKid from "@/components/navitem/SelectKid.vue"
   export default {
     name: 'App',
     components:{
       EditUser,
-    }
+      SelectKid,
+    },
+    computed: {
+      ...mapGetters(['isLoggedIn']),
+    },
   }
 </script>
 <style>

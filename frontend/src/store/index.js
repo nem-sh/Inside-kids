@@ -14,12 +14,11 @@ export default new Vuex.Store({
     authToken: cookies.get("auth-token"),
     user: {},
     kid: {},
+    kidslist: {},
   },
   getters: {
-    isLoggedIn: (state) => !!state.authToken,
-    config: (state) => ({
-      headers: { Authorization: `Token ${state.authToken}` },
-    }),
+    isLoggedIn: state => !!state.authToken,
+    config: state => ({ headers: { Authorization: `jwt ${state.authToken}` } }),
   },
   mutations: {
     SET_TOKEN(state, token) {
@@ -31,6 +30,9 @@ export default new Vuex.Store({
     },
     SET_KID(state, kidInfo) {
       state.kid = kidInfo;
+    },
+    SET_KIDSLIST(state, kids) {
+      state.kidslist = kids
     },
   },
   actions: {
@@ -113,11 +115,10 @@ export default new Vuex.Store({
       //   router.push({ name: "Home" })
       // })
     },
-    getKidsList({ getters, commit }) {
-      axios
-        .get(SERVER.URL + SERVER.ROUTES.getKidInfo, getters.config)
-        .then((res) => {
-          commit("SET_KID", res.data);
+    getKidsList({ getters, commit}) {
+      axios.get(SERVER.URL + SERVER.ROUTES.getKidInfo, getters.config)
+        .then(res => {
+          commit('SET_KIDSLIST', res.data)
         })
         .catch((err) => {
           console.error(err);
