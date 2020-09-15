@@ -26,7 +26,7 @@
         </div>
 
         <div id="find-pwd-form" style="display:none">
-          <FindPassword />
+          <ResetPassword />
         </div>
 
         <a v-if="!switchBoolean2" class="ml-2" @click="findPwdForm">비밀번호를 잊으셨나요?</a>
@@ -39,14 +39,14 @@
 <script>
 import Login from "@/components/accounts/Login";
 import Signup from "@/components/accounts/Signup";
-import FindPassword from "@/components/accounts/FindPassword";
+import ResetPassword from "@/components/accounts/ResetPassword";
 
 export default {
   name: "MainForm",
   components: {
     Login,
     Signup,
-    FindPassword,
+    ResetPassword,
   },
   data() {
     return {
