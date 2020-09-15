@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 
     # rest auth
     'rest_auth',
@@ -68,6 +69,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # CORS 설정
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -162,6 +166,22 @@ REST_FRAMEWORK = {
     )
 }
 
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '356066814463-bsu1bq7npgqee92bhao0slaib1p5gvcg.apps.googleusercontent.com',
+            'secret': 'PvCdJpVK3kgGbaWjI3A6LAbq',
+            'key': ''
+        }
+    }
+}
+
 # MEDIA 설정
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# CORS 설정
+CORS_ORIGIN_ALLOW_ALL = True
