@@ -3,8 +3,8 @@ import VueRouter from "vue-router";
 
 //도연
 import KidsDetailView from "@/views/parents/KidsDetailView";
-import Vue from "vue";
-import VueRouter from "vue-router";
+
+//수미
 import Home from "@/views/Home";
 
 Vue.use(VueRouter);
