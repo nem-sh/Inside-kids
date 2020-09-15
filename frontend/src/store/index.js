@@ -30,9 +30,13 @@ export default new Vuex.Store({
         .then((res) => {
           console.log(res.data);
           commit("SET_TOKEN", res.data);
-          router.push({ name: "KidsDetailView", params: { kidId: 1 } });
+          router.push({ name: "BeforeEmailAuthView" });
         })
-        .catch((err) => console.log(err.response));
+        .catch((err) => {
+          for (const [key, value] of Object.entries(err.response.data)) {
+            alert(`${key}: ${value}`);
+          }
+        });
     },
   },
   modules: {},
