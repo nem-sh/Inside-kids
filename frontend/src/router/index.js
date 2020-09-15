@@ -1,23 +1,37 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
 //도연
-import KidsDetailView from '@/views/parents/KidsDetailView'
+import KidsDetailView from "@/views/parents/KidsDetailView";
 
-Vue.use(VueRouter)
+//수미
+import Home from "@/views/Home";
+import BeforeEmailAuthView from "@/views/accounts/BeforeEmailAuthView";
+
+Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: "/",
+    name: "Home",
+    component: Home,
+  },
   {
     path: "/:kidId",
     name: "KidsDetailView",
     component: KidsDetailView,
   },
-]
+  {
+    path: "/auth/before",
+    name: "BeforeEmailAuthView",
+    component: BeforeEmailAuthView,
+  },
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

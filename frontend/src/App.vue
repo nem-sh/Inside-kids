@@ -1,10 +1,7 @@
 <template>
   <v-app id="app">
     <div>
-      <v-app-bar                  
-        dense
-        dark
-      >
+      <v-app-bar dense dark>
         <v-toolbar-title>
           <v-btn>
             <span>로고</span>
@@ -33,10 +30,10 @@
   }
 </script>
 <style>
-  #app {
-    font-family: 'Jua', sans-serif !important;
-    -webkit-font-smoothing: antialiased !important;
-    -moz-osx-font-smoothing: grayscale !important;
-    color: #2c3e50;
-  }
+#app {
+  font-family: "Jua", sans-serif !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  color: #2c3e50;
+}
 </style>
