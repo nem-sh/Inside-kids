@@ -28,3 +28,10 @@ class ScriptSerializer(serializers.ModelSerializer):
     class Meta:
         model = Script
         fields = ('created_at', 'file_source')
+
+
+class CharacterSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Character
+        fields = ('eat_time', 'wash_time')

@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Video, Paint, Picture, Music, Script, Script, Character
-from .serializers import PaintListSerializer, PictureListSerializer, MusicListSerializer, ScriptSerializer
+from .serializers import PaintListSerializer, PictureListSerializer, MusicListSerializer, ScriptSerializer, CharacterSerializer
 
 
 # video
@@ -105,3 +105,17 @@ def script_delete(request, script_id):
         return HttpResponse(status=204)
     else:
         return HttpResponse(status=403)
+
+
+# character
+
+
+@api_view(['GET', 'PUT'])
+@permission_classes([IsAuthenticated])
+def character_detail_or_update(request, character_id):
+    character = get_object_or_404(Character, pk=character_id)
+    if request.method == 'PUT':
+        character.eat_time = request.data['eat_time']
+        character.wash_time = request.data['eat_time']
+    serializer = CharacterSerializer(character)
+    return Response(serializer.data)
