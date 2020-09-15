@@ -22,8 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # rest-auth
-    path('rest-auth/', include('rest_auth.urls')),
-    path('rest-auth/', include('rest_auth.registration.urls')),
+    path('accounts/', include('rest_auth.urls')),
+    path('accounts/', include('rest_auth.registration.urls')),
 
     # app
     path('accounts/', include('accounts.urls')),

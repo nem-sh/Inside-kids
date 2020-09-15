@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # all auth
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
 
     # rest auth
     'rest_auth',
