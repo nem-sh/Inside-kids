@@ -2,17 +2,13 @@
   <div class="text-center">
     <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
-        <v-btn dark v-bind="attrs" v-on="on">
-          kidname
+        <v-btn text dark v-bind="attrs" v-on="on">
+          아이 선택
           <!-- {{kid.name}} -->
         </v-btn>
       </template>
       <v-list>
-        <v-list-item
-          v-for="(kid, index) in kidslist"
-          :key="index"
-          @click="kidDetail(index)"
-        >
+        <v-list-item v-for="(kid, index) in kidslist" :key="index" @click="kidDetail(index)">
           <v-list-item-title>{{ kid }}</v-list-item-title>
         </v-list-item>
       </v-list>

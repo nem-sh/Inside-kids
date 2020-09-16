@@ -2,18 +2,13 @@
   <div class="text-center">
     <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
-        <v-btn dark v-bind="attrs" v-on="on">
-            username
-          <!-- {{user.username}} -->
-        </v-btn>
+        <v-btn text dark v-bind="attrs" v-on="on">{{user.username}}님</v-btn>
       </template>
       <v-list class="text-center">
         <!-- modal 정보수정 -->
-        <EditUserItem/>
-        <!-- modal 비밀번호수정 -->
-        <ChangePassword/>
+        <EditUserItem />
         <!-- 로그아웃 -->
-        <v-list-item>
+        <v-list-item @click="logout">
           <v-list-item-title>로그아웃</v-list-item-title>
         </v-list-item>
       </v-list>
@@ -22,18 +17,19 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import EditUserItem from "@/components/navitem/EditUserItem.vue"
-import ChangePassword from "@/components/navitem/ChangePassword.vue"
+import { mapState, mapActions } from "vuex";
+import EditUserItem from "@/components/navitem/EditUserItem.vue";
 
 export default {
   name: "EditUser",
-  components:{
-    ChangePassword,
+  components: {
     EditUserItem,
   },
   computed: {
-      ...mapState(['user']),
+    ...mapState(["user"]),
+  },
+  methods: {
+    ...mapActions(["logout"]),
   },
 };
 </script>

@@ -17,8 +17,10 @@ export default new Vuex.Store({
     kidslist: {},
   },
   getters: {
-    isLoggedIn: state => !!state.authToken,
-    config: state => ({ headers: { Authorization: `jwt ${state.authToken}` } }),
+    isLoggedIn: (state) => !!state.authToken,
+    config: (state) => ({
+      headers: { Authorization: `jwt ${state.authToken}` },
+    }),
   },
   mutations: {
     SET_TOKEN(state, token) {
@@ -32,7 +34,7 @@ export default new Vuex.Store({
       state.kid = kidInfo;
     },
     SET_KIDSLIST(state, kids) {
-      state.kidslist = kids
+      state.kidslist = kids;
     },
   },
   actions: {
@@ -40,7 +42,8 @@ export default new Vuex.Store({
       axios
         .post(SERVER.URL + SERVER.ROUTES.signup, signupData)
         .then((res) => {
-          commit("SET_TOKEN", res.data);
+          commit("SET_TOKEN", res.data.token);
+          commit("SET_USER", res.data.user);
           router.push({ name: "BeforeEmailAuthView" });
         })
         .catch((err) => {
@@ -53,8 +56,8 @@ export default new Vuex.Store({
       axios
         .post(SERVER.URL + SERVER.ROUTES.login, loginData)
         .then((res) => {
-          console.log(res.data);
-          commit("SET_TOKEN", res.data);
+          commit("SET_TOKEN", res.data.token);
+          commit("SET_USER", res.data.user);
           router.push({ name: "KidsDetailView", params: { kidId: 0 } });
         })
         .catch(() => {
@@ -73,7 +76,7 @@ export default new Vuex.Store({
     },
     logout({ getters, commit }) {
       axios
-        .get(SERVER.URL + SERVER.ROUTES.logout, getters.config)
+        .post(SERVER.URL + SERVER.ROUTES.logout, null, getters.config)
         .then(() => {
           commit("SET_TOKEN", null);
           cookies.remove("auth-token");
@@ -115,10 +118,11 @@ export default new Vuex.Store({
       //   router.push({ name: "Home" })
       // })
     },
-    getKidsList({ getters, commit}) {
-      axios.get(SERVER.URL + SERVER.ROUTES.getKidInfo, getters.config)
-        .then(res => {
-          commit('SET_KIDSLIST', res.data)
+    getKidsList({ getters, commit }) {
+      axios
+        .get(SERVER.URL + SERVER.ROUTES.getKidInfo, getters.config)
+        .then((res) => {
+          commit("SET_KIDSLIST", res.data);
         })
         .catch((err) => {
           console.error(err);
@@ -132,6 +136,29 @@ export default new Vuex.Store({
         })
         .catch((err) => {
           console.error(err);
+        });
+    },
+    changePassword({ getters }, data) {
+      axios
+        .post(SERVER.URL + SERVER.ROUTES.passwordChange, data, getters.config)
+        .then(() => {
+          alert("비밀번호 변경이 완료되었습니다.");
+          location.reload();
+        })
+        .catch((err) => {
+          for (const [key, value] of Object.entries(err.response.data)) {
+            alert(`${key}: ${value}`);
+          }
+        });
+    },
+    deleteUser({ getters }) {
+      axios
+        .delete(SERVER.URL + SERVER.ROUTES.deletAccount, getters.config)
+        .then(() => {
+          //
+        })
+        .catch((err) => {
+          console.log(err.response);
         });
     },
   },
