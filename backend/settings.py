@@ -80,7 +80,9 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            'frontend/dist'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -144,7 +146,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
+VUE_DIR = os.path.join(BASE_DIR, 'frontend')
+STATICFILES_DIRS = (
+    os.path.join(VUE_DIR, 'dist', 'static'),
+)
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # AUTH
 AUTH_USER_MODEL = 'accounts.User'
