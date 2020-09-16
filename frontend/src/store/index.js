@@ -47,8 +47,12 @@ export default new Vuex.Store({
           router.push({ name: "BeforeEmailAuthView" });
         })
         .catch((err) => {
-          for (const [key, value] of Object.entries(err.response.data)) {
-            alert(`${key}: ${value}`);
+          if ("email" in err.response.data) {
+            alert(err.response.data.email);
+          } else if ("password1" in err.response.data) {
+            alert(err.response.data.password1);
+          } else {
+            alert("이메일 혹은 비밀번호를 확인해주세요.");
           }
         });
     },
@@ -145,21 +149,31 @@ export default new Vuex.Store({
           alert("비밀번호 변경이 완료되었습니다.");
           location.reload();
         })
-        .catch((err) => {
-          for (const [key, value] of Object.entries(err.response.data)) {
-            alert(`${key}: ${value}`);
-          }
+        .catch(() => {
+          alert("일상적이거나, 아이디와 비슷한 비밀번호로 바꿀 수 없습니다.");
         });
     },
     deleteUser({ getters }) {
-      axios
-        .delete(SERVER.URL + SERVER.ROUTES.deletAccount, getters.config)
-        .then(() => {
-          //
-        })
-        .catch((err) => {
-          console.log(err.response);
-        });
+      Swal.fire({
+        position: "center",
+        icon: "warning",
+        title: "회원 탈퇴하시겠습니까?",
+        showCancelButton: true,
+        confirmButtonText: `Yes`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          axios
+            .delete(SERVER.URL + SERVER.ROUTES.deletAccount, getters.config)
+            .then(() => {
+              alert("회원 탈퇴되었습니다.");
+              router.push({ name: "Home" });
+            })
+            .catch((err) => {
+              console.log(err.response);
+            });
+        }
+      });
     },
   },
   modules: {},
