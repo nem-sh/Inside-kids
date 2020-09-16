@@ -16,6 +16,7 @@
         prepend-icon="mdi-lock"
         hint="At least 8 characters"
         required
+        @keyup.enter="submit"
       ></v-text-field>
     </div>
     <v-card-actions>

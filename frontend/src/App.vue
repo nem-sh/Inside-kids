@@ -1,43 +1,13 @@
 <template>
   <v-app id="app">
-    <!-- <div v-if="isLoggedIn"> -->
-    <div>
-      <v-app-bar dense dark>
-        <v-toolbar-title>
-          <v-btn>
-            <span>로고</span>
-          </v-btn>
-        </v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-btn>
-          <span>도움말</span>
-        </v-btn>
-      <div class="text-center">
-        <SelectKid/>
-      </div>
-      <div class="text-center">
-        <EditUser/>
-      </div>
-      </v-app-bar>
-    </div>
-      <router-view></router-view>
+    <router-view></router-view>
   </v-app>
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
-  import EditUser from "@/components/navitem/EditUser.vue"
-  import SelectKid from "@/components/navitem/SelectKid.vue"
-  export default {
-    name: 'App',
-    components:{
-      EditUser,
-      SelectKid,
-    },
-    computed: {
-      ...mapGetters(['isLoggedIn']),
-    },
-  }
+export default {
+  name: "App",
+};
 </script>
 <style>
 #app {
