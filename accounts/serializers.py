@@ -23,4 +23,4 @@ class KidSerializer(serializers.ModelSerializer):
 class KidListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Kid
-        fields = ('id', 'name')
+        fields = ('id', 'name',)
