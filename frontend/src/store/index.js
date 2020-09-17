@@ -18,7 +18,7 @@ export default new Vuex.Store({
   },
   getters: {
     isLoggedIn: (state) => !!state.authToken,
-    config: (state) => ({
+    commonConfig: (state) => ({
       headers: { Authorization: `jwt ${state.authToken}` },
     }),
   },
@@ -80,7 +80,7 @@ export default new Vuex.Store({
     },
     logout({ getters, commit }) {
       axios
-        .post(SERVER.URL + SERVER.ROUTES.logout, null, getters.config)
+        .post(SERVER.URL + SERVER.ROUTES.logout, null, getters.commonConfig)
         .then(() => {
           commit("SET_TOKEN", null);
           cookies.remove("auth-token");
@@ -96,7 +96,7 @@ export default new Vuex.Store({
     // getUser({ getters, commit, state }) {
     getUser({ getters, commit }) {
       axios
-        .get(SERVER.URL + SERVER.ROUTES.getUserInfo, getters.config)
+        .get(SERVER.URL + SERVER.ROUTES.getUserInfo, getters.commonConfig)
         .then((res) => {
           commit("SET_USER", res.data);
           // if (state.authToken !== cookies.get('auth-token')) {
@@ -124,7 +124,7 @@ export default new Vuex.Store({
     },
     getKidsList({ getters, commit }) {
       axios
-        .get(SERVER.URL + SERVER.ROUTES.getKidInfo, getters.config)
+        .get(SERVER.URL + SERVER.ROUTES.getKidInfo, getters.commonConfig)
         .then((res) => {
           commit("SET_KIDSLIST", res.data);
         })
@@ -134,7 +134,10 @@ export default new Vuex.Store({
     },
     getKid({ getters, commit, kidId }) {
       axios
-        .get(SERVER.URL + SERVER.ROUTES.getKidInfo + kidId, getters.config)
+        .get(
+          SERVER.URL + SERVER.ROUTES.getKidInfo + kidId,
+          getters.commonConfig
+        )
         .then((res) => {
           commit("SET_KID", res.data);
         })
@@ -144,7 +147,11 @@ export default new Vuex.Store({
     },
     changePassword({ getters }, data) {
       axios
-        .post(SERVER.URL + SERVER.ROUTES.passwordChange, data, getters.config)
+        .post(
+          SERVER.URL + SERVER.ROUTES.passwordChange,
+          data,
+          getters.commonConfig
+        )
         .then(() => {
           alert("비밀번호 변경이 완료되었습니다.");
           location.reload();
@@ -153,7 +160,7 @@ export default new Vuex.Store({
           alert("일상적이거나, 아이디와 비슷한 비밀번호로 바꿀 수 없습니다.");
         });
     },
-    deleteUser({ getters }) {
+    deleteUser({ getters, commit }) {
       Swal.fire({
         position: "center",
         icon: "warning",
@@ -164,9 +171,14 @@ export default new Vuex.Store({
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
           axios
-            .delete(SERVER.URL + SERVER.ROUTES.deletAccount, getters.config)
+            .delete(
+              SERVER.URL + SERVER.ROUTES.deletAccount,
+              getters.commonConfig
+            )
             .then(() => {
               alert("회원 탈퇴되었습니다.");
+              commit("SET_TOKEN", null);
+              cookies.remove("auth-token");
               router.push({ name: "Home" });
             })
             .catch((err) => {
