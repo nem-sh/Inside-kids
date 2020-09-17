@@ -173,7 +173,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
-    'EXCEPTION_HANDLER': 'accounts.utils.custom_exception_handler'
+    # 'EXCEPTION_HANDLER': 'accounts.utils.custom_exception_handler'
 }
 
 SOCIALACCOUNT_PROVIDERS = {
