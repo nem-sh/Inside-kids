@@ -27,7 +27,7 @@ SECRET_KEY = '4()9jj#6v9+0w$l%5^!qh4es=su9it&oehlt*b-d0#um&5m%oj'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -80,7 +80,9 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            'frontend/dist'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -144,7 +146,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
+VUE_DIR = os.path.join(BASE_DIR, 'frontend')
+STATICFILES_DIRS = (
+    os.path.join(VUE_DIR, 'dist', 'static'),
+)
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # AUTH
 AUTH_USER_MODEL = 'accounts.User'
@@ -167,7 +173,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
-    # 'EXCEPTION_HANDLER': 'accounts.utils.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'accounts.utils.custom_exception_handler'
 }
 
 SOCIALACCOUNT_PROVIDERS = {

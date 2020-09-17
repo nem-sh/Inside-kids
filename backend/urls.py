@@ -17,6 +17,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
 from rest_auth import views
 
 urlpatterns = [
@@ -30,9 +31,11 @@ urlpatterns = [
     path('accounts/password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
          views.PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
 
-
     # app
     path('accounts/', include('accounts.urls')),
     path('contents/', include('contents.urls')),
+
+    # index
+    path('', TemplateView.as_view(template_name='index.html'))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
