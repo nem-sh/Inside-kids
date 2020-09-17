@@ -27,7 +27,7 @@ SECRET_KEY = '4()9jj#6v9+0w$l%5^!qh4es=su9it&oehlt*b-d0#um&5m%oj'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -173,7 +173,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
-    # 'EXCEPTION_HANDLER': 'accounts.utils.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'accounts.utils.custom_exception_handler'
 }
 
 SOCIALACCOUNT_PROVIDERS = {
