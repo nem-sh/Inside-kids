@@ -8,10 +8,6 @@
           <h1>아이 관리</h1>
         </v-card-title>
 
-        <!-- <v-card-text
-                class="headline font-weight-bold"
-        >"Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."</v-card-text>-->
-
         <v-card-actions v-for="kid in kidslist" :key="kid.id">
           <v-list-item class="grow blue-grey lighten-4">
             <v-list-item-avatar color="white">

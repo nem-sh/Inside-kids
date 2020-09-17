@@ -6,7 +6,7 @@
         <h1 class="font-weight-bold mt-5">도연이</h1>
       </div>
       <KidProfile />
-      <v-tabs fixed-tabs dark>
+      <v-tabs fixed-tabs>
         <v-tab>대화녹화</v-tab>
         <v-tab>그림</v-tab>
         <v-tab>사진</v-tab>
@@ -21,6 +21,7 @@
         </v-tab-item>
       </v-tabs>
     </div>
+    <Footer />
   </div>
 </template>
 
@@ -31,6 +32,7 @@ import Recording from "@/components/parents/Recording.vue";
 import Photo from "@/components/parents/Photo.vue";
 import Drawing from "@/components/parents/Drawing.vue";
 import Nav from "@/components/Navigation.vue";
+import Footer from "@/components/Footer.vue";
 
 export default {
   name: "kidsDetailView",
@@ -40,6 +42,7 @@ export default {
     Drawing,
     Photo,
     Recording,
+    Footer,
   },
   methods: {
     ...mapActions(["getUser", "getKid"]),
