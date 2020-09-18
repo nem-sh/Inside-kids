@@ -7,6 +7,8 @@ import KidsDetailView from "@/views/parents/KidsDetailView";
 //수미
 import Home from "@/views/Home";
 import BeforeEmailAuthView from "@/views/accounts/BeforeEmailAuthView";
+import KidsManageView from "@/views/parents/KidsManageView";
+import KidsMainView from "@/views/kids/KidsMainView";
 
 Vue.use(VueRouter);
 
@@ -17,14 +19,24 @@ const routes = [
     component: Home,
   },
   {
-    path: "/:kidId",
-    name: "KidsDetailView",
-    component: KidsDetailView,
-  },
-  {
     path: "/auth/before",
     name: "BeforeEmailAuthView",
     component: BeforeEmailAuthView,
+  },
+  {
+    path: "/parents/kids/manage",
+    name: "KidsManageView",
+    component: KidsManageView,
+  },
+  {
+    path: "/child",
+    name: "KidsMainView",
+    component: KidsMainView,
+  },
+  {
+    path: "/:kidId",
+    name: "KidsDetailView",
+    component: KidsDetailView,
   },
 ];
 

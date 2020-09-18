@@ -66,7 +66,7 @@
             <img width="100%" height="300px" src="../assets/info_parent.png" alt="info_parent" />
           </v-col>
           <v-col class="my-auto" col="12" sm="6">
-            <h1>AI 캐릭터가 되어 아이와 대화할 수 있어요!</h1>
+            <h1>AI 캐릭터가 아이에게 대신 물어봐줄거에요!</h1>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias
               corporis repellat eaque accusantium porro placeat reprehenderit,

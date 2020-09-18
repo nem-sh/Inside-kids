@@ -17,8 +17,10 @@ export default new Vuex.Store({
     kidslist: {},
   },
   getters: {
-    isLoggedIn: state => !!state.authToken,
-    config: state => ({ headers: { Authorization: `jwt ${state.authToken}` } }),
+    isLoggedIn: (state) => !!state.authToken,
+    commonConfig: (state) => ({
+      headers: { Authorization: `jwt ${state.authToken}` },
+    }),
   },
   mutations: {
     SET_TOKEN(state, token) {
@@ -32,7 +34,7 @@ export default new Vuex.Store({
       state.kid = kidInfo;
     },
     SET_KIDSLIST(state, kids) {
-      state.kidslist = kids
+      state.kidslist = kids;
     },
   },
   actions: {
@@ -40,12 +42,17 @@ export default new Vuex.Store({
       axios
         .post(SERVER.URL + SERVER.ROUTES.signup, signupData)
         .then((res) => {
-          commit("SET_TOKEN", res.data);
+          commit("SET_TOKEN", res.data.token);
+          commit("SET_USER", res.data.user);
           router.push({ name: "BeforeEmailAuthView" });
         })
         .catch((err) => {
-          for (const [key, value] of Object.entries(err.response.data)) {
-            alert(`${key}: ${value}`);
+          if ("email" in err.response.data) {
+            alert(err.response.data.email);
+          } else if ("password1" in err.response.data) {
+            alert(err.response.data.password1);
+          } else {
+            alert("이메일 혹은 비밀번호를 확인해주세요.");
           }
         });
     },
@@ -53,8 +60,8 @@ export default new Vuex.Store({
       axios
         .post(SERVER.URL + SERVER.ROUTES.login, loginData)
         .then((res) => {
-          console.log(res.data);
-          commit("SET_TOKEN", res.data);
+          commit("SET_TOKEN", res.data.token);
+          commit("SET_USER", res.data.user);
           router.push({ name: "KidsDetailView", params: { kidId: 0 } });
         })
         .catch(() => {
@@ -73,7 +80,7 @@ export default new Vuex.Store({
     },
     logout({ getters, commit }) {
       axios
-        .get(SERVER.URL + SERVER.ROUTES.logout, getters.config)
+        .post(SERVER.URL + SERVER.ROUTES.logout, null, getters.commonConfig)
         .then(() => {
           commit("SET_TOKEN", null);
           cookies.remove("auth-token");
@@ -89,7 +96,7 @@ export default new Vuex.Store({
     // getUser({ getters, commit, state }) {
     getUser({ getters, commit }) {
       axios
-        .get(SERVER.URL + SERVER.ROUTES.getUserInfo, getters.config)
+        .get(SERVER.URL + SERVER.ROUTES.getUserInfo, getters.commonConfig)
         .then((res) => {
           commit("SET_USER", res.data);
           // if (state.authToken !== cookies.get('auth-token')) {
@@ -115,10 +122,11 @@ export default new Vuex.Store({
       //   router.push({ name: "Home" })
       // })
     },
-    getKidsList({ getters, commit}) {
-      axios.get(SERVER.URL + SERVER.ROUTES.getKidInfo, getters.config)
-        .then(res => {
-          commit('SET_KIDSLIST', res.data)
+    getKidsList({ getters, commit }) {
+      axios
+        .get(SERVER.URL + SERVER.ROUTES.getKidInfo, getters.commonConfig)
+        .then((res) => {
+          commit("SET_KIDSLIST", res.data);
         })
         .catch((err) => {
           console.error(err);
@@ -126,13 +134,58 @@ export default new Vuex.Store({
     },
     getKid({ getters, commit, kidId }) {
       axios
-        .get(SERVER.URL + SERVER.ROUTES.getKidInfo + kidId, getters.config)
+        .get(
+          SERVER.URL + SERVER.ROUTES.getKidInfo + kidId,
+          getters.commonConfig
+        )
         .then((res) => {
           commit("SET_KID", res.data);
         })
         .catch((err) => {
           console.error(err);
         });
+    },
+    changePassword({ getters }, data) {
+      axios
+        .post(
+          SERVER.URL + SERVER.ROUTES.passwordChange,
+          data,
+          getters.commonConfig
+        )
+        .then(() => {
+          alert("비밀번호 변경이 완료되었습니다.");
+          location.reload();
+        })
+        .catch(() => {
+          alert("일상적이거나, 아이디와 비슷한 비밀번호로 바꿀 수 없습니다.");
+        });
+    },
+    deleteUser({ getters, commit }) {
+      Swal.fire({
+        position: "center",
+        icon: "warning",
+        title: "회원 탈퇴하시겠습니까?",
+        showCancelButton: true,
+        confirmButtonText: `Yes`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          axios
+            .delete(
+              SERVER.URL + SERVER.ROUTES.deletAccount,
+              getters.commonConfig
+            )
+            .then(() => {
+              alert("회원 탈퇴되었습니다.");
+              commit("SET_TOKEN", null);
+              cookies.remove("auth-token");
+              router.push({ name: "Home" });
+            })
+            .catch((err) => {
+              console.log(err.response);
+            });
+        }
+      });
     },
   },
   modules: {},

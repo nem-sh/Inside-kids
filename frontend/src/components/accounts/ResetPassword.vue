@@ -8,6 +8,7 @@
         prepend-icon="mdi-account-circle"
         v-model="email"
         required
+        @keyup.enter="submit"
       ></v-text-field>
     </div>
     <v-card-actions>
