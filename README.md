@@ -70,7 +70,7 @@
 ## 기술 설명
 
 ### ERD
-![인사이드키즈 (4)](README.assets/인사이드키즈 (4).png)
+![image-20200918095918099](README.assets/image-20200918095918099.png)
 
 
 
