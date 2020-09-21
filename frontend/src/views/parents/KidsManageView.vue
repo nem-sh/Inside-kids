@@ -22,14 +22,18 @@
             </v-list-item-content>
 
             <v-row align="center" justify="end">
-              <v-btn color="black" text @click="updateKids">수정</v-btn>
+              <v-btn
+                color="black"
+                text
+                @click.stop="(dialog=true),(addOrUpdate=true),(kidsId=kid.id)"
+              >수정</v-btn>
               <v-btn color="black" text @click="deleteKids(kid.id)">삭제</v-btn>
             </v-row>
           </v-list-item>
         </v-card-actions>
 
         <v-card-actions>
-          <v-btn color="white" text @click.stop="dialog = true">
+          <v-btn color="white" text @click.stop="(dialog=true),(addOrUpdate=false)">
             <v-icon class="mr-1">mdi-plus</v-icon>
           </v-btn>
         </v-card-actions>
@@ -37,7 +41,8 @@
         <v-dialog v-model="dialog" max-width="400">
           <v-card class="text-center px-5">
             <v-col>
-              <h1>아이 등록</h1>
+              <h1 v-if="!addOrUpdate">아이 등록</h1>
+              <h1 v-if="addOrUpdate">아이 수정</h1>
             </v-col>
             <form>
               <v-col>
@@ -49,15 +54,22 @@
                 ></v-file-input>
               </v-col>
               <v-col>
-                <v-text-field require prepend-icon="mdi-pencil" label="이름" v-model="kidsName"></v-text-field>
+                <v-text-field
+                  require
+                  prepend-icon="mdi-pencil"
+                  label="이름"
+                  v-model="kidsName"
+                  @keypress.enter="addKids"
+                ></v-text-field>
               </v-col>
 
               <v-card-actions>
                 <v-spacer></v-spacer>
 
-                <v-btn color="green darken-1" text @click="addKids">add</v-btn>
+                <v-btn color="green darken-1" text @click="addKids" v-if="!addOrUpdate">add</v-btn>
+                <v-btn color="green darken-1" text @click="updateKids()" v-if="addOrUpdate">update</v-btn>
 
-                <v-btn color="green darken-1" text @click="dialog = false">close</v-btn>
+                <v-btn color="green darken-1" text @click="dialog=false">close</v-btn>
               </v-card-actions>
             </form>
           </v-card>
@@ -69,12 +81,13 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import axios from "axios";
 import SERVER from "@/api/drf";
 
 import Nav from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import Swal from "sweetalert2";
 
 export default {
   name: "KidsManageView",
@@ -87,10 +100,13 @@ export default {
       dialog: false,
       kidsName: "",
       kidsImage: [],
+      addOrUpdate: false,
+      kidsId: "",
     };
   },
   computed: {
-    ...mapState(["kidslist", "commonConfig", "authToken"]),
+    ...mapState(["kidslist", "authToken"]),
+    ...mapGetters(["commonConfig"]),
   },
   methods: {
     ...mapActions(["getKidsList", "getUser"]),
@@ -98,46 +114,87 @@ export default {
       this.kidsImage = this.$refs.kidsimage.files[0];
     },
     addKids() {
-      var formData = new FormData();
-      formData.append("name", this.kidsName);
-      formData.append("image", this.kidsImage);
-
-      const axiosConfig = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `jwt ${this.authToken}`,
-        },
-      };
-      axios
-        .post(SERVER.URL + SERVER.ROUTES.getKidInfo, formData, axiosConfig)
-        .then(() => {
-          this.dialog = false;
-          this.getKidsList();
-          this.kidsName = null;
-          this.kidsImage = null;
-        })
-        .catch((err) => {
-          console.error(err.response);
-        });
+      if (this.kidsName) {
+        var formData = new FormData();
+        formData.append("name", this.kidsName);
+        if (this.kidsImage.length) {
+          formData.append("image", this.kidsImage);
+        }
+        const axiosConfig = {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `jwt ${this.authToken}`,
+          },
+        };
+        axios
+          .post(SERVER.URL + SERVER.ROUTES.getKidInfo, formData, axiosConfig)
+          .then(() => {
+            this.dialog = false;
+            this.getKidsList();
+            this.kidsName = null;
+            this.kidsImage = [];
+          })
+          .catch((err) => {
+            console.error(err.response);
+          });
+      } else {
+        alert("아이 이름을 입력해주세요.");
+      }
     },
-    updateKids() {},
+    updateKids() {
+      if (this.kidsName) {
+        var formData = new FormData();
+        formData.append("name", this.kidsName);
+        if (this.kidsImage.length) {
+          formData.append("image", this.kidsImage);
+        }
+        const axiosConfig = {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `jwt ${this.authToken}`,
+          },
+        };
+        axios
+          .put(
+            SERVER.URL + SERVER.ROUTES.getKidInfo + this.kidsId + "/",
+            formData,
+            axiosConfig
+          )
+          .then(() => {
+            this.dialog = false;
+            this.getKidsList();
+            this.kidsName = null;
+            this.kidsImage = [];
+          })
+          .catch((err) => {
+            console.error(err.response);
+          });
+      } else {
+        alert("변경할 이름을 입력해주세요.");
+      }
+    },
     deleteKids(kidId) {
-      const axiosConfig = {
-        headers: {
-          Authorization: `jwt ${this.authToken}`,
-        },
-      };
-      axios
-        .delete(
-          SERVER.URL + SERVER.ROUTES.getKidInfo + kidId + "/",
-          axiosConfig
-        )
-        .then(() => {
-          this.getKidsList();
-        })
-        .catch((err) => {
-          console.error(err.response);
-        });
+      Swal.fire({
+        position: "center",
+        icon: "warning",
+        title: "삭제하시겠습니까?",
+        showCancelButton: true,
+        confirmButtonText: `Yes`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .delete(
+              SERVER.URL + SERVER.ROUTES.getKidInfo + kidId + "/",
+              this.commonConfig
+            )
+            .then(() => {
+              this.getKidsList();
+            })
+            .catch((err) => {
+              console.error(err.response);
+            });
+        }
+      });
     },
   },
   created() {
