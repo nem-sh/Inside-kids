@@ -1,28 +1,37 @@
 <template>
-  <v-row>
-    <v-col cols="12" sm="6" offset-sm="3">
-      <v-card>
-        <v-container fluid>
-          <v-row>
-            <v-col v-for="n in 9" :key="n" class="d-flex child-flex" cols="4">
-              <v-card flat tile class="d-flex">
-                <v-img
-                  :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
-                  :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
-                  aspect-ratio="1"
-                  class="grey lighten-2"
-                >
-                  <template v-slot:placeholder>
-                    <v-row class="fill-height ma-0" align="center" justify="center">
-                      <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                    </v-row>
-                  </template>
-                </v-img>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-card>
+  <v-row class="pt-7">
+    <v-col offset="2" cols="8">
+      <v-expansion-panels>
+        <v-expansion-panel>
+          <v-expansion-panel-header>
+            Item
+            <template v-slot:actions>
+              <v-icon color="primary">$expand</v-icon>
+            </template>
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
+        </v-expansion-panel>
+
+        <v-expansion-panel>
+          <v-expansion-panel-header disable-icon-rotate>
+            Item
+            <template v-slot:actions>
+              <v-icon color="teal">mdi-check</v-icon>
+            </template>
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
+        </v-expansion-panel>
+
+        <v-expansion-panel>
+          <v-expansion-panel-header disable-icon-rotate>
+            Item
+            <template v-slot:actions>
+              <v-icon color="error">mdi-alert-circle</v-icon>
+            </template>
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
     </v-col>
   </v-row>
 </template>

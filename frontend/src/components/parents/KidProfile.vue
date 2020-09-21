@@ -3,19 +3,29 @@
     <!-- <div class="col-lg-2 col-md-3 col-4 box"> -->
     <div class="col-lg-12 text-center">
       <v-avatar size="120px">
-        <img src="@/assets/default_image.jpg" alt />
+        <img :src="imagePath" alt="kids-profile" />
       </v-avatar>
     </div>
-    <div class="col-12 text-center my-auto">
+    <!-- <div class="col-12 text-center my-auto">
       <v-btn>대화하기</v-btn>
-    </div>
+    </div>-->
   </div>
 </template>
 
 <script>
+import SERVER from "@/api/drf";
+
+import { mapState } from "vuex";
+
 // import axios from 'axios'
 export default {
   name: "KidProfile",
+  computed: {
+    ...mapState(["kid"]),
+    imagePath() {
+      return SERVER.URL + this.kid.image;
+    },
+  },
 };
 </script>
 
