@@ -34,7 +34,10 @@ export default {
       if (!this.email) {
         alert("이메일을 입력해주세요.");
       } else {
-        this.resetPwd(this.email);
+        const emailData = {
+          email: this.email,
+        };
+        this.resetPwd(emailData);
       }
     },
   },

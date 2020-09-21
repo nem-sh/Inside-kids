@@ -50,9 +50,9 @@ export default new Vuex.Store({
           alert("아이디 혹은 비밀번호를 확인해주세요.");
         });
     },
-    resetPwd(email) {
+    resetPwd(context, emailData) {
       axios
-        .post(SERVER.URL + SERVER.ROUTES.resetPwd, email)
+        .post(SERVER.URL + SERVER.ROUTES.resetPwd, emailData)
         .then(() => {
           alert("비밀번호 초기화 메일을 전송했습니다.");
         })
