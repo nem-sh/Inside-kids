@@ -8,7 +8,7 @@ class VideoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Video
-        fields = ('file_source')
+        fields = ('file_source',)
 
 # paint
 
@@ -17,7 +17,7 @@ class PaintSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Paint
-        fields = ('file_source')
+        fields = ('file_source',)
 
 
 class PaintListSerializer(serializers.ModelSerializer):
@@ -33,7 +33,7 @@ class PictureSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Paint
-        fields = ('file_source')
+        fields = ('file_source',)
 
 
 class PictureListSerializer(serializers.ModelSerializer):
