@@ -47,7 +47,9 @@
 <script>
 import { validationMixin } from "vuelidate";
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
-import { mapActions } from "vuex";
+
+import axios from "axios";
+import SERVER from "@/api/drf";
 
 export default {
   mixins: [validationMixin],
@@ -70,7 +72,6 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["signup"]),
     submit() {
       this.$v.$touch();
       if (this.$v.$invalid) {
@@ -83,6 +84,25 @@ export default {
         };
         this.signup(signupData);
       }
+    },
+    signup(signupData) {
+      axios
+        .post(SERVER.URL + SERVER.ROUTES.signup, signupData)
+        .then(() => {
+          this.email = null;
+          this.password = null;
+          this.repeatPassword = null;
+          this.$emit("signup");
+        })
+        .catch((err) => {
+          if ("email" in err.response.data) {
+            alert(err.response.data.email);
+          } else if ("password1" in err.response.data) {
+            alert(err.response.data.password1);
+          } else {
+            alert("이메일 혹은 비밀번호를 확인해주세요.");
+          }
+        });
     },
   },
   computed: {
