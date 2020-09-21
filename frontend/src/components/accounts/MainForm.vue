@@ -22,7 +22,7 @@
         </div>
 
         <div id="signup-form" style="display:none">
-          <Signup />
+          <Signup @signup="toLogin" />
         </div>
 
         <div id="find-pwd-form" style="display:none">
@@ -40,6 +40,7 @@
 import Login from "@/components/accounts/Login";
 import Signup from "@/components/accounts/Signup";
 import ResetPassword from "@/components/accounts/ResetPassword";
+import Swal from "sweetalert2";
 
 export default {
   name: "MainForm",
@@ -78,6 +79,15 @@ export default {
       signupForm.style.display = "none";
       findPwdForm.style.display = "block";
       this.switchBoolean2 = true;
+    },
+    toLogin() {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title:
+          "가입하신 이메일로 인증 메일을 보냈습니다. 인증 후 로그인해주세요.",
+      });
+      this.switchBoolean = !this.switchBoolean;
     },
   },
   watch: {

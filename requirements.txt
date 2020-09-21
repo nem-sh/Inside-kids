@@ -17,7 +17,6 @@ matterhook==0.2
 oauthlib==3.1.0
 pilkit==2.0
 Pillow==7.2.0
-pkg-resources==0.0.0
 pycodestyle==2.6.0
 PyJWT==1.7.1
 python3-openid==3.2.0
