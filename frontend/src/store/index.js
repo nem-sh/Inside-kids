@@ -114,10 +114,10 @@ export default new Vuex.Store({
           console.error(err);
         });
     },
-    getKid({ getters, commit, kidId }) {
+    getKid({ getters, commit }, kidId) {
       axios
         .get(
-          SERVER.URL + SERVER.ROUTES.getKidInfo + kidId,
+          SERVER.URL + SERVER.ROUTES.getKidInfo + kidId + "/",
           getters.commonConfig
         )
         .then((res) => {

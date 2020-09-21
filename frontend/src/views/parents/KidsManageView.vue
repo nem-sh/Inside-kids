@@ -8,13 +8,15 @@
           <h1>아이 관리</h1>
         </v-card-title>
 
-        <v-card-actions v-for="kid in kidslist" :key="kid.id">
+        <v-card-actions
+          v-for="kid in kidslist"
+          :key="kid.id"
+          @click="goToDetail(kid.id)"
+          class="kid-list"
+        >
           <v-list-item class="grow blue-grey lighten-4">
             <v-list-item-avatar color="white">
-              <v-img
-                class="elevation-6"
-                src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-              ></v-img>
+              <KidImage :image="kid.image" />
             </v-list-item-avatar>
 
             <v-list-item-content class="ml-5 text--primary">
@@ -51,16 +53,12 @@
                   placeholder="아이 사진"
                   prepend-icon="mdi-camera"
                   v-model="kidsImage"
+                  ref="file"
+                  type="file"
                 ></v-file-input>
               </v-col>
               <v-col>
-                <v-text-field
-                  require
-                  prepend-icon="mdi-pencil"
-                  label="이름"
-                  v-model="kidsName"
-                  @keypress.enter="addKids"
-                ></v-text-field>
+                <v-text-field require prepend-icon="mdi-pencil" label="이름" v-model="kidsName"></v-text-field>
               </v-col>
 
               <v-card-actions>
@@ -87,19 +85,22 @@ import SERVER from "@/api/drf";
 
 import Nav from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import KidImage from "@/components/parents/KidImage";
 import Swal from "sweetalert2";
+import router from "@/router";
 
 export default {
   name: "KidsManageView",
   components: {
     Nav,
     Footer,
+    KidImage,
   },
   data() {
     return {
       dialog: false,
       kidsName: "",
-      kidsImage: [],
+      kidsImage: null,
       addOrUpdate: false,
       kidsId: "",
     };
@@ -110,14 +111,14 @@ export default {
   },
   methods: {
     ...mapActions(["getKidsList", "getUser"]),
-    fileSelect() {
-      this.kidsImage = this.$refs.kidsimage.files[0];
-    },
+    // fileSelect() {
+    //   this.kidsImage = this.$refs.kidsimage.files[0];
+    // },
     addKids() {
       if (this.kidsName) {
         var formData = new FormData();
         formData.append("name", this.kidsName);
-        if (this.kidsImage.length) {
+        if (this.kidsImage) {
           formData.append("image", this.kidsImage);
         }
         const axiosConfig = {
@@ -132,7 +133,7 @@ export default {
             this.dialog = false;
             this.getKidsList();
             this.kidsName = null;
-            this.kidsImage = [];
+            this.kidsImage = null;
           })
           .catch((err) => {
             console.error(err.response);
@@ -145,7 +146,7 @@ export default {
       if (this.kidsName) {
         var formData = new FormData();
         formData.append("name", this.kidsName);
-        if (this.kidsImage.length) {
+        if (this.kidsImage) {
           formData.append("image", this.kidsImage);
         }
         const axiosConfig = {
@@ -164,7 +165,7 @@ export default {
             this.dialog = false;
             this.getKidsList();
             this.kidsName = null;
-            this.kidsImage = [];
+            this.kidsImage = null;
           })
           .catch((err) => {
             console.error(err.response);
@@ -174,6 +175,7 @@ export default {
       }
     },
     deleteKids(kidId) {
+      event.stopPropagation();
       Swal.fire({
         position: "center",
         icon: "warning",
@@ -196,6 +198,9 @@ export default {
         }
       });
     },
+    goToDetail(kidId) {
+      router.push({ name: "KidsDetailView", params: { kidId: kidId } });
+    },
   },
   created() {
     this.getKidsList();
@@ -206,6 +211,9 @@ export default {
 
 <style>
 .kids-manage-body {
-  height: 90vh;
+  min-height: 100vh;
+}
+.kid-list {
+  cursor: pointer;
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class>
     <Nav />
-    <div class="container">
+    <div class="container kids-detail-body">
       <div class="text-center justify-center">
-        <h1 class="font-weight-bold mt-5">도연이</h1>
+        <h1 class="font-weight-bold mt-5">{{kid.name}}</h1>
       </div>
       <KidProfile />
-      <v-tabs fixed-tabs>
+      <v-tabs fixed-tabs color="cyan accent-4">
         <v-tab>대화녹화</v-tab>
         <v-tab>그림</v-tab>
         <v-tab>사진</v-tab>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 import KidProfile from "@/components/parents/KidProfile.vue";
 import Recording from "@/components/parents/Recording.vue";
 import Photo from "@/components/parents/Photo.vue";
@@ -44,6 +44,9 @@ export default {
     Recording,
     Footer,
   },
+  computed: {
+    ...mapState(["kid"]),
+  },
   methods: {
     ...mapActions(["getUser", "getKid"]),
   },
@@ -55,4 +58,7 @@ export default {
 </script>
 
 <style>
+.kids-detail-body {
+  min-height: 100vh;
+}
 </style>
