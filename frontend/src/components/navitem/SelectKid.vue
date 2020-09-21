@@ -36,6 +36,7 @@ export default {
   methods: {
     ...mapActions(["getKidsList"]),
     kidDetail(index) {
+      console.log(index);
       this.$router.push({ name: "KidsDetailView", params: { kidId: index } });
     },
     movePage() {
