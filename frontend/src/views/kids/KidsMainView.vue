@@ -2,18 +2,30 @@
   <div class="kid-main">
     <!-- 윗 탭 -->
     <v-col class="text-center my-10">
-      <!-- 그림그리기 -->
-      <v-btn color="error mx-15 px-14 py-14" fab x-large dark>
+      <div style="display:flex; justify-content:center;">
+        <!-- 그림그리기 -->
+        <button style="margin:50px;">
+          <v-img src="../../assets/icons/draw.png" alt style="width: 120x; width: 120px;" />
+        </button>
+        <!-- 사진찍기 -->
+        <button style="margin:50px;">
+          <v-img src="../../assets/icons/photo.png" alt style="width: 120x; width: 120px;" />
+        </button>
+        <!-- 동요부르기 -->
+        <button style="margin:50px;">
+          <v-img src="../../assets/icons/sing.png" alt style="width: 120x; width: 120px;" />
+        </button>
+      </div>
+
+      <!-- <v-btn color="red mx-15 px-14 py-14" fab x-large dark>
         <i class="fa fa-image fa-4x"></i>
       </v-btn>
-      <!-- 사진찍기 -->
       <v-btn color="cyan mx-15 px-14 py-14" fab x-large dark>
         <i class="fa fa-camera fa-4x"></i>
       </v-btn>
-      <!-- 동요부르기 -->
       <v-btn color="green mx-15 px-14 py-14" fab x-large dark>
         <i class="fa fa-music fa-4x"></i>
-      </v-btn>
+      </v-btn>-->
     </v-col>
 
     <!-- 캐릭터 -->
@@ -35,8 +47,21 @@
 
     <!-- 아랫 탭 -->
     <v-col class="text-center my-10">
-      <!-- 식사하기 -->
-      <v-btn
+      <div style="display:flex; justify-content:center;">
+        <!-- 그림그리기 -->
+        <button @click="actionNum = 1; actionOnOff = true;" style="margin:50px;">
+          <v-img src="../../assets/icons/eat.png" alt style="width: 120x; width: 120px;" />
+        </button>
+        <!-- 사진찍기 -->
+        <button style="margin:50px;">
+          <v-img src="../../assets/icons/talk.png" alt style="width: 120x; width: 120px;" />
+        </button>
+        <!-- 동요부르기 -->
+        <button @click="actionNum = 2; actionOnOff = true;" style="margin:50px;">
+          <v-img src="../../assets/icons/wash.png" alt style="width: 120x; width: 120px;" />
+        </button>
+      </div>
+      <!-- <v-btn
         @click="actionNum = 1; actionOnOff = true;"
         color="error mx-15 px-14 py-14"
         fab
@@ -45,13 +70,9 @@
       >
         <i class="fa fa-utensils fa-4x"></i>
       </v-btn>
-
-      <!-- 대화하기 -->
       <v-btn color="cyan mx-15 px-14 py-14" fab x-large dark>
         <i class="fa fa-phone fa-4x"></i>
       </v-btn>
-
-      <!-- 씻기 -->
       <v-btn
         @click="actionNum = 2; actionOnOff = true;"
         color="green mx-15 px-14 py-14"
@@ -60,7 +81,7 @@
         dark
       >
         <i class="fa fa-shower fa-4x"></i>
-      </v-btn>
+      </v-btn>-->
     </v-col>
   </div>
 </template>
