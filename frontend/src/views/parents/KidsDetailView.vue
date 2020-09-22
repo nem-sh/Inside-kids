@@ -2,22 +2,25 @@
   <div class>
     <Nav />
     <div class="container kids-detail-body">
-      <div class="text-center justify-center">
-        <h1 class="font-weight-bold mt-5">{{kid.name}}</h1>
-      </div>
       <KidProfile />
+      <div class="text-center justify-center">
+        <h1 class="font-weight-bold mb-5">
+          <i class="fas fa-house-user"></i>
+          {{kid.name}}
+        </h1>
+      </div>
       <v-tabs fixed-tabs color="cyan accent-4">
         <v-tab>대화녹화</v-tab>
         <v-tab>그림</v-tab>
         <v-tab>사진</v-tab>
         <v-tab-item>
-          <Recording />
+          <VideoList />
         </v-tab-item>
         <v-tab-item>
-          <Drawing />
+          <PaintList />
         </v-tab-item>
         <v-tab-item>
-          <Photo />
+          <PictureList />
         </v-tab-item>
       </v-tabs>
     </div>
@@ -27,21 +30,21 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-import KidProfile from "@/components/parents/KidProfile.vue";
-import Recording from "@/components/parents/Recording.vue";
-import Photo from "@/components/parents/Photo.vue";
-import Drawing from "@/components/parents/Drawing.vue";
-import Nav from "@/components/Navigation.vue";
-import Footer from "@/components/Footer.vue";
+import KidProfile from "@/components/parents/KidProfile";
+import VideoList from "@/components/parents/VideoList";
+import PictureList from "@/components/parents/PictureList";
+import PaintList from "@/components/parents/PaintList";
+import Nav from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
 export default {
   name: "kidsDetailView",
   components: {
     Nav,
     KidProfile,
-    Drawing,
-    Photo,
-    Recording,
+    PictureList,
+    PaintList,
+    VideoList,
     Footer,
   },
   computed: {

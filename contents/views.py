@@ -28,9 +28,10 @@ def video_delete(request, video_id):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def video_create(request, kid_id):
+    kid = get_object_or_404(Kid, pk=kid_id)
     serializer = VideoSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
-        serializer.save(kid=kid_id)
+        serializer.save(kid=kid)
         return Response(serializer.data)
     else:
         return HttpResponse(status=400)
@@ -63,9 +64,10 @@ def paint_delete(request, paint_id):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def paint_create(request, kid_id):
+    kid = get_object_or_404(Kid, pk=kid_id)
     serializer = PaintSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
-        serializer.save(kid=kid_id)
+        serializer.save(kid=kid)
         return Response(serializer.data)
     else:
         return HttpResponse(status=400)
@@ -97,9 +99,10 @@ def picture_delete(request, picture_id):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def picture_create(request, kid_id):
+    kid = get_object_or_404(Kid, pk=kid_id)
     serializer = PictureSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
-        serializer.save(kid=kid_id)
+        serializer.save(kid=kid)
         return Response(serializer.data)
     else:
         return HttpResponse(status=400)
@@ -121,9 +124,10 @@ def music_list(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def script_create(request, kid_id):
+    kid = get_object_or_404(Kid, pk=kid_id)
     serializer = ScriptSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
-        serializer.save(kid=kid_id)
+        serializer.save(kid=kid)
         return Response(serializer.data)
     else:
         return HttpResponse(status=400)
