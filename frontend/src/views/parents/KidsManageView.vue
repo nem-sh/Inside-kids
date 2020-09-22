@@ -7,7 +7,6 @@
           <v-icon large left>fas fa-child</v-icon>
           <h1>아이 관리</h1>
         </v-card-title>
-
         <v-card-actions
           v-for="kid in kidslist"
           :key="kid.id"
@@ -213,7 +212,7 @@ export default {
 .kids-manage-body {
   min-height: 100vh;
 }
-.kid-list {
+.kid-list:hover {
   cursor: pointer;
 }
 </style>

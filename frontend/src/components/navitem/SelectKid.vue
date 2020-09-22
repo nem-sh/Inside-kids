@@ -3,7 +3,7 @@
     <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
         <v-btn text dark v-bind="attrs" v-on="on">
-          아이 선택
+          <i class="fas fa-user-check pr-1"></i>아이 선택
           <!-- {{kid.name}} -->
         </v-btn>
       </template>

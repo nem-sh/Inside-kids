@@ -32,7 +32,7 @@ class PaintListSerializer(serializers.ModelSerializer):
 class PictureSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Paint
+        model = Picture
         fields = ('file_source',)
 
 
