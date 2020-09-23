@@ -13,6 +13,7 @@
         <v-tab>대화녹화</v-tab>
         <v-tab>그림</v-tab>
         <v-tab>사진</v-tab>
+        <v-tab>스크립트</v-tab>
         <v-tab-item>
           <VideoList />
         </v-tab-item>
@@ -21,6 +22,9 @@
         </v-tab-item>
         <v-tab-item>
           <PictureList />
+        </v-tab-item>
+        <v-tab-item>
+          <ScriptList />
         </v-tab-item>
       </v-tabs>
     </div>
@@ -34,6 +38,7 @@ import KidProfile from "@/components/parents/KidProfile";
 import VideoList from "@/components/parents/VideoList";
 import PictureList from "@/components/parents/PictureList";
 import PaintList from "@/components/parents/PaintList";
+import ScriptList from "@/components/parents/ScriptList";
 import Nav from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
@@ -45,6 +50,7 @@ export default {
     PictureList,
     PaintList,
     VideoList,
+    ScriptList,
     Footer,
   },
   computed: {
