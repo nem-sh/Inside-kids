@@ -77,8 +77,7 @@ export default {
       window.Kakao.Link.sendCustom({
         templateId: 37115,
         templateArgs: {
-          THU:
-            "http://mud-kage.kakao.co.kr/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg",
+          THU: this.contentImg,
         },
       });
     },
