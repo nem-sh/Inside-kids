@@ -16,7 +16,7 @@
         <v-card class="d-inline-block mx-auto">
           <v-container>
             <v-row justify="space-between">
-              <v-col cols="10" class="mx-auto mt-5 swing">
+              <v-col cols="9" class="mx-auto mt-5 swing">
                 <img
                   class="content-image"
                   :src="contentImg"
