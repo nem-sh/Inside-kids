@@ -7,6 +7,11 @@
           <v-icon large left>fas fa-child</v-icon>
           <h1>아이 관리</h1>
         </v-card-title>
+        <div v-if="!kidslist.length" class="text-center">
+          <h2>
+            <i class="fas fa-exclamation-circle"></i> 아이를 등록해주세요
+          </h2>
+        </div>
         <v-card-actions
           v-for="kid in kidslist"
           :key="kid.id"
@@ -45,30 +50,29 @@
               <h1 v-if="!addOrUpdate">아이 등록</h1>
               <h1 v-if="addOrUpdate">아이 수정</h1>
             </v-col>
-            <form>
-              <v-col>
-                <v-file-input
-                  accept="image/png, image/jpeg, image/bmp"
-                  placeholder="아이 사진"
-                  prepend-icon="mdi-camera"
-                  v-model="kidsImage"
-                  ref="file"
-                  type="file"
-                ></v-file-input>
-              </v-col>
-              <v-col>
-                <v-text-field require prepend-icon="mdi-pencil" label="이름" v-model="kidsName"></v-text-field>
-              </v-col>
 
-              <v-card-actions>
-                <v-spacer></v-spacer>
+            <v-col>
+              <v-file-input
+                accept="image/png, image/jpeg, image/bmp"
+                placeholder="아이 사진"
+                prepend-icon="mdi-camera"
+                v-model="kidsImage"
+                ref="file"
+                type="file"
+              ></v-file-input>
+            </v-col>
+            <v-col>
+              <v-text-field require prepend-icon="mdi-pencil" label="이름" v-model="kidsName"></v-text-field>
+            </v-col>
 
-                <v-btn color="green darken-1" text @click="addKids" v-if="!addOrUpdate">add</v-btn>
-                <v-btn color="green darken-1" text @click="updateKids()" v-if="addOrUpdate">update</v-btn>
+            <v-card-actions>
+              <v-spacer></v-spacer>
 
-                <v-btn color="green darken-1" text @click="dialog=false">close</v-btn>
-              </v-card-actions>
-            </form>
+              <v-btn color="green darken-1" text @click="addKids" v-if="!addOrUpdate">add</v-btn>
+              <v-btn color="green darken-1" text @click="updateKids()" v-if="addOrUpdate">update</v-btn>
+
+              <v-btn color="green darken-1" text @click="dialog=false">close</v-btn>
+            </v-card-actions>
           </v-card>
         </v-dialog>
       </v-card>
@@ -142,9 +146,11 @@ export default {
       }
     },
     updateKids() {
-      if (this.kidsName) {
+      if (this.kidsName || this.kidsImage) {
         var formData = new FormData();
-        formData.append("name", this.kidsName);
+        if (this.kidsName) {
+          formData.append("name", this.kidsName);
+        }
         if (this.kidsImage) {
           formData.append("image", this.kidsImage);
         }
