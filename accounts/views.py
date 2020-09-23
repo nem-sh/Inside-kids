@@ -14,8 +14,8 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Kid
 from .serializers import KidSerializer, KidListSerializer
 
-from contents.models import Paint, Video, Picture
-from contents.serializers import PaintListSerializer, VideoSerializer, PictureListSerializer
+from contents.models import Paint, Video, Picture, Script
+from contents.serializers import PaintListSerializer, VideoSerializer, PictureListSerializer, ScriptSerializer
 
 
 @api_view(['DELETE'])
@@ -57,6 +57,10 @@ def kid_detail_or_update_or_delete(request, kid_id):
             Picture.objects.filter(kid=kid),
             many=True
         )
+        script_serializer = ScriptSerializer(
+            Script.objects.filter(kid=kid, used=False),
+            many=True
+        )
         serializer = KidSerializer(kid)
 
         return Response(
@@ -64,7 +68,9 @@ def kid_detail_or_update_or_delete(request, kid_id):
                 **serializer.data,
                 "paints": paint_serializer.data,
                 "videos": video_serializer.data,
-                "pictures": picture_serializer.data
+                "pictures": picture_serializer.data,
+                "scripts": script_serializer.data,
+
             }
         )
 

@@ -25,6 +25,7 @@ class Script(models.Model):
 
 
 class Video(models.Model):
+    kid = models.ForeignKey("accounts.Kid", on_delete=models.CASCADE)
     script = models.OneToOneField(Script, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     file_source = models.FileField()

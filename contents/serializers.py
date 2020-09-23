@@ -1,14 +1,24 @@
 from rest_framework import serializers
 from .models import Video, Paint, Picture, Music, Script, Character
 
+# script
+
+
+class ScriptSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Script
+        fields = ('content',)
+
 # video
 
 
 class VideoSerializer(serializers.ModelSerializer):
+    script = ScriptSerializer()
 
     class Meta:
         model = Video
-        fields = ('file_source',)
+        fields = ('file_source', 'script')
 
 # paint
 
@@ -51,14 +61,6 @@ class MusicListSerializer(serializers.ModelSerializer):
         model = Music
         fields = ('title', 'file_source')
 
-# script
-
-
-class ScriptSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Script
-        fields = ('created_at', 'file_source')
 
 # character
 
