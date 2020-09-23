@@ -7,7 +7,7 @@
       </template>
     </v-expansion-panel-header>
     <v-expansion-panel-content>
-      <video :src="videoUrl"></video>
+      <video :src="videoUrl" controls></video>
     </v-expansion-panel-content>
   </v-expansion-panel>
 </template>
