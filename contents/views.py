@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
-from .models import Video, Paint, Picture, Music, Script, Script, Character
+from .models import Video, Paint, Picture, Music, Script, Character
 from .serializers import VideoSerializer, PaintSerializer, PaintListSerializer, PictureSerializer, PictureListSerializer, MusicListSerializer, ScriptSerializer, CharacterSerializer
 
 
