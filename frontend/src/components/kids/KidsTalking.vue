@@ -4,11 +4,11 @@
       <h4 class="title is-4">
         {{ timer.interval ?  `Gravando ${formatedTime}` : 'Iniciar gravação' }}
       </h4>
-      <video ref="video"></video>
+      <video v-show="false" ref="video"></video>
     </div>
     <div class="block" v-show="result">
       <h4 class="title is-4">Resultado</h4>
-      <video controls :src="blobUrl"></video>
+      <video v-show="false" controls :src="blobUrl"></video>
     </div>
     <div class="field">
         <button class="button is-danger" @click="stop" v-if="recorder && recorder.getState() === 'recording'">

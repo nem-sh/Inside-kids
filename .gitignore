@@ -4,6 +4,8 @@ logs
 # Image Files
 images/
 
+tts/audio/
+tts/content/data/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

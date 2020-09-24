@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 
 //도연
 import KidsDetailView from "@/views/parents/KidsDetailView";
-import KidsTalkingView from "@/views/kids/KidsTalkingView"
+import KidsTalkingView from "@/views/kids/KidsTalkingView";
 
 //수미
 import Home from "@/views/Home";

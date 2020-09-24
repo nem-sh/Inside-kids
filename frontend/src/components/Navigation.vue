@@ -3,7 +3,7 @@
     <v-app-bar dense class="deep-orange lighten-3">
       <div class="container d-flex">
         <v-toolbar-title>
-          <v-btn text dark>
+          <v-btn text dark @click="moveToMain">
             <span>로고</span>
           </v-btn>
         </v-toolbar-title>
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import router from "@/router";
+
 import EditUser from "@/components/navitem/EditUser.vue";
 import SelectKid from "@/components/navitem/SelectKid.vue";
 
@@ -31,6 +33,11 @@ export default {
   components: {
     EditUser,
     SelectKid,
+  },
+  methods: {
+    moveToMain() {
+      router.push({ name: "Home" });
+    },
   },
 };
 </script>

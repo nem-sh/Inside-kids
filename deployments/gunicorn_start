@@ -3,7 +3,7 @@
 
 NAME="inside_kids"
 
-DJANGODIR=/home/ubuntu/s03p22b106
+DJANGODIR=/home/ubuntu/inside_kids
 
 SOCKFILE=localhost:8000
 
@@ -33,7 +33,7 @@ export PYTHONPATH=$DJANGODIR:$PYTHONPATH
 
 
 
-exec /home/ubuntu/s03p22b106/venv/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \
+exec /home/ubuntu/inside_kids/venv/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \
 
   --name $NAME \
 

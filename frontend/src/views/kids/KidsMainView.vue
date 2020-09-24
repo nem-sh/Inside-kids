@@ -91,14 +91,10 @@
               style="width: 120x; width: 120px"
             />
           </button>
-          <!-- 대화하기 -->
-          <button style="margin: 50px">
-            <v-img
-              src="../../assets/icons/talk.png"
-              alt
-              style="width: 120x; width: 120px"
-            />
-          </button>
+        <!-- 대화 -->
+        <button @click="gotalking" style="margin:50px;">
+          <v-img src="../../assets/icons/talk.png" alt style="width: 120x; width: 120px;" />
+        </button>
           <!-- 씻기 -->
           <button @click="wash" style="margin: 50px">
             <v-img
@@ -141,6 +137,9 @@ export default {
   methods: {
     ...mapMutations(["SET_CHARACTER"]),
     ...mapActions(["getCharacter"]),
+    gotalking(){
+      this.$router.push({ name: "KidsTalkingView" })
+    },
     characterNonActionAlgo: function () {
       let now = new Date();
       if (new Date(this.character.eat_time) - now < -30000) {
