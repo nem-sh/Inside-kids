@@ -10,10 +10,13 @@
         </h1>
       </div>
       <v-tabs fixed-tabs color="cyan accent-4">
+        <v-tab>질문관리</v-tab>
         <v-tab>대화녹화</v-tab>
         <v-tab>그림</v-tab>
         <v-tab>사진</v-tab>
-        <v-tab>스크립트</v-tab>
+        <v-tab-item>
+          <ScriptList />
+        </v-tab-item>
         <v-tab-item>
           <VideoList />
         </v-tab-item>
@@ -22,9 +25,6 @@
         </v-tab-item>
         <v-tab-item>
           <PictureList />
-        </v-tab-item>
-        <v-tab-item>
-          <ScriptList />
         </v-tab-item>
       </v-tabs>
     </div>

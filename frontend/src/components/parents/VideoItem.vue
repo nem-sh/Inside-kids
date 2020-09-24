@@ -1,30 +1,66 @@
 <template>
   <v-expansion-panel cols="6" md="4">
     <v-expansion-panel-header>
-      날짜
+      {{ video.script.content }}
       <template v-slot:actions>
         <v-icon color="primary">$expand</v-icon>
       </template>
     </v-expansion-panel-header>
     <v-expansion-panel-content>
-      <video :src="videoUrl" controls></video>
+      <video :src="videoUrl" controls width="100%" height="400px"></video>
+      <div class="text-right">
+        <v-btn @click="deleteVideo">삭제</v-btn>
+      </div>
     </v-expansion-panel-content>
-    <a href="">삭제</a>
   </v-expansion-panel>
 </template>
 
 <script>
+import { mapGetters, mapState } from "vuex";
+import axios from "axios";
 import SERVER from "@/api/drf";
+
+import Swal from "sweetalert2";
 
 export default {
   name: "VideoItem",
   props: {
     video: Object,
-    key2:Number,
+    key2: Number,
   },
   computed: {
+    ...mapState(["kid"]),
+    ...mapGetters(["commonConfig"]),
     videoUrl() {
       return SERVER.URL + this.video.file_source;
+    },
+  },
+  methods: {
+    deleteVideo() {
+      Swal.fire({
+        position: "center",
+        icon: "warning",
+        title: "삭제하시겠습니까?",
+        showCancelButton: true,
+        confirmButtonText: `Yes`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .delete(
+              SERVER.URL + SERVER.ROUTES.deleteVideo + this.video.id + "/",
+              this.commonConfig
+            )
+            .then(() => {
+              const newVideos = this.kid.videos.filter((video) => {
+                return video.id !== this.video.id;
+              });
+              this.kid.videos = newVideos;
+            })
+            .catch((err) => {
+              console.error(err.response);
+            });
+        }
+      });
     },
   },
 };
