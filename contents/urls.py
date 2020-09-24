@@ -28,7 +28,7 @@ urlpatterns = [
     path('scripts/<int:script_id>/', views.script_delete),
 
     # character
-    path('characters/<character_id>/', views.character_detail_or_update),
+    path('characters/<int:character_id>/', views.character_detail_or_update),
 
 
 

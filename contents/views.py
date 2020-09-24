@@ -150,9 +150,10 @@ def script_delete(request, script_id):
 @api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
 def character_detail_or_update(request, character_id):
-    character = get_object_or_404(Character, pk=character_id)
+    character = get_object_or_404(Character, kid_id=character_id)
     if request.method == 'PUT':
         character.eat_time = request.data['eat_time']
-        character.wash_time = request.data['eat_time']
+        character.wash_time = request.data['wash_time']
+        character.save()
     serializer = CharacterSerializer(character)
     return Response(serializer.data)

@@ -11,5 +11,9 @@ export default {
     passwordChange: "/accounts/password/change/",
     deletAccount: "/accounts/delete/",
     getKidInfo: "/accounts/kids/",
+
+
+    // contents
+    getCharacterInfo: "/contents/characters/"
   },
 };

@@ -30,7 +30,7 @@ const routes = [
     component: KidsManageView,
   },
   {
-    path: "/child",
+    path: "/child/:kidId",
     name: "KidsMainView",
     component: KidsMainView,
   },
