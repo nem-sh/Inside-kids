@@ -59,7 +59,7 @@ class ScriptSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Script
-        fields = ('id', 'created_at', 'file_source')
+        fields = ('id', 'content')
 
 # character
 
