@@ -16,7 +16,7 @@
             />
           </button>
           <!-- 사진찍기 -->
-          <button style="margin: 50px">
+          <button @click="gopicture" style="margin: 50px">
             <v-img
               src="../../assets/icons/photo.png"
               alt
@@ -139,6 +139,9 @@ export default {
     ...mapActions(["getCharacter"]),
     gotalking(){
       this.$router.push({ name: "KidsTalkingView" })
+    },
+    gopicture(){
+      this.$router.push({ name: "KidsPictureView" })
     },
     characterNonActionAlgo: function () {
       let now = new Date();
