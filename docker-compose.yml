@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  web:
+    build: .
+    command: nginx
+    volumes:
+      - .:/project
+    ports:
+      - "80:80"

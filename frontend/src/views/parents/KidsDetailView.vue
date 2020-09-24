@@ -1,23 +1,30 @@
 <template>
-  <div>
+  <div class>
     <Nav />
-    <div class="container">
-      <div class="text-center justify-center">
-        <h1 class="font-weight-bold mt-5">도연이</h1>
-      </div>
+    <div class="container kids-detail-body">
       <KidProfile />
-      <v-tabs fixed-tabs>
+      <div class="text-center justify-center">
+        <h1 class="font-weight-bold mb-5">
+          <i class="fas fa-house-user"></i>
+          {{kid.name}}
+        </h1>
+      </div>
+      <v-tabs fixed-tabs color="cyan accent-4">
         <v-tab>대화녹화</v-tab>
         <v-tab>그림</v-tab>
         <v-tab>사진</v-tab>
+        <v-tab>스크립트</v-tab>
         <v-tab-item>
-          <Recording />
+          <VideoList />
         </v-tab-item>
         <v-tab-item>
-          <Drawing />
+          <PaintList />
         </v-tab-item>
         <v-tab-item>
-          <Photo />
+          <PictureList />
+        </v-tab-item>
+        <v-tab-item>
+          <ScriptList />
         </v-tab-item>
       </v-tabs>
     </div>
@@ -26,23 +33,28 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import KidProfile from "@/components/parents/KidProfile.vue";
-import Recording from "@/components/parents/Recording.vue";
-import Photo from "@/components/parents/Photo.vue";
-import Drawing from "@/components/parents/Drawing.vue";
-import Nav from "@/components/Navigation.vue";
-import Footer from "@/components/Footer.vue";
+import { mapActions, mapState } from "vuex";
+import KidProfile from "@/components/parents/KidProfile";
+import VideoList from "@/components/parents/VideoList";
+import PictureList from "@/components/parents/PictureList";
+import PaintList from "@/components/parents/PaintList";
+import ScriptList from "@/components/parents/ScriptList";
+import Nav from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
 export default {
   name: "kidsDetailView",
   components: {
     Nav,
     KidProfile,
-    Drawing,
-    Photo,
-    Recording,
+    PictureList,
+    PaintList,
+    VideoList,
+    ScriptList,
     Footer,
+  },
+  computed: {
+    ...mapState(["kid"]),
   },
   methods: {
     ...mapActions(["getUser", "getKid"]),
@@ -55,4 +67,7 @@ export default {
 </script>
 
 <style>
+.kids-detail-body {
+  min-height: 100vh;
+}
 </style>

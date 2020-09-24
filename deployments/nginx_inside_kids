@@ -18,15 +18,15 @@ server {
 
 
 
-    access_log /home/ubuntu/s03p22b106/logs/nginx-access.log;
+    access_log /home/ubuntu/inside_kids/logs/nginx-access.log;
 
-    error_log /home/ubuntu/s03p22b106/logs/nginx-error.log;
+    error_log /home/ubuntu/inside_kids/logs/nginx-error.log;
 
 
 
     location /static/ {
 
-        alias /home/ubuntu/s03p22b106/frontend/dist/static/;
+        alias /home/ubuntu/inside_kids/frontend/dist/static/;
 
     }
 
@@ -34,7 +34,7 @@ server {
 
     location /media/ {
 
-        alias /home/ubuntu/s03p22b106/media/;
+        alias /home/ubuntu/inside_kids/media/;
 
     }
     location /accounts/ {
@@ -61,7 +61,7 @@ server {
 
 
     location / {
-        root /home/ubuntu/s03p22b106/frontend/dist/;
+        root /home/ubuntu/inside_kids/frontend/dist/;
 
         try_files $uri $uri/ /index.html;
     }

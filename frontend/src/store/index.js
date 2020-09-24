@@ -38,39 +38,21 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    signup({ commit }, signupData) {
-      axios
-        .post(SERVER.URL + SERVER.ROUTES.signup, signupData)
-        .then((res) => {
-          commit("SET_TOKEN", res.data.token);
-          commit("SET_USER", res.data.user);
-          router.push({ name: "BeforeEmailAuthView" });
-        })
-        .catch((err) => {
-          if ("email" in err.response.data) {
-            alert(err.response.data.email);
-          } else if ("password1" in err.response.data) {
-            alert(err.response.data.password1);
-          } else {
-            alert("이메일 혹은 비밀번호를 확인해주세요.");
-          }
-        });
-    },
     login({ commit }, loginData) {
       axios
         .post(SERVER.URL + SERVER.ROUTES.login, loginData)
         .then((res) => {
           commit("SET_TOKEN", res.data.token);
           commit("SET_USER", res.data.user);
-          router.push({ name: "KidsDetailView", params: { kidId: 0 } });
+          router.push({ name: "KidsManageView" });
         })
         .catch(() => {
           alert("아이디 혹은 비밀번호를 확인해주세요.");
         });
     },
-    resetPwd(email) {
+    resetPwd(context, emailData) {
       axios
-        .post(SERVER.URL + SERVER.ROUTES.resetPwd, email)
+        .post(SERVER.URL + SERVER.ROUTES.resetPwd, emailData)
         .then(() => {
           alert("비밀번호 초기화 메일을 전송했습니다.");
         })
@@ -132,10 +114,10 @@ export default new Vuex.Store({
           console.error(err);
         });
     },
-    getKid({ getters, commit, kidId }) {
+    getKid({ getters, commit }, kidId) {
       axios
         .get(
-          SERVER.URL + SERVER.ROUTES.getKidInfo + kidId,
+          SERVER.URL + SERVER.ROUTES.getKidInfo + kidId + "/",
           getters.commonConfig
         )
         .then((res) => {

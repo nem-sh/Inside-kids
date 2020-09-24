@@ -13,12 +13,12 @@ urlpatterns = [
     # paint
     path('kids/<int:kid_id>/paints/', views.paint_list),
     path('paints/<int:paint_id>/', views.paint_delete),
-    path('kids/<int:kid_id>/paints', views.paint_create),
+    path('kids/<int:kid_id>/paints/', views.paint_create),
 
     # picture
     path('kids/<int:kid_id>/pictures/', views.picture_list),
     path('pictures/<picture_id>/', views.picture_delete),
-    path('kids/<int:kid_id>/pictures', views.picture_create),
+    path('kids/<int:kid_id>/pictures/', views.picture_create),
 
     # music
     path('musics/', views.music_list),

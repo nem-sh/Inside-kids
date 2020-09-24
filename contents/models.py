@@ -1,15 +1,5 @@
 from django.db import models
 
-# Create your models here.
-from django.db import models
-
-
-class Video(models.Model):
-    kid = models.ForeignKey(
-        "accounts.Kid", on_delete=models.CASCADE, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    file_source = models.FileField()
-
 
 class Paint(models.Model):
     kid = models.ForeignKey("accounts.Kid", on_delete=models.CASCADE)
@@ -31,6 +21,14 @@ class Music(models.Model):
 class Script(models.Model):
     kid = models.ForeignKey("accounts.Kid", on_delete=models.CASCADE)
     content = models.TextField()
+    used = models.BooleanField(default=False)
+
+
+class Video(models.Model):
+    kid = models.ForeignKey("accounts.Kid", on_delete=models.CASCADE)
+    script = models.OneToOneField(Script, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    file_source = models.FileField()
 
 
 class Character(models.Model):
