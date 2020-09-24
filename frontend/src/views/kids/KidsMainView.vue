@@ -48,15 +48,15 @@
     <!-- 아랫 탭 -->
     <v-col class="text-center my-10">
       <div style="display:flex; justify-content:center;">
-        <!-- 그림그리기 -->
+        <!--먹이-->
         <button @click="actionNum = 1; actionOnOff = true;" style="margin:50px;">
           <v-img src="../../assets/icons/eat.png" alt style="width: 120x; width: 120px;" />
         </button>
-        <!-- 사진찍기 -->
-        <button style="margin:50px;">
+        <!-- 대화 -->
+        <button @click="gotalking" style="margin:50px;">
           <v-img src="../../assets/icons/talk.png" alt style="width: 120x; width: 120px;" />
         </button>
-        <!-- 동요부르기 -->
+        <!-- 샤워 -->
         <button @click="actionNum = 2; actionOnOff = true;" style="margin:50px;">
           <v-img src="../../assets/icons/wash.png" alt style="width: 120x; width: 120px;" />
         </button>
@@ -97,6 +97,9 @@ export default {
     };
   },
   methods: {
+    gotalking(){
+      this.$router.push({ name: "KidsTalkingView" })
+    },
     characterNonActionAlgo: function () {
       let cnt = this.actionCnt;
       let nonActionList = [3, 4];
