@@ -14,7 +14,7 @@ class User(AbstractUser):
 
 class Kid(models.Model):
     name = models.CharField(max_length=50)
-    image = models.ImageField()
+    image = models.ImageField(default='default_image.jpg')
     image_small = ImageSpecField(
         source='image',
         processors=[ResizeToFit(150, 150)],

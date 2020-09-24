@@ -83,10 +83,16 @@
         <i class="fa fa-shower fa-4x"></i>
       </v-btn>-->
     </v-col>
+
+    <!-- 효과음 -->
+    <audio id="eat-sound" src="../../assets/characterSounds/eating.mp3"></audio>
+    <audio id="wash-sound" src="../../assets/characterSounds/washing.mp3"></audio>
   </div>
 </template>
 
 <script>
+// import axios from "axios";
+// import SERVER from "@/api/drf";
 export default {
   name: "KidsMainView",
   data: function () {
@@ -114,15 +120,38 @@ export default {
       }, rand);
     },
     actionTimer: function (ms) {
+      let cnt = this.actionCnt;
       setTimeout(() => {
-        this.actionOnOff = false;
-        this.actionNum = 0;
-        this.characterNonActionAlgo();
+        if (cnt == this.actionCnt) {
+          this.actionOnOff = false;
+          this.actionNum = 0;
+          this.characterNonActionAlgo();
+        }
       }, ms);
     },
     wasAction: function () {
       this.actionCnt += 1;
     },
+    eat: function () {
+      this.actionNum = 1;
+      this.actionOnOff = true;
+      var audio = document.getElementById("eat-sound");
+      audio.play();
+    },
+    wash: function () {
+      this.actionNum = 2;
+      this.actionOnOff = true;
+      var audio = document.getElementById("wash-sound");
+      audio.play();
+      setTimeout(() => {
+        audio.pause();
+      }, 3000);
+    },
+    // characterGetStatus: function () {
+    //   axios
+    //     .get(SERVER.URL + SERVER.ROUTES.getCharacterInfo, axiosConfig)
+    //     .then(() => {});
+    // },
   },
   computed: {
     doAction: function () {
@@ -146,6 +175,7 @@ export default {
   },
   created: function () {
     this.characterNonActionAlgo();
+    // this.characterGetStatus();
   },
 };
 </script>
