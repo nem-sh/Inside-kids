@@ -14,7 +14,7 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Kid
 from .serializers import KidSerializer, KidListSerializer
 
-from contents.models import Paint, Video, Picture, Script
+from contents.models import Paint, Video, Picture, Script, Character
 from contents.serializers import PaintListSerializer, VideoSerializer, PictureListSerializer, ScriptSerializer
 
 
@@ -32,6 +32,7 @@ def kid_create_or_list(request):
         serializer = KidSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user)
+            Character.objects.create(kid_id=serializer.data['id'])
             return Response(serializer.data)
 
     else:

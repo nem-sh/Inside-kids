@@ -12,6 +12,12 @@ export default {
     passwordChange: "/accounts/password/change/",
     deletAccount: "/accounts/delete/",
     getKidInfo: "/accounts/kids/",
+<<<<<<< frontend/src/api/drf.js
+
+
+    // contents
+    getCharacterInfo: "/contents/characters/"
     deleteVideo: "/contents/videos/",
+>>>>>>> frontend/src/api/drf.js
   },
 };
