@@ -8,7 +8,7 @@
       <v-col class="text-center my-10">
         <div style="display: flex; justify-content: center">
           <!-- 그림그리기 -->
-          <button style="margin: 50px">
+          <button @click="godrawing" style="margin: 50px">
             <v-img
               src="../../assets/icons/draw.png"
               alt
@@ -137,6 +137,9 @@ export default {
   methods: {
     ...mapMutations(["SET_CHARACTER"]),
     ...mapActions(["getCharacter"]),
+    godrawing(){
+      this.$router.push({ name: "KidsDrawingView" })
+    },
     gotalking(){
       this.$router.push({ name: "KidsTalkingView" })
     },
