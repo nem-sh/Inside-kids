@@ -5,6 +5,8 @@ import VueRouter from "vue-router";
 import KidsDetailView from "@/views/parents/KidsDetailView";
 import KidsTalkingView from "@/views/kids/KidsTalkingView";
 import KidsPictureView from "@/views/kids/KidsPictureView";
+import KidsDrawingView from "@/views/kids/KidsDrawingView";
+
 
 
 //수미
@@ -45,6 +47,11 @@ const routes = [
     path: "/child/picture",
     name: "KidsPictureView",
     component: KidsPictureView,
+  },
+  {
+    path: "/child/drawing",
+    name: "KidsDrawingView",
+    component: KidsDrawingView,
   },
   {
     path: "/:kidId",
