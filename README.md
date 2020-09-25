@@ -117,7 +117,9 @@ https://www.erdcloud.com/d/Sp7M42wxDDvtge6pi
 
 - frontend/ : vue.js 프로젝트
 
-- deployments: 배포 설정 파일
+- deployments/: 배포 설정 파일
+
+- tts/ : 음성 변환에 사용되는 AI 모듈
 
 
 
