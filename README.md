@@ -44,9 +44,9 @@
 ### 아이
 
 - 캐릭터 대화기능 개발 중
-- 동요 부르기 개발 중
+- 동요 부르기
 - 그림그리기 탭 사용가능
-- 사진찍기 탭 사용가능
+- 사진찍기 개발중
 - 캐릭터 밥주기 및 씻기기 기능 가능
 
 ### 캐릭터
@@ -212,5 +212,7 @@ https://docs.google.com/spreadsheets/d/13YrPIV2G8iPM4RlGT9UtUlvjRybJrfWg3j3Yb12O
 ## 테스트 방법
 - url : http://j3b106.p.ssafy.io/   ~~http://inside-kids.cf~~ (준비중)
 
-- TEST 계정 (준비중)
+- TEST 계정
+    ID : test@test.com
+    PW : test1234!
 
