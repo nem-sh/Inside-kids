@@ -119,6 +119,10 @@
         id="wash-sound"
         src="../../assets/characterSounds/washing.mp3"
       ></audio>
+      <audio
+        id="hungry-sound"
+        src="../../assets/characterSounds/hungry.mp3"
+      ></audio>
     </div>
   </div>
 </template>
@@ -193,8 +197,11 @@ export default {
     eat: function () {
       this.actionNum = 1;
       this.actionOnOff = true;
-      var audio = document.getElementById("eat-sound");
-      audio.play();
+      this.hungry = false;
+      var audio1 = document.getElementById("hungry-sound");
+      audio1.pause();
+      var audio2 = document.getElementById("eat-sound");
+      audio2.play();
       axios
         .put(
           SERVER.URL +
@@ -206,7 +213,7 @@ export default {
         )
         .then(() => {
           // this.SET_CHARACTER(null);
-          this.hungry = false;
+
           this.getCharacter(this.$route.params.kidId);
         })
         .catch((err) => {
@@ -239,6 +246,15 @@ export default {
           console.error(err);
         });
     },
+    hungrySoundOn: function () {
+      if (this.hungry) {
+        var audio = document.getElementById("hungry-sound");
+        audio.play();
+        setTimeout(() => {
+          this.hungrySoundOn();
+        }, 10000);
+      }
+    },
   },
   computed: {
     ...mapState(["character"]),
@@ -246,6 +262,7 @@ export default {
     doAction: function () {
       if (this.actionNum == 0) {
         if (this.hungry) {
+          this.hungrySoundOn();
           return "hungry";
         } else if (this.dirty) {
           return "dirty";
