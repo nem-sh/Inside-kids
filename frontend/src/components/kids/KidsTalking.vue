@@ -26,7 +26,7 @@
         >
           <i class="fas fa-arrow-right"></i>
         </v-btn>
-        <v-btn class="button is-primary" @click="record" v-else>
+        <v-btn class="button is-primary" @click="loaddata" v-else>
           말하기
         </v-btn>
       </div>
@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 import axios from "axios";
 import SERVER from "@/api/drf";
 import { mapActions, mapState } from "vuex";
@@ -63,6 +64,15 @@ export default {
     },
   },
   methods: {
+    loaddata(){
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: '서비스 준비 중 입니다!',
+        showConfirmButton: false,
+        timer: 2000
+      })
+    },
     _fillzero(value) {
       return value < 9 ? "0" + value : value;
     },
