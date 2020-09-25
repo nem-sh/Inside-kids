@@ -1,4 +1,7 @@
 <template>
+  <div>
+  <v-btn @click="gokidhome" class="blue mb-2"> <i class="fas fa-home fa-2x"></i>
+ </v-btn>
   <div class="canvas-wrapper" ref="canvasWrapper">
     <div class="draw-area">
       <canvas id="canvas" ref="canvas" :width="width" :height="height"></canvas>
@@ -18,6 +21,7 @@
         <img src="@/assets/download.svg"/>
       </li>
     </ul>
+  </div>
   </div>
 </template>
 
@@ -66,6 +70,9 @@ export default {
     this.bindEvents();
   },
   methods: {
+    gokidhome(){
+      this.$router.push({ name: "KidsMainView" })
+    },
     setCanvas() {
       this.$refs.canvasWrapper.style.gridTemplateColumns = `${this.width}px 30px`;
       this.$refs.canvasWrapper.style.width = `${this.width + 30}px`;
