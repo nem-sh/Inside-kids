@@ -15,6 +15,10 @@ import BeforeEmailAuthView from "@/views/accounts/BeforeEmailAuthView";
 import KidsManageView from "@/views/parents/KidsManageView";
 import KidsMainView from "@/views/kids/KidsMainView";
 
+
+//시성
+import KidMusicView from "@/views/kids/KidMusicView";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -34,11 +38,6 @@ const routes = [
     component: KidsManageView,
   },
   {
-    path: "/child/:kidId",
-    name: "KidsMainView",
-    component: KidsMainView,
-  },
-  {
     path: "/child/talking",
     name: "KidsTalkingView",
     component: KidsTalkingView,
@@ -54,10 +53,21 @@ const routes = [
     component: KidsDrawingView,
   },
   {
+    path: "/child/:kidId",
+    name: "KidsMainView",
+    component: KidsMainView,
+  },
+  {
+    path: "/child/:kidId/music",
+    name: "KidMusicView",
+    component: KidMusicView,
+  },
+  {
     path: "/:kidId",
     name: "KidsDetailView",
     component: KidsDetailView,
   },
+
 ];
 
 const router = new VueRouter({
