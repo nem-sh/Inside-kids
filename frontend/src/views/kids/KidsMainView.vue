@@ -153,7 +153,7 @@ export default {
     },
     godrawing(){
       this.$router.push({ name: "KidsDrawingView" })
-
+    },
     goMusic() {
       this.$router.push(`/child/${this.$route.params.kidId}/music`);
     },
