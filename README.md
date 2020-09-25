@@ -213,6 +213,8 @@ https://docs.google.com/spreadsheets/d/13YrPIV2G8iPM4RlGT9UtUlvjRybJrfWg3j3Yb12O
 - url : http://j3b106.p.ssafy.io/   ~~http://inside-kids.cf~~ (준비중)
 
 - TEST 계정
+
+    테스트 계정에 추가되어 있는 데이터는 같이 볼수 있도록 삭제하지 말아주세요!
     ID : test@test.com
     PW : test1234!
 
