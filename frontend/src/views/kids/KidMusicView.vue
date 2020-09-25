@@ -157,7 +157,7 @@ export default {
       setTimeout(() => {
         this.text1 = "까만하늘위에";
         this.text2 = "달이 찾아오지요";
-      }, 70000);
+      }, 61000);
       setTimeout(() => {
         this.text1 = "";
         this.text2 = "";
