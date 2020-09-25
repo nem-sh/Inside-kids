@@ -24,7 +24,7 @@
             />
           </button>
           <!-- 동요부르기 -->
-          <button style="margin: 50px">
+          <button @click="goMusic" style="margin: 50px">
             <v-img
               src="../../assets/icons/sing.png"
               alt
@@ -91,10 +91,14 @@
               style="width: 120x; width: 120px"
             />
           </button>
-        <!-- 대화 -->
-        <button @click="gotalking" style="margin:50px;">
-          <v-img src="../../assets/icons/talk.png" alt style="width: 120x; width: 120px;" />
-        </button>
+          <!-- 대화 -->
+          <button @click="gotalking" style="margin: 50px">
+            <v-img
+              src="../../assets/icons/talk.png"
+              alt
+              style="width: 120x; width: 120px"
+            />
+          </button>
           <!-- 씻기 -->
           <button @click="wash" style="margin: 50px">
             <v-img
@@ -149,12 +153,18 @@ export default {
     },
     godrawing(){
       this.$router.push({ name: "KidsDrawingView" })
+
+    goMusic() {
+      this.$router.push(`/child/${this.$route.params.kidId}/music`);
     },
-    gotalking(){
-      this.$router.push({ name: "KidsTalkingView" })
+    godrawing() {
+      this.$router.push({ name: "KidsDrawingView" });
     },
-    gopicture(){
-      this.$router.push({ name: "KidsPictureView" })
+    gotalking() {
+      this.$router.push({ name: "KidsTalkingView" });
+    },
+    gopicture() {
+      this.$router.push({ name: "KidsPictureView" });
     },
     characterNonActionAlgo: function () {
       let now = new Date();
