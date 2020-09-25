@@ -104,8 +104,7 @@
 ## 기술 설명
 
 ### ERD
-![image-20200918095918099](README.assets/image-20200918095918099.png)
-
+https://www.erdcloud.com/d/Sp7M42wxDDvtge6pi
 
 
 ### 디렉토리 구조도
