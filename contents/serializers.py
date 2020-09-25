@@ -14,7 +14,7 @@ class ScriptSerializer(serializers.ModelSerializer):
 
 
 class VideoSerializer(serializers.ModelSerializer):
-    script = ScriptSerializer()
+    script = ScriptSerializer(required=False)
 
     class Meta:
         model = Video

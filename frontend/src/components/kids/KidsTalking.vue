@@ -1,7 +1,6 @@
 <template>
   <div>
         <img
-          v-if="!actionOnOff"
           class="character"
           src="../../assets/characters/talking.png"
           height="600px"

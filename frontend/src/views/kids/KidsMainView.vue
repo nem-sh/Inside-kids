@@ -16,7 +16,7 @@
             />
           </button>
           <!-- 사진찍기 -->
-          <button @click="gopicture" style="margin: 50px">
+          <button @click="loaddata" style="margin: 50px">
             <v-img
               src="../../assets/icons/photo.png"
               alt
@@ -124,6 +124,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 import axios from "axios";
 import SERVER from "@/api/drf";
 import { mapActions, mapGetters, mapState, mapMutations } from "vuex";
@@ -141,6 +142,18 @@ export default {
   methods: {
     ...mapMutations(["SET_CHARACTER"]),
     ...mapActions(["getCharacter"]),
+    loaddata(){
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: '서비스 준비 중 입니다!',
+        showConfirmButton: false,
+        timer: 1000
+      })
+    },
+    godrawing(){
+      this.$router.push({ name: "KidsDrawingView" })
+
     goMusic() {
       this.$router.push(`/child/${this.$route.params.kidId}/music`);
     },
