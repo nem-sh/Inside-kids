@@ -102,6 +102,7 @@ export default {
           this.$emit("signup");
         })
         .catch((err) => {
+          this.overlay = false;
           if ("email" in err.response.data) {
             alert(err.response.data.email);
           } else if ("password1" in err.response.data) {
