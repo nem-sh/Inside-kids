@@ -1,12 +1,12 @@
 <template>
   <v-card class="mx-auto my-15" color="grey lighten-5" dark width="700">
     <v-card-title class="mx-2 my-2 text--primary">
-      <h3>질문 관리 ({{scripts.length}}/3)</h3>
+      <h3>질문 관리 ({{kid.scripts.length}}/3)</h3>
     </v-card-title>
 
     <p class="text--primary ml-5">** 아이의 답변이 등록된 질문은 대화녹화 탭에서 확인하실 수 있습니다.</p>
 
-    <v-card-actions v-for="script in scripts" :key="script.id">
+    <v-card-actions v-for="script in kid.scripts" :key="script.id">
       <v-list-item class="grow blue-grey lighten-5">
         <v-list-item-content class="ml-5 text--primary">
           <v-list-item-title>{{script.content}}</v-list-item-title>
@@ -64,7 +64,6 @@ export default {
     return {
       dialog: false,
       script: "",
-      scripts: [],
     };
   },
   computed: {
@@ -73,7 +72,7 @@ export default {
   },
   methods: {
     addScript() {
-      if (this.scripts.length >= 3) {
+      if (this.kid.scripts.length >= 3) {
         alert("질문은 최대 3개까지 등록 가능합니다.");
         this.dialog = false;
       } else {
@@ -88,7 +87,7 @@ export default {
               this.commonConfig
             )
             .then((res) => {
-              this.scripts.push(res.data);
+              this.kid.scripts.push(res.data);
               this.script = "";
               this.dialog = false;
             })
@@ -115,10 +114,10 @@ export default {
               this.commonConfig
             )
             .then(() => {
-              const newScripts = this.scripts.filter((script) => {
+              const newScripts = this.kid.scripts.filter((script) => {
                 return script.id !== scriptId;
               });
-              this.scripts = newScripts;
+              this.kid.scripts = newScripts;
             })
             .catch((err) => {
               console.error(err.response);
@@ -127,15 +126,12 @@ export default {
       });
     },
     cntCheck() {
-      if (this.scripts.length >= 3) {
+      if (this.kid.scripts.length >= 3) {
         alert("질문은 최대 3개까지 등록 가능합니다.");
       } else {
         this.dialog = true;
       }
     },
-  },
-  mounted() {
-    this.scripts = this.kid.scripts;
   },
 };
 </script>

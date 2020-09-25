@@ -40,13 +40,21 @@ def video_create(request, kid_id):
 # paint
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
-def paint_list(request, kid_id):
+def paint_list_or_create(request, kid_id):
     kid = get_object_or_404(Kid, pk=kid_id)
-    paints = kid.paint_set.order_by()
-    serializer = PaintListSerializer(paints, many=True)
-    return Response(serializer.data)
+    if request.method == 'GET':
+        paints = kid.paint_set.order_by()
+        serializer = PaintListSerializer(paints, many=True)
+        return Response(serializer.data)
+    else:
+        serializer = PaintSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(kid=kid)
+            return Response(serializer.data)
+        else:
+            return HttpResponse(status=400)
 
 
 @api_view(['DELETE'])
@@ -61,28 +69,24 @@ def paint_delete(request, paint_id):
         return HttpResponse(status=403)
 
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def paint_create(request, kid_id):
-    kid = get_object_or_404(Kid, pk=kid_id)
-    serializer = PaintSerializer(data=request.data)
-    if serializer.is_valid(raise_exception=True):
-        serializer.save(kid=kid)
-        return Response(serializer.data)
-    else:
-        return HttpResponse(status=400)
-
-
 # picture
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
-def picture_list(request, kid_id):
+def picture_list_or_create(request, kid_id):
     kid = get_object_or_404(Kid, pk=kid_id)
-    pictures = kid.picture_set.order_by()
-    serializer = PictureListSerializer(pictures, many=True)
-    return Response(serializer.data)
+    if request.method == 'GET':
+        pictures = kid.picture_set.order_by()
+        serializer = PictureListSerializer(pictures, many=True)
+        return Response(serializer.data)
+    else:
+        serializer = PictureSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(kid=kid)
+            return Response(serializer.data)
+        else:
+            return HttpResponse(status=400)
 
 
 @api_view(['DELETE'])
@@ -94,19 +98,6 @@ def picture_delete(request, picture_id):
         return HttpResponse(status=204)
     else:
         return HttpResponse(status=403)
-
-
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def picture_create(request, kid_id):
-    kid = get_object_or_404(Kid, pk=kid_id)
-    serializer = PictureSerializer(data=request.data)
-    if serializer.is_valid(raise_exception=True):
-        serializer.save(kid=kid)
-        return Response(serializer.data)
-    else:
-        return HttpResponse(status=400)
-
 
 # music
 
@@ -150,9 +141,10 @@ def script_delete(request, script_id):
 @api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
 def character_detail_or_update(request, character_id):
-    character = get_object_or_404(Character, pk=character_id)
+    character = get_object_or_404(Character, kid_id=character_id)
     if request.method == 'PUT':
         character.eat_time = request.data['eat_time']
-        character.wash_time = request.data['eat_time']
+        character.wash_time = request.data['wash_time']
+        character.save()
     serializer = CharacterSerializer(character)
     return Response(serializer.data)

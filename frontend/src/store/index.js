@@ -15,12 +15,14 @@ export default new Vuex.Store({
     user: {},
     kid: {},
     kidslist: {},
+    character: {},
   },
   getters: {
     isLoggedIn: (state) => !!state.authToken,
     commonConfig: (state) => ({
       headers: { Authorization: `jwt ${state.authToken}` },
     }),
+
   },
   mutations: {
     SET_TOKEN(state, token) {
@@ -35,6 +37,9 @@ export default new Vuex.Store({
     },
     SET_KIDSLIST(state, kids) {
       state.kidslist = kids;
+    },
+    SET_CHARACTER(state, character) {
+      state.character = character;
     },
   },
   actions: {
@@ -75,34 +80,33 @@ export default new Vuex.Store({
         })
         .catch((err) => console.log(err));
     },
-    // getUser({ getters, commit, state }) {
-    getUser({ getters, commit }) {
+    getUser({ getters, commit, state }) {
       axios
         .get(SERVER.URL + SERVER.ROUTES.getUserInfo, getters.commonConfig)
         .then((res) => {
           commit("SET_USER", res.data);
-          // if (state.authToken !== cookies.get('auth-token')) {
-          //   commit('SET_TOKEN', null)
-          //   cookies.remove('auth-token')
-          //   Swal.fire({
-          //     position: 'center',
-          //     icon: 'warning',
-          //     title: '로그인해 주세요.',
-          //   })
-          //   router.push({ name: "Home" })
-          // }
-        });
-      // .catch((err) => {
-      //   console.error(err)
-      //   commit('SET_TOKEN', null)
-      //   cookies.remove('auth-token')
-      //   Swal.fire({
-      //     position: 'center',
-      //     icon: 'warning',
-      //     title: '로그인해 주세요.',
-      //   })
-      //   router.push({ name: "Home" })
-      // })
+          if (state.authToken !== cookies.get('auth-token')) {
+            commit('SET_TOKEN', null)
+            cookies.remove('auth-token')
+            Swal.fire({
+              position: 'center',
+              icon: 'warning',
+              title: '로그인해 주세요.',
+            })
+            router.push({ name: "Home" })
+          }
+        })
+      .catch((err) => {
+        console.error(err)
+        commit('SET_TOKEN', null)
+        cookies.remove('auth-token')
+        Swal.fire({
+          position: 'center',
+          icon: 'warning',
+          title: '로그인해 주세요.',
+        })
+        router.push({ name: "Home" })
+      })
     },
     getKidsList({ getters, commit }) {
       axios
@@ -169,6 +173,20 @@ export default new Vuex.Store({
         }
       });
     },
+    getCharacter({ getters, commit }, kidId) {
+      axios
+        .get(
+          SERVER.URL +
+          SERVER.ROUTES.getCharacterInfo + kidId + "/", getters.commonConfig
+        )
+        .then((res) => {
+          commit("SET_CHARACTER", res.data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+
   },
   modules: {},
 });

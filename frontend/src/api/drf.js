@@ -1,4 +1,5 @@
 export default {
+  // URL: "http://localhost:8000",
   URL: "http://j3b106.p.ssafy.io",
   ROUTES: {
     // auth
@@ -11,5 +12,9 @@ export default {
     passwordChange: "/accounts/password/change/",
     deletAccount: "/accounts/delete/",
     getKidInfo: "/accounts/kids/",
+
+    // contents
+    getCharacterInfo: "/contents/characters/",
+    deleteVideo: "/contents/videos/",
   },
 };
