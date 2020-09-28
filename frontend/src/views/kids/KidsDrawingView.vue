@@ -1,5 +1,5 @@
 <template>
-  <div class="py-15 my-auto background">
+  <div class="py-15 my-auto bg-1">
     <div class="controls">
       <div>
         <img
