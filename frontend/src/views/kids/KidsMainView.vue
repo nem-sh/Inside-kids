@@ -8,29 +8,62 @@
       <v-col class="text-center my-10">
         <div style="display: flex; justify-content: center">
           <!-- 그림그리기 -->
-          <button @click="godrawing" style="margin: 50px">
+          <button
+            v-if="!(hungry || dirty || sleep || actionOnOff)"
+            @click="godrawing"
+            style="margin: 50px"
+          >
             <v-img
               src="../../assets/icons/draw.png"
               alt
               style="width: 120x; width: 120px"
             />
           </button>
+          <div v-else style="margin: 50px">
+            <v-img
+              src="../../assets/icons/drawBlack.png"
+              alt
+              style="width: 120x; width: 120px"
+            />
+          </div>
           <!-- 사진찍기 -->
-          <button @click="gopicture" style="margin: 50px">
+          <button
+            v-if="!(hungry || dirty || sleep || actionOnOff)"
+            @click="gopicture"
+            style="margin: 50px"
+          >
             <v-img
               src="../../assets/icons/photo.png"
               alt
               style="width: 120x; width: 120px"
             />
           </button>
+          <div v-else style="margin: 50px">
+            <v-img
+              src="../../assets/icons/photoBlack.png"
+              alt
+              style="width: 120x; width: 120px"
+            />
+          </div>
           <!-- 동요부르기 -->
-          <button @click="goMusic" style="margin: 50px">
+          <button
+            v-if="!(hungry || dirty || sleep || actionOnOff)"
+            @click="goMusic"
+            style="margin: 50px"
+          >
             <v-img
               src="../../assets/icons/sing.png"
               alt
               style="width: 120x; width: 120px"
             />
           </button>
+          <div v-else style="margin: 50px">
+            <v-img
+              src="../../assets/icons/singBlack.png"
+              alt
+              style="width: 120x; width: 120px"
+            />
+          </div>
         </div>
       </v-col>
 
@@ -52,14 +85,16 @@
         >
           <div style="z-index: 2; position: absolute">
             <img
-              v-if="hungry && actionNum != 1 && actionNum != 2"
+              v-if="!sleep && hungry && actionNum != 1 && actionNum != 2"
               src="../../assets/characters/wantEat.png"
               height="140px"
               width="150px"
               style="position: absolute; top: -200px; right: -250px"
             />
             <img
-              v-if="dirty && !hungry && actionNum != 1 && actionNum != 2"
+              v-if="
+                !sleep && dirty && !hungry && actionNum != 1 && actionNum != 2
+              "
               src="../../assets/characters/wantDirty.png"
               height="140px"
               width="150px"
@@ -84,29 +119,62 @@
       <v-col class="text-center my-10">
         <div style="display: flex; justify-content: center">
           <!-- 먹기 -->
-          <button @click="eat" style="margin: 50px">
+          <button
+            v-if="!sleep && (!actionOnOff || hungry)"
+            @click="eat"
+            style="margin: 50px"
+          >
             <v-img
               src="../../assets/icons/eat.png"
               alt
               style="width: 120x; width: 120px"
             />
           </button>
+          <div v-else style="margin: 50px">
+            <v-img
+              src="../../assets/icons/eatBlack.png"
+              alt
+              style="width: 120x; width: 120px"
+            />
+          </div>
           <!-- 대화 -->
-          <button @click="gotalking" style="margin: 50px">
+          <button
+            v-if="!(hungry || dirty || sleep || actionOnOff)"
+            @click="gotalking"
+            style="margin: 50px"
+          >
             <v-img
               src="../../assets/icons/talk.png"
               alt
               style="width: 120x; width: 120px"
             />
           </button>
+          <div v-else style="margin: 50px">
+            <v-img
+              src="../../assets/icons/talkBlack.png"
+              alt
+              style="width: 120x; width: 120px"
+            />
+          </div>
           <!-- 씻기 -->
-          <button @click="wash" style="margin: 50px">
+          <button
+            v-if="!sleep && (!actionOnOff || dirty)"
+            @click="wash"
+            style="margin: 50px"
+          >
             <v-img
               src="../../assets/icons/wash.png"
               alt
               style="width: 120x; width: 120px"
             />
           </button>
+          <div v-else style="margin: 50px">
+            <v-img
+              src="../../assets/icons/washBlack.png"
+              alt
+              style="width: 120x; width: 120px"
+            />
+          </div>
         </div>
       </v-col>
 
@@ -122,6 +190,10 @@
       <audio
         id="hungry-sound"
         src="../../assets/characterSounds/hungry.mp3"
+      ></audio>
+      <audio
+        id="door-sound"
+        src="../../assets/characterSounds/door.mp3"
       ></audio>
     </div>
   </div>
@@ -141,6 +213,7 @@ export default {
       actionCnt: 0,
       hungry: false,
       dirty: false,
+      sleep: false,
     };
   },
   methods: {
@@ -159,7 +232,13 @@ export default {
       this.$router.push({ name: "KidsDrawingView" });
     },
     goMusic() {
-      this.$router.push(`/child/${this.$route.params.kidId}/music`);
+      this.actionOnOff = true;
+      this.actionNum = 99;
+      var audio = document.getElementById("door-sound");
+      audio.play();
+      setTimeout(() => {
+        this.$router.push(`/child/${this.$route.params.kidId}/music`);
+      }, 1500);
     },
     gotalking() {
       this.$router.push({ name: "KidsTalkingView" });
@@ -169,18 +248,22 @@ export default {
     },
     characterNonActionAlgo: function () {
       let now = new Date();
+      let nowHours = now.getHours();
+      if (nowHours > 19 || 7 > nowHours) {
+        this.sleep = true;
+      }
       if (new Date(this.character.eat_time) - now < -30000) {
         this.hungry = true;
       }
-      if (new Date(this.character.wash_time) - now < -30000) {
+      if (new Date(this.character.wash_time) - now < -120000) {
         this.dirty = true;
       }
       if (!(this.hungry || this.dirty)) {
         let cnt = this.actionCnt;
-        let nonActionList = [3, 4];
+        let nonActionList = [4];
         let nonActionNum =
           nonActionList[Math.floor(Math.random() * nonActionList.length)];
-        let rand = Math.random() * (10000 - 3000) + 3000;
+        let rand = Math.random() * (10000 - 3000) + 15000;
         setTimeout(() => {
           if (cnt == this.actionCnt) {
             this.actionOnOff = true;
@@ -271,6 +354,9 @@ export default {
     ...mapGetters(["commonConfig"]),
     doAction: function () {
       if (this.actionNum == 0) {
+        if (this.sleep) {
+          return "sleeping";
+        }
         if (this.hungry) {
           this.hungrySoundOn();
           return "hungry";
@@ -310,7 +396,7 @@ export default {
 
 <style>
 .kid-main {
-  background-image: url("../../assets/characters/house.png");
+  background-image: url("../../assets/backgrounds/house.png");
   background-position: center center;
   background-size: cover;
   width: 100%;
@@ -321,6 +407,8 @@ export default {
   justify-content: center;
 }
 .non-action {
+  width: 240px;
+  height: 240px;
 }
 .eating {
   width: 240px;
@@ -386,8 +474,8 @@ export default {
   width: 240px;
   height: 240px;
   background: url("../../assets/characters/sleep.png") left center;
-  animation: play-sleeping 1.5s steps(8);
-  animation-iteration-count: 2;
+  animation: play-sleeping 3s steps(10);
+  animation-iteration-count: infinite;
 }
 @keyframes play-sleeping {
   100% {

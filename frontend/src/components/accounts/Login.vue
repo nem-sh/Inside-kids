@@ -29,6 +29,8 @@
 <script>
 import { mapActions } from "vuex";
 
+import Swal from "sweetalert2";
+
 export default {
   name: "Login",
   data() {
@@ -41,7 +43,13 @@ export default {
     ...mapActions(["login"]),
     submit() {
       if (!this.email || !this.password) {
-        alert("이메일 혹은 패스워드를 입력해주세요.");
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: "이메일 혹은 패스워드를 입력해주세요.",
+          showConfirmButton: false,
+          timer: 1000,
+        });
       } else {
         const loginData = {
           email: this.email,
