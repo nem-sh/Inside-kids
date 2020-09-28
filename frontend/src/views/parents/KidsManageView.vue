@@ -142,7 +142,13 @@ export default {
             console.error(err.response);
           });
       } else {
-        alert("아이 이름을 입력해주세요.");
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: "아이 이름을 입력해주세요.",
+          showConfirmButton: false,
+          timer: 1000,
+        });
       }
     },
     updateKids() {
@@ -176,7 +182,13 @@ export default {
             console.error(err.response);
           });
       } else {
-        alert("변경할 이름을 입력해주세요.");
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: "변경할 이름을 입력해주세요.",
+          showConfirmButton: false,
+          timer: 1000,
+        });
       }
     },
     deleteKids(kidId) {

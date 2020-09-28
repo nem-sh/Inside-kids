@@ -73,7 +73,13 @@ export default {
   methods: {
     addScript() {
       if (this.kid.scripts.length >= 3) {
-        alert("질문은 최대 3개까지 등록 가능합니다.");
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: "질문은 최대 3개까지 등록 가능합니다.",
+          showConfirmButton: false,
+          timer: 1000,
+        });
         this.dialog = false;
       } else {
         if (this.script) {
@@ -95,7 +101,13 @@ export default {
               console.error(err.response);
             });
         } else {
-          alert("질문을 작성해주세요.");
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "질문을 작성해주세요.",
+            showConfirmButton: false,
+            timer: 1000,
+          });
         }
       }
     },
@@ -127,7 +139,13 @@ export default {
     },
     cntCheck() {
       if (this.kid.scripts.length >= 3) {
-        alert("질문은 최대 3개까지 등록 가능합니다.");
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: "질문은 최대 3개까지 등록 가능합니다.",
+          showConfirmButton: false,
+          timer: 1000,
+        });
       } else {
         this.dialog = true;
       }

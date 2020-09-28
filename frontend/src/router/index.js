@@ -9,7 +9,6 @@ import KidsDrawingView from "@/views/kids/KidsDrawingView";
 
 //수미
 import Home from "@/views/Home";
-import BeforeEmailAuthView from "@/views/accounts/BeforeEmailAuthView";
 import KidsManageView from "@/views/parents/KidsManageView";
 import KidsMainView from "@/views/kids/KidsMainView";
 import KidsDrawingListView from "@/views/kids/KidsDrawingListView";
@@ -26,11 +25,6 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
-  },
-  {
-    path: "/auth/before",
-    name: "BeforeEmailAuthView",
-    component: BeforeEmailAuthView,
   },
   {
     path: "/parents/kids/manage",

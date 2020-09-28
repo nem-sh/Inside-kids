@@ -60,6 +60,8 @@ import { mapState, mapGetters, mapActions } from "vuex";
 import { validationMixin } from "vuelidate";
 import { required, minLength, sameAs } from "vuelidate/lib/validators";
 
+import Swal from "sweetalert2";
+
 export default {
   mixins: [validationMixin],
   validations: {
@@ -90,7 +92,13 @@ export default {
       };
       this.$v.$touch();
       if (this.$v.$invalid) {
-        alert("입력한 내용을 다시 한번 확인해주세요.");
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: "입력한 내용을 다시 한번 확인해주세요.",
+          showConfirmButton: false,
+          timer: 1000,
+        });
       } else {
         this.changePassword(data);
       }
