@@ -1,6 +1,6 @@
 <template>
   <div class="bg-2 d-flex flex-column justify-center">
-    <v-card class="mx-auto login-form" min-width="400">
+    <v-card class="mx-auto opacity-form" min-width="400">
       <div>
         <v-card-title class="text-h4 d-flex justify-center primary--text font-weight-bold">LOG IN</v-card-title>
         <div class="pa-5">
@@ -67,8 +67,7 @@ export default {
             this.SET_TOKEN(res.data.token);
             this.SET_USER(res.data.user);
             router.push({
-              name: "KidsMainView",
-              params: { kidId: res.data.user.pk },
+              name: "KidsSelectView",
             });
           })
           .catch(() => {
@@ -94,7 +93,7 @@ export default {
   background-position: center center;
   background-size: cover;
 }
-.login-form {
+.opacity-form {
   background-color: rgba(255, 255, 255, 0.8) !important;
 }
 </style>
