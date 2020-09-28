@@ -1,6 +1,6 @@
 export default {
-  URL: "http://localhost:8000",
-  // URL: "http://j3b106.p.ssafy.io",
+  URL: "https://localhost:8000/api",
+  // URL: "https://j3b106.p.ssafy.io/api",
   ROUTES: {
     // auth
     login: "/accounts/login/",
@@ -16,5 +16,8 @@ export default {
     // contents
     getCharacterInfo: "/contents/characters/",
     deleteVideo: "/contents/videos/",
+
+    // media root
+    media: "/media/",
   },
 };
