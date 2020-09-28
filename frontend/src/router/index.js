@@ -14,6 +14,7 @@ import KidsMainView from "@/views/kids/KidsMainView";
 import KidsDrawingListView from "@/views/kids/KidsDrawingListView";
 import KidsLoginView from "@/views/kids/KidsLoginView";
 import KidsSelectView from "@/views/kids/KidsSelectView";
+import PageNotFound from "@/views/PageNotFound";
 
 //시성
 import KidMusicView from "@/views/kids/KidMusicView";
@@ -75,6 +76,11 @@ const routes = [
     path: "/parents/:kidId",
     name: "KidsDetailView",
     component: KidsDetailView,
+  },
+  {
+    path: "*",
+    name: "PageNotFound",
+    component: PageNotFound,
   },
 ];
 
