@@ -7,21 +7,16 @@ upstream inside_kids_server {
 
 
 server {
-
     listen 80;
 
-    server_name j3b106.p.ssafy.io inside-kids.cf;
+    server_name j3b106.p.ssafy.io;
 
-
+    error_page 405 =200 $uri;
 
     client_max_body_size 4G;
 
-
-
     access_log /home/ubuntu/inside_kids/logs/nginx-access.log;
-
     error_log /home/ubuntu/inside_kids/logs/nginx-error.log;
-
 
 
     location /static/ {
@@ -37,7 +32,29 @@ server {
         alias /home/ubuntu/inside_kids/media/;
 
     }
-    location /accounts/ {
+
+
+    location /accounts/{
+
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        proxy_set_header Host $http_host;
+
+        proxy_redirect off;
+
+        try_files $uri $uri/ /index.html;
+
+
+        if (!-f $request_filename) {
+
+            proxy_pass http://inside_kids_server;
+
+            break;
+
+        }
+
+    }
+    location /contents/{
 
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
@@ -58,12 +75,29 @@ server {
 
     }
 
-
-
     location / {
         root /home/ubuntu/inside_kids/frontend/dist/;
 
         try_files $uri $uri/ /index.html;
     }
 
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/j3b106.p.ssafy.io/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/j3b106.p.ssafy.io/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+}
+
+
+server {
+    if ($host = j3b106.p.ssafy.io) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+
+    server_name j3b106.p.ssafy.io;
+    return 404; # managed by Certbot
 }

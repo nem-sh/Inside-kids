@@ -41,6 +41,10 @@
       <v-spacer></v-spacer>
       <v-btn color="green darken-1" text @click="submit">Signup</v-btn>
     </v-card-actions>
+
+    <v-overlay :value="overlay">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </div>
 </template>
 
@@ -69,6 +73,7 @@ export default {
       email: "",
       password: "",
       repeatPassword: "",
+      overlay: false,
     };
   },
   methods: {
@@ -86,15 +91,18 @@ export default {
       }
     },
     signup(signupData) {
+      this.overlay = true;
       axios
         .post(SERVER.URL + SERVER.ROUTES.signup, signupData)
         .then(() => {
+          this.overlay = false;
           this.email = null;
           this.password = null;
           this.repeatPassword = null;
           this.$emit("signup");
         })
         .catch((err) => {
+          this.overlay = false;
           if ("email" in err.response.data) {
             alert(err.response.data.email);
           } else if ("password1" in err.response.data) {

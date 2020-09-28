@@ -1,33 +1,35 @@
 <template>
   <div>
-  <v-btn @click="gokidhome" class="blue mb-2"> <i class="fas fa-home fa-2x"></i>
- </v-btn>
-  <div class="canvas-wrapper" ref="canvasWrapper">
-    <div class="draw-area">
-      <canvas id="canvas" ref="canvas" :width="width" :height="height"></canvas>
-      <canvas id="cursor" ref="cursor" :width="width" :height="height"></canvas>
+    <v-btn @click="gokidhome" class="blue mb-2">
+      <i class="fas fa-home fa-2x"></i>
+    </v-btn>
+    <div class="canvas-wrapper" ref="canvasWrapper">
+      <div class="draw-area">
+        <canvas id="canvas" ref="canvas" :width="width" :height="height"></canvas>
+        <canvas id="cursor" ref="cursor" :width="width" :height="height"></canvas>
+      </div>
+      <ul class="tools">
+        <li id="tool-pencil" :class="{ active: selectedToolIdx === 0 }" @click="changeTool(0)">
+          <img src="@/assets/edit.svg" />
+        </li>
+        <li id="tool-eraser" :class="{ active: selectedToolIdx === 1 }" @click="changeTool(1)">
+          <img src="@/assets/eraser.svg" />
+        </li>
+        <li id="tool-color-palette" @click="showColorPalette()">
+          <img src="@/assets/color-palette.svg" />
+        </li>
+        <li id="tool-download" @click="download()">
+          <img src="@/assets/download.svg" />
+        </li>
+      </ul>
     </div>
-    <ul class="tools">
-      <li id="tool-pencil" :class="{ active: selectedToolIdx === 0 }" @click="changeTool(0)">
-        <img src="@/assets/edit.svg"/>
-      </li>
-      <li id="tool-eraser" :class="{ active: selectedToolIdx === 1 }" @click="changeTool(1)">
-        <img src="@/assets/eraser.svg"/>
-      </li>
-      <li id="tool-color-palette" @click="showColorPalette()">
-        <img src="@/assets/color-palette.svg"/>
-      </li>
-      <li id="tool-download" @click="download()">
-        <img src="@/assets/download.svg"/>
-      </li>
-    </ul>
-  </div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
-  name: 'KidsDrawing',
+  name: "KidsDrawing",
   props: {
     brushSize: {
       type: Number,
@@ -43,7 +45,7 @@ export default {
     },
     outputName: {
       type: String,
-      default: 'canvas',
+      default: "canvas",
     },
   },
   data() {
@@ -55,11 +57,11 @@ export default {
       lastY: 0,
       tools: [
         {
-          name: 'Pencil',
-          color: '#000000',
+          name: "Pencil",
+          color: "#000000",
         },
         {
-          name: 'Eraser',
+          name: "Eraser",
         },
       ],
       selectedToolIdx: 0,
@@ -69,29 +71,41 @@ export default {
     this.setCanvas();
     this.bindEvents();
   },
+  computed: {
+    ...mapState(["kid"]),
+  },
   methods: {
-    gokidhome(){
-      this.$router.push({ name: "KidsMainView" })
+    gokidhome() {
+      this.$router.push({
+        name: "KidsMainView",
+        params: { kidId: this.kid.id },
+      });
     },
     setCanvas() {
       this.$refs.canvasWrapper.style.gridTemplateColumns = `${this.width}px 30px`;
       this.$refs.canvasWrapper.style.width = `${this.width + 30}px`;
       this.$refs.canvasWrapper.style.height = `${this.height}px`;
-      this.canvasContext = this.$refs.canvas.getContext('2d');
-      this.canvasContext.lineJoin = 'round';
-      this.canvasContext.lineCap = 'round';
+      this.canvasContext = this.$refs.canvas.getContext("2d");
+      this.canvasContext.lineJoin = "round";
+      this.canvasContext.lineCap = "round";
       this.canvasContext.lineWidth = this.brushSize;
       this.canvasContext.strokeStyle = this.tools[this.selectedToolIdx].color;
-      this.cursorContext = this.$refs.cursor.getContext('2d');
+      this.cursorContext = this.$refs.cursor.getContext("2d");
     },
     bindEvents() {
-      this.$refs.canvas.addEventListener('mousedown', (event) => {
+      this.$refs.canvas.addEventListener("mousedown", (event) => {
         this.isDrawing = true;
         [this.lastX, this.lastY] = [event.offsetX, event.offsetY];
       });
-      this.$refs.canvas.addEventListener('mousemove', this.draw);
-      this.$refs.canvas.addEventListener('mouseup', () => this.isDrawing = false);
-      this.$refs.canvas.addEventListener('mouseout', () => this.isDrawing = false);
+      this.$refs.canvas.addEventListener("mousemove", this.draw);
+      this.$refs.canvas.addEventListener(
+        "mouseup",
+        () => (this.isDrawing = false)
+      );
+      this.$refs.canvas.addEventListener(
+        "mouseout",
+        () => (this.isDrawing = false)
+      );
     },
     changeTool(tool) {
       this.selectedToolIdx = tool;
@@ -99,10 +113,10 @@ export default {
     draw(event) {
       this.drawCursor(event);
       if (!this.isDrawing) return;
-      if (this.tools[this.selectedToolIdx].name === 'Eraser') {
-        this.canvasContext.globalCompositeOperation = 'destination-out';
+      if (this.tools[this.selectedToolIdx].name === "Eraser") {
+        this.canvasContext.globalCompositeOperation = "destination-out";
       } else {
-        this.canvasContext.globalCompositeOperation = 'source-over';
+        this.canvasContext.globalCompositeOperation = "source-over";
         this.canvasContext.strokeStyle = this.tools[this.selectedToolIdx].color;
       }
       this.canvasContext.beginPath();
@@ -114,9 +128,13 @@ export default {
     drawCursor(event) {
       this.cursorContext.beginPath();
       this.cursorContext.ellipse(
-        event.offsetX, event.offsetY,
-        this.brushSize, this.brushSize,
-        Math.PI / 4, 0, 2 * Math.PI
+        event.offsetX,
+        event.offsetY,
+        this.brushSize,
+        this.brushSize,
+        Math.PI / 4,
+        0,
+        2 * Math.PI
       );
       this.cursorContext.stroke();
       setTimeout(() => {
@@ -124,22 +142,22 @@ export default {
       }, 100);
     },
     showColorPalette() {
-      const colorPalette = document.createElement('input');
-      colorPalette.addEventListener('change', (event) => {
+      const colorPalette = document.createElement("input");
+      colorPalette.addEventListener("change", (event) => {
         this.tools[0].color = event.target.value;
       });
-      colorPalette.type = 'color';
+      colorPalette.type = "color";
       colorPalette.value = this.tools[0].color;
       colorPalette.click();
     },
     download() {
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.download = `${this.outputName}.png`;
-      link.href = this.$refs.canvas.toDataURL()
+      link.href = this.$refs.canvas.toDataURL();
       link.click();
     },
-  }
-}
+  },
+};
 </script>
 <style scoped>
 .canvas-wrapper {
@@ -161,7 +179,7 @@ export default {
   margin: 0;
   padding: 0;
 }
-.tools li{
+.tools li {
   padding: 4px;
   background-color: #c8c8c8;
   border-left: 1px solid #abaaaa;
