@@ -16,8 +16,5 @@ export default {
     // contents
     getCharacterInfo: "/contents/characters/",
     deleteVideo: "/contents/videos/",
-
-    // media root
-    media: "/media/",
   },
 };
