@@ -29,7 +29,7 @@
           <!-- 사진찍기 -->
           <button
             v-if="!(hungry || dirty || sleep || actionOnOff)"
-             @click="gopicture"
+            @click="gopicture"
             style="margin: 50px"
           >
             <v-img
@@ -260,10 +260,10 @@ export default {
       }
       if (!(this.hungry || this.dirty)) {
         let cnt = this.actionCnt;
-        let nonActionList = [3, 4];
+        let nonActionList = [4];
         let nonActionNum =
           nonActionList[Math.floor(Math.random() * nonActionList.length)];
-        let rand = Math.random() * (10000 - 3000) + 10000;
+        let rand = Math.random() * (10000 - 3000) + 15000;
         setTimeout(() => {
           if (cnt == this.actionCnt) {
             this.actionOnOff = true;
