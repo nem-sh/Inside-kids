@@ -7,14 +7,12 @@ import KidsTalkingView from "@/views/kids/KidsTalkingView";
 import KidsPictureView from "@/views/kids/KidsPictureView";
 import KidsDrawingView from "@/views/kids/KidsDrawingView";
 
-
-
 //수미
 import Home from "@/views/Home";
 import BeforeEmailAuthView from "@/views/accounts/BeforeEmailAuthView";
 import KidsManageView from "@/views/parents/KidsManageView";
 import KidsMainView from "@/views/kids/KidsMainView";
-
+import KidsDrawingListView from "@/views/kids/KidsDrawingListView";
 
 //시성
 import KidMusicView from "@/views/kids/KidMusicView";
@@ -48,9 +46,14 @@ const routes = [
     component: KidsPictureView,
   },
   {
-    path: "/child/drawing",
+    path: "/child/:kidId/drawing",
     name: "KidsDrawingView",
     component: KidsDrawingView,
+  },
+  {
+    path: "/child/:kidId/drawing/list",
+    name: "KidsDrawingListView",
+    component: KidsDrawingListView,
   },
   {
     path: "/child/:kidId",
@@ -67,7 +70,6 @@ const routes = [
     name: "KidsDetailView",
     component: KidsDetailView,
   },
-
 ];
 
 const router = new VueRouter({
