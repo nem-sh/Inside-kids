@@ -17,7 +17,7 @@ import KidsSelectView from "@/views/kids/KidsSelectView";
 import PageNotFound from "@/views/PageNotFound";
 
 //시성
-import KidMusicView from "@/views/kids/KidMusicView";
+import KidsMusicView from "@/views/kids/KidsMusicView";
 
 Vue.use(VueRouter);
 
@@ -69,8 +69,8 @@ const routes = [
   },
   {
     path: "/child/:kidId/music",
-    name: "KidMusicView",
-    component: KidMusicView,
+    name: "KidsMusicView",
+    component: KidsMusicView,
   },
   {
     path: "/parents/:kidId",
