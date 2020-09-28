@@ -19,12 +19,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 from rest_auth import views
+from . import api_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     # api
-    path('api/', include('api_urls')),
+    path('api/', include(api_urls)),
 
     # index
     path('', TemplateView.as_view(template_name='index.html'))
