@@ -14,6 +14,7 @@ import KidsManageView from "@/views/parents/KidsManageView";
 import KidsMainView from "@/views/kids/KidsMainView";
 import KidsDrawingListView from "@/views/kids/KidsDrawingListView";
 import KidsLoginView from "@/views/kids/KidsLoginView";
+import KidsSelectView from "@/views/kids/KidsSelectView";
 
 //시성
 import KidMusicView from "@/views/kids/KidMusicView";
@@ -60,6 +61,11 @@ const routes = [
     path: "/child",
     name: "KidsLoginView",
     component: KidsLoginView,
+  },
+  {
+    path: "/child/select",
+    name: "KidsSelectView",
+    component: KidsSelectView,
   },
   {
     path: "/child/:kidId",
