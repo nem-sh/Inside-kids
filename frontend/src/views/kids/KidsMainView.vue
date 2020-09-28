@@ -16,7 +16,7 @@
             />
           </button>
           <!-- 사진찍기 -->
-          <button @click="loaddata" style="margin: 50px">
+          <button @click="gopicture" style="margin: 50px">
             <v-img
               src="../../assets/icons/photo.png"
               alt
