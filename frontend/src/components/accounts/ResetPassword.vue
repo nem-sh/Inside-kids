@@ -21,6 +21,8 @@
 <script>
 import { mapActions } from "vuex";
 
+import Swal from "sweetalert2";
+
 export default {
   name: "ResetPassword",
   data() {
@@ -32,7 +34,13 @@ export default {
     ...mapActions(["resetPwd"]),
     submit() {
       if (!this.email) {
-        alert("이메일을 입력해주세요.");
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: "이메일을 입력해주세요.",
+          showConfirmButton: false,
+          timer: 1000,
+        });
       } else {
         const emailData = {
           email: this.email,
