@@ -1,5 +1,5 @@
 <template>
-  <v-row class="background pt-15">
+  <v-row class="bg-1 pt-15">
     <v-col cols="12" class="text-center">
       <img
         class="back-btn"
@@ -67,7 +67,7 @@ export default {
 </script>
 
 <style>
-.background {
+.bg-1 {
   width: 100%;
   height: 100%;
   background-image: url("../../assets/characters/house.png");

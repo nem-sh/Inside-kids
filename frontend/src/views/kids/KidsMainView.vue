@@ -29,7 +29,7 @@
           <!-- 사진찍기 -->
           <button
             v-if="!(hungry || dirty || sleep || actionOnOff)"
-            @click="loaddata"
+             @click="gopicture"
             style="margin: 50px"
           >
             <v-img
