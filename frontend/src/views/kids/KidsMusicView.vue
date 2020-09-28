@@ -16,13 +16,9 @@
         align-items: center;
         flex-direction: column;
       "
-      ><v-btn
-        @click="back"
-        class="blue"
-        style="font-size: 2em"
-        height="70"
-        v-if="!isStart"
-        ><i class="fas fa-home"></i>
+    >
+      <v-btn @click="back" class="blue" style="font-size: 2em" height="70" v-if="!isStart">
+        <i class="fas fa-home"></i>
       </v-btn>
       <v-btn
         @click="music1"
@@ -31,9 +27,7 @@
         height="70"
         v-if="!isStart"
         width="100%"
-      >
-        싹이 싹이 나네요 ♪
-      </v-btn>
+      >싹이 싹이 나네요 ♪</v-btn>
       <v-btn
         @click="music2"
         class="orange mt-4"
@@ -41,19 +35,17 @@
         height="70"
         v-if="!isStart"
         width="100%"
-      >
-        하루 ♪
-      </v-btn>
+      >하루 ♪</v-btn>
 
       <div>
         <h1 style="text-align: center">{{ text1 }}</h1>
       </div>
       <div>
         <h1 style="text-align: center">{{ text2 }}</h1>
-      </div></v-row
-    >
-    <v-row style="display: flex; justify-content: center; align-items: center"
-      ><div
+      </div>
+    </v-row>
+    <v-row style="display: flex; justify-content: center; align-items: center">
+      <div
         v-if="isStart"
         class="action-box"
         style="display: flex; justify-content: center; align-items: center"
@@ -87,7 +79,7 @@
 
 <script>
 export default {
-  name: "KidMusicView",
+  name: "KidsMusicView",
   data: function () {
     return {
       text1: "",
