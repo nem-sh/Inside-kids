@@ -72,7 +72,7 @@ const routes = [
     component: KidMusicView,
   },
   {
-    path: "/:kidId",
+    path: "/parents/:kidId",
     name: "KidsDetailView",
     component: KidsDetailView,
   },
@@ -82,6 +82,42 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  // 부모 Login 필수
+  const loggedInPagesP = ["KidsManageView", "KidsDetailView"];
+  const authRequiredP = loggedInPagesP.includes(to.name);
+
+  // 아이 Login 필수
+  const loggedInPagesC = [
+    "KidMusicView",
+    "KidsDrawingView",
+    "KidsDrawingListView",
+    "KidsMainView",
+    "KidsPictureView",
+    "KidsSelectView",
+    "KidsTalkingView",
+  ];
+  const authRequiredC = loggedInPagesC.includes(to.name);
+
+  // Login 되어 있으면 안됨
+  const notLoggedInPages = ["KidsLoginView"];
+  const unAuthRequired = notLoggedInPages.includes(to.name);
+
+  // Login 판단
+  const isLoggedIn = !!Vue.$cookies.isKey("auth-token");
+
+  if (unAuthRequired && isLoggedIn) {
+    next(from);
+  }
+  if (authRequiredP && !isLoggedIn) {
+    next("/");
+  } else if (authRequiredC && !isLoggedIn) {
+    next("/child");
+  } else {
+    next();
+  }
 });
 
 export default router;
