@@ -62,13 +62,13 @@
             class="d-none"
             ><i class="material-icons">file_download</i></a
           >
-                  <img
-          class="back-btn"
-          @click="gokidhome"
-          src="../../assets/icons/back.png"
-          alt="back_btn"
-          width="80px"
-        />
+          <img
+            class="back-btn"
+            @click="gokidhome"
+            src="../../assets/icons/back.png"
+            alt="back_btn"
+            width="80px"
+          />
           <img
             class="download-btn"
             @click="download()"
@@ -98,7 +98,7 @@ export default {
     };
   },
   components: {},
-    computed: {
+  computed: {
     ...mapState(["authToken"]),
   },
   methods: {
@@ -126,20 +126,20 @@ export default {
 
     download() {
       const imgBase64 = this.$refs.canvas.toDataURL("image/png");
-      console.log(imgBase64)
+      console.log(imgBase64);
       const decodImg = atob(imgBase64.split(",")[1]);
       let array = [];
       for (let i = 0; i < decodImg.length; i++) {
         array.push(decodImg.charCodeAt(i));
       }
-      console.log(array)
+      console.log(array);
       const file = new Blob([new Uint8Array(array)], { type: "image/png" });
-      console.log(file)
+      console.log(file);
       const fileName = "canvas_img_" + new Date().getMilliseconds() + ".jpg";
-      console.log(fileName)
+      console.log(fileName);
       let formData = new FormData();
       formData.append("file_source", file, fileName);
-      console.log(formData)
+      console.log(formData);
 
       const axiosConfig = {
         headers: {
@@ -147,13 +147,9 @@ export default {
           Authorization: `jwt ${this.authToken}`,
         },
       };
-      console.log(axiosConfig)
+      console.log(axiosConfig);
       axios
-        .post(
-          SERVER.URL + `/contents/kids/1/paints/`,
-          formData,
-          axiosConfig
-        )
+        .post(SERVER.URL + `/contents/kids/1/paints/`, formData, axiosConfig)
         .then(() => {
           Swal.fire({
             position: "center",
@@ -175,6 +171,9 @@ export default {
       tag.setAttribute("src", scri);
       document.head.appendChild(tag);
     });
+  },
+  beforeDestroy() {
+    location.reload();
   },
 };
 </script>
