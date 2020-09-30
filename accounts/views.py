@@ -62,7 +62,7 @@ def kid_detail_or_update_or_delete(request, kid_id):
             many=True
         )
         script_serializer = ScriptSerializer(
-            Script.objects.filter(kid=kid, used=False),
+            Script.objects.filter(kid=kid, state=0),
             many=True
         )
         serializer = KidSerializer(kid)

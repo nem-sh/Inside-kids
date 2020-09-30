@@ -8,7 +8,7 @@ urlpatterns = [
 
     # video
     path('videos/<int:video_id>/', views.video_delete),
-    path('kids/<int:kid_id>/videos/', views.video_create),
+    path('kids/<int:kid_id>/scripts/<int:script_id>/videos/', views.video_create),
 
     # paint
     path('kids/<int:kid_id>/paints/', views.paint_list_or_create),
@@ -22,7 +22,7 @@ urlpatterns = [
     path('musics/', views.music_list),
 
     # script
-    path('kids/<int:kid_id>/scripts/', views.script_create),
+    path('kids/<int:kid_id>/scripts/', views.script_list_or_create),
     path('scripts/<int:script_id>/', views.script_delete),
 
     # character
