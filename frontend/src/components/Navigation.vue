@@ -8,7 +8,7 @@
           </v-btn>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn text dark>
+        <v-btn text dark @click="moveToInfo">
           <v-icon>fas fa-question-circle</v-icon>
         </v-btn>
         <div class="text-center">
@@ -23,8 +23,6 @@
 </template>
 
 <script>
-import router from "@/router";
-
 import EditUser from "@/components/navitem/EditUser.vue";
 import SelectKid from "@/components/navitem/SelectKid.vue";
 
@@ -36,7 +34,16 @@ export default {
   },
   methods: {
     moveToMain() {
-      router.push({ name: "Home" });
+      this.$router.push({
+        name: "KidsDetailView", 
+        params: { kidId: this.$route.params.kidId },
+         });
+    },
+    moveToInfo() {
+      this.$router.push({
+        name: "NavInfoView", 
+        params: { kidId: this.$route.params.kidId },
+         });
     },
   },
 };

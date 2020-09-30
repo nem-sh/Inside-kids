@@ -9,9 +9,9 @@
         />
     <div class="text-center">
       <div v-show="!result">
-        <h4 class="title is-4">
+        <!-- <h4 class="title is-4">
           {{ timer.interval ? `${formatedTime}` : "00:00:00" }}
-        </h4>
+        </h4> -->
         <video v-show="false" ref="video"></video>
       </div>
       <div v-show="result">
@@ -19,13 +19,12 @@
       </div>
       <div>
         <v-btn
-          class="button is-danger"
           @click="stop"
           v-if="recorder && recorder.getState() === 'recording'"
         >
           <i class="fas fa-arrow-right"></i>
         </v-btn>
-        <v-btn class="button is-primary" @click="loaddata" v-else>
+        <v-btn class="button is-primary" @click="record" v-else>
           말하기
         </v-btn>
       </div>
@@ -34,7 +33,7 @@
 </template>
 
 <script>
-import Swal from 'sweetalert2'
+// import Swal from 'sweetalert2'
 import axios from "axios";
 import SERVER from "@/api/drf";
 import { mapActions, mapState } from "vuex";
@@ -55,23 +54,14 @@ export default {
   computed: {
     ...mapState(["kid", "authToken"]),
     ...mapActions(["getKid"]),
-    formatedTime() {
-      let hour = Math.floor(this.timer.value / 3600);
-      let minute = Math.floor((this.timer.value - hour * 3600) / 60);
-      let seconds = this.timer.value - (hour * 3600 + minute * 60);
-      return [hour, minute, seconds].map(this._fillzero).join(":");
-    },
+    // formatedTime() {
+    //   let hour = Math.floor(this.timer.value / 3600);
+    //   let minute = Math.floor((this.timer.value - hour * 3600) / 60);
+    //   let seconds = this.timer.value - (hour * 3600 + minute * 60);
+    //   return [hour, minute, seconds].map(this._fillzero).join(":");
+    // },
   },
   methods: {
-    loaddata(){
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: '서비스 준비 중 입니다!',
-        showConfirmButton: false,
-        timer: 2000
-      })
-    },
     _fillzero(value) {
       return value < 9 ? "0" + value : value;
     },
@@ -95,7 +85,6 @@ export default {
             Authorization: `jwt ${this.authToken}`,
           },
         };
-        console.log(444444444);
         axios
           .post(
             SERVER.URL + "/contents/kids/" + this.kid.id + "/videos/",
@@ -104,11 +93,9 @@ export default {
           )
           .then((res) => {
             console.log(res);
-            console.log(12345699999999999999999);
           })
           .catch((err) => {
             console.error(err);
-            console.log(123456);
           });
         console.log(this.result, "result");
         console.log(this.blobUrl, "url");
