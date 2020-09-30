@@ -27,11 +27,12 @@ def video_delete(request, video_id):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def video_create(request, kid_id):
+def video_create(request, kid_id, script_id):
     kid = get_object_or_404(Kid, pk=kid_id)
+    script = get_object_or_404(Script, pk=script_id)
     serializer = VideoSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
-        serializer.save(kid=kid)
+        serializer.save(kid=kid, script=script)
         return Response(serializer.data)
     else:
         return HttpResponse(status=400)
