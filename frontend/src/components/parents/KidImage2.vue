@@ -1,5 +1,5 @@
 <template>
-  <v-avatar tile size="100px" color="white">
+  <v-avatar class="img-border" size="100px" color="black">
     <img :src="kidImg" alt="kid-profile" />
   </v-avatar>
 </template>
@@ -21,4 +21,7 @@ export default {
 </script>
 
 <style>
+.img-border {
+  border: 4px solid black;
+}
 </style>

@@ -17,7 +17,7 @@
         <div
           class="controls__color"
           :class="{ active: selectedToolIdx === 1 }"
-          @click="changeTool(1)"
+          @click="chooseColor(colors.white);changeTool(0)"
         >
           <img src="@/assets/icons/eraser.png" width="100%" />
         </div>
@@ -128,7 +128,7 @@ export default {
         yellow: "#ffcc00",
         green: "#4cd963",
         skyBlue: "#5ac8fa",
-        blud: "#0579FF",
+        blue: "#0579FF",
         purple: "#5856D6",
       },
     };
@@ -377,6 +377,6 @@ button:active {
 .drawings-btn {
   cursor: pointer;
   display: inline-block;
-  padding: 0 20px;
+  padding: 0 40px;
 }
 </style>

@@ -116,13 +116,14 @@ router.beforeEach((to, from, next) => {
 
   if (unAuthRequired && isLoggedIn) {
     next(from);
-  }
-  if (authRequiredP && !isLoggedIn) {
-    next("/");
-  } else if (authRequiredC && !isLoggedIn) {
-    next("/child");
   } else {
-    next();
+    if (authRequiredP && !isLoggedIn) {
+      next("/");
+    } else if (authRequiredC && !isLoggedIn) {
+      next("/child");
+    } else {
+      next();
+    }
   }
 });
 
