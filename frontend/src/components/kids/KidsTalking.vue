@@ -1,17 +1,16 @@
 <template>
   <div>
-        <img
-          class="character"
-          src="../../assets/characters/talking.png"
-          height="600px"
-          width="500px"
-          alt="character"
-        />
+    <div :class="characterState"></div>
+    <!-- <img
+      class="character"
+      src="../../assets/characters/talking.png"
+      height="600px"
+      width="500px"
+      alt="character"
+    />-->
     <div class="text-center">
       <div v-show="!result">
-        <h4 class="title is-4">
-          {{ timer.interval ? `${formatedTime}` : "00:00:00" }}
-        </h4>
+        <h4 class="title is-4">{{ timer.interval ? `${formatedTime}` : "00:00:00" }}</h4>
         <video v-show="false" ref="video"></video>
       </div>
       <div v-show="result">
@@ -25,20 +24,26 @@
         >
           <i class="fas fa-arrow-right"></i>
         </v-btn>
-        <v-btn class="button is-primary" @click="loaddata" v-else>
-          말하기
-        </v-btn>
+        <v-btn class="button is-primary" @click="record" v-else>말하기</v-btn>
+        <div v-for="script in scripts" :key="script.id">
+          <audio :id="`script`+script.id" :src="server + script.source"></audio>
+        </div>
+        <button
+          v-show="characterState === 'stop' && index < scripts.length"
+          @click="nextScript"
+        >다음 대화</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import axios from "axios";
 import SERVER from "@/api/drf";
 import { mapActions, mapState } from "vuex";
 import RecordRTC from "recordrtc";
+
 export default {
   name: "KidsTalking",
   data() {
@@ -50,6 +55,22 @@ export default {
         interval: null,
         value: 0,
       },
+      scripts: [
+        {
+          id: 1,
+          source: "/media/hungry.mp3",
+          state: 0,
+        },
+        {
+          id: 2,
+          source: "/media/washing.mp3",
+          state: 0,
+        },
+      ],
+      index: 0,
+      characterState: "stop",
+      server: SERVER.URL,
+      recordFlag: false,
     };
   },
   computed: {
@@ -63,14 +84,14 @@ export default {
     },
   },
   methods: {
-    loaddata(){
+    loaddata() {
       Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: '서비스 준비 중 입니다!',
+        position: "center",
+        icon: "success",
+        title: "서비스 준비 중 입니다!",
         showConfirmButton: false,
-        timer: 2000
-      })
+        timer: 2000,
+      });
     },
     _fillzero(value) {
       return value < 9 ? "0" + value : value;
@@ -117,6 +138,56 @@ export default {
         this.timer.interval = null;
       });
     },
+    getScripts() {
+      const hello = ["hello1"];
+      const bye = ["bye1"];
+
+      // 랜덤으로 처음, 끝에 인사 넣기
+      var rand1 = hello[Math.floor(Math.random() * hello.length)];
+      this.scripts.push({
+        id: 0,
+        source: `/media/greeting/${rand1}.mp3`,
+        state: 2,
+      });
+      // 오디오 가져오는 axios & push
+
+      var rand2 = bye[Math.floor(Math.random() * bye.length)];
+      this.scripts.push({
+        id: 3,
+        source: `/media/greeting/${rand2}.mp3`,
+        state: 2,
+      });
+    },
+    nextScript() {
+      // 녹화중이었다면 중지 & axios 보내기w
+      if (this.recordFlag) {
+        this.stop();
+        this.recordFlag = false;
+      }
+      // 사용자가 등록한 질문 녹화
+      if (this.scripts[this.index].state == 0) {
+        this.record();
+        this.recordFlag = true;
+      }
+      // 오디오 실행
+      var audio = document.getElementById(`script${this.index++}`);
+      audio.play();
+      this.characterState = "talking";
+
+      // 입모양 움직이기
+      setTimeout(() => {
+        this.characterState = "stop";
+        if (this.index === this.scripts.length) {
+          this.$router.push({
+            name: "KidsMainView",
+            params: { kidId: this.$route.params.kidId },
+          });
+        }
+      }, audio.duration * 1000);
+    },
+  },
+  created() {
+    this.getScripts();
   },
   mounted() {
     let self = this;
@@ -126,7 +197,7 @@ export default {
         video: true,
         audio: true,
       })
-      .then(async function(stream) {
+      .then(async function (stream) {
         self.recorder = RecordRTC(stream, {
           type: "video",
         });
@@ -134,9 +205,7 @@ export default {
         video.volume = 0;
         video.play();
       });
-  },
-  beforeDestroy() {
-    location.reload();
+    this.nextScript();
   },
 };
 </script>
@@ -147,4 +216,21 @@ export default {
   margin: 0 auto;
   box-shadow: 0 4px 8px 2px #999;
 } */
+.stop {
+  width: 680px;
+  height: 767px;
+  background: url("../../assets/characters/talking.png") left center;
+}
+.talking {
+  width: 680px;
+  height: 767px;
+  background: url("../../assets/characters/talkingIng.png") left center;
+  animation: play-talking 0.6s steps(3);
+  animation-iteration-count: infinite;
+}
+@keyframes play-talking {
+  100% {
+    background-position: -2040px;
+  }
+}
 </style>

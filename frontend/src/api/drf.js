@@ -1,20 +1,20 @@
 export default {
-  URL: "http://localhost:8000/api",
-  // URL: "https://j3b106.p.ssafy.io/api",
+  URL: "http://localhost:8000",
+  // URL: "https://j3b106.p.ssafy.io",
   ROUTES: {
     // auth
-    login: "/accounts/login/",
-    logout: "/accounts/logout/",
-    signup: "/accounts/signup/",
-    resetPwd: "/accounts/password/reset/",
-    getUserInfo: "/accounts/user/",
-    editUserInfo: "/accounts/user/",
-    passwordChange: "/accounts/password/change/",
-    deletAccount: "/accounts/delete/",
-    getKidInfo: "/accounts/kids/",
+    login: "/api/accounts/login/",
+    logout: "/api/accounts/logout/",
+    signup: "/api/accounts/signup/",
+    resetPwd: "/api/accounts/password/reset/",
+    getUserInfo: "/api/accounts/user/",
+    editUserInfo: "/api/accounts/user/",
+    passwordChange: "/api/accounts/password/change/",
+    deletAccount: "/api/accounts/delete/",
+    getKidInfo: "/api/accounts/kids/",
 
     // contents
-    getCharacterInfo: "/contents/characters/",
-    deleteVideo: "/contents/videos/",
+    getCharacterInfo: "/api/contents/characters/",
+    deleteVideo: "/api/contents/videos/",
   },
 };
