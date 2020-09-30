@@ -26,12 +26,9 @@
         </v-btn>
         <v-btn class="button is-primary" @click="record" v-else>말하기</v-btn>
         <div v-for="script in scripts" :key="script.id">
-          <audio :id="`script`+script.id" :src="server + script.source"></audio>
+          <audio :id="`script`+script.id" :src="server + script.file_source"></audio>
         </div>
-        <button
-          v-show="characterState === 'stop' && index < scripts.length"
-          @click="nextScript"
-        >다음 대화</button>
+        <button v-show="characterState === 'stop'" @click="nextScript">다음 대화</button>
       </div>
     </div>
   </div>
@@ -58,12 +55,12 @@ export default {
       scripts: [
         {
           id: 1,
-          source: "/media/hungry.mp3",
+          file_source: "/media/hungry.mp3",
           state: 0,
         },
         {
           id: 2,
-          source: "/media/washing.mp3",
+          file_source: "/media/washing.mp3",
           state: 0,
         },
       ],
@@ -97,6 +94,7 @@ export default {
       return value < 9 ? "0" + value : value;
     },
     record() {
+      console.log("녹화시작");
       this.recorder && this.recorder.startRecording();
       this.result = null;
       this.blobUrl && URL.revokeObjectURL(this.blobUrl);
@@ -104,6 +102,7 @@ export default {
       this.timer.interval = setInterval(() => ++this.timer.value, 1000);
     },
     stop() {
+      console.log("녹화종료");
       this.recorder.stopRecording(() => {
         this.result = this.recorder.getBlob();
         this.blobUrl = window.URL.createObjectURL(this.result);
@@ -119,17 +118,22 @@ export default {
         console.log(444444444);
         axios
           .post(
-            SERVER.URL + "/contents/kids/" + this.kid.id + "/videos/",
+            SERVER.URL +
+              "/contents/kids/" +
+              this.kid.id +
+              "/videos/" +
+              this.index -
+              1,
             formData,
             axiosConfig
           )
           .then((res) => {
             console.log(res);
-            console.log(12345699999999999999999);
+            console.log("녹화 저장 성공");
           })
           .catch((err) => {
             console.error(err);
-            console.log(123456);
+            console.log("녹화 저장 실패");
           });
         console.log(this.result, "result");
         console.log(this.blobUrl, "url");
@@ -142,24 +146,25 @@ export default {
       const hello = ["hello1"];
       const bye = ["bye1"];
 
-      // 랜덤으로 처음, 끝에 인사 넣기
+      // 랜덤으로 처음에 인사 넣기
       var rand1 = hello[Math.floor(Math.random() * hello.length)];
       this.scripts.push({
         id: 0,
-        source: `/media/greeting/${rand1}.mp3`,
+        file_source: `/media/greeting/${rand1}.mp3`,
         state: 2,
       });
       // 오디오 가져오는 axios & push
 
+      // 랜덤으로 끝에 인사 넣기
       var rand2 = bye[Math.floor(Math.random() * bye.length)];
       this.scripts.push({
         id: 3,
-        source: `/media/greeting/${rand2}.mp3`,
+        file_source: `/media/greeting/${rand2}.mp3`,
         state: 2,
       });
     },
     nextScript() {
-      // 녹화중이었다면 중지 & axios 보내기w
+      // 녹화중이었다면 중지 & 저장
       if (this.recordFlag) {
         this.stop();
         this.recordFlag = false;
@@ -170,13 +175,14 @@ export default {
         this.recordFlag = true;
       }
       // 오디오 실행
-      var audio = document.getElementById(`script${this.index++}`);
+      var audio = document.getElementById(`script${this.index}`);
       audio.play();
       this.characterState = "talking";
 
       // 입모양 움직이기
       setTimeout(() => {
         this.characterState = "stop";
+        this.index += 1;
         if (this.index === this.scripts.length) {
           this.$router.push({
             name: "KidsMainView",
