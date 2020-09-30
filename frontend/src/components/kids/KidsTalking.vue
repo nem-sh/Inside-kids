@@ -135,6 +135,9 @@ export default {
         video.play();
       });
   },
+  beforeDestroy() {
+    location.reload();
+  },
 };
 </script>
 

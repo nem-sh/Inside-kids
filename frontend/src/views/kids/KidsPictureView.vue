@@ -16,7 +16,15 @@
           <i class="fas fa-home fa-2x"></i>
         </v-btn>-->
       </div>
+      <div>
+        <img
+          @click="toPictureList"
+          class="back-btn"
+          src="../../assets/icons/drawings.png"
+          alt="drawings"
+        />
       </div>
+    </div>
     <KidsPicture />
   </div>
 </template>
@@ -28,7 +36,13 @@ export default {
   components: {
     KidsPicture,
   },
-  methods:{
+  methods: {
+    toPictureList() {
+      this.$router.push({
+        name: "KidsPictureListView",
+        params: { kidId: this.$route.params.kidId },
+      });
+    },
     gokidhome() {
       this.$router.push({
         name: "KidsMainView",

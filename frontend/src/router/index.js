@@ -6,6 +6,7 @@ import KidsDetailView from "@/views/parents/KidsDetailView";
 import KidsTalkingView from "@/views/kids/KidsTalkingView";
 import KidsPictureView from "@/views/kids/KidsPictureView";
 import KidsDrawingView from "@/views/kids/KidsDrawingView";
+import KidsPictureListView from "@/views/kids/KidsPictureListView";
 
 //수미
 import Home from "@/views/Home";
@@ -33,14 +34,19 @@ const routes = [
     component: KidsManageView,
   },
   {
-    path: "/child/talking",
+    path: "/child/:kidId/talking",
     name: "KidsTalkingView",
     component: KidsTalkingView,
   },
   {
-    path: "/child/picture",
+    path: "/child/:kidId/picture",
     name: "KidsPictureView",
     component: KidsPictureView,
+  },
+  {
+    path: "/child/:kidId/picture/list",
+    name: "KidsPictureListView",
+    component: KidsPictureListView,
   },
   {
     path: "/child/:kidId/drawing",
