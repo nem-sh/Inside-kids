@@ -255,73 +255,73 @@ export default {
         params: { kidId: this.$route.params.kidId },  
       });
     },
-    // characterNonActionAlgo: function () {
-    //   let now = new Date();
-    //   let nowHours = now.getHours();
-    //   if (nowHours > 19 || 7 > nowHours) {
-    //     this.sleep = true;
-    //   }
-    //   if (new Date(this.character.eat_time) - now < -30000) {
-    //     this.hungry = true;
-    //   }
-    //   if (new Date(this.character.wash_time) - now < -120000) {
-    //     this.dirty = true;
-    //   }
-    //   if (!(this.hungry || this.dirty)) {
-    //     let cnt = this.actionCnt;
-    //     let nonActionList = [4];
-    //     let nonActionNum =
-    //       nonActionList[Math.floor(Math.random() * nonActionList.length)];
-    //     let rand = Math.random() * (10000 - 3000) + 15000;
-    //     setTimeout(() => {
-    //       if (cnt == this.actionCnt) {
-    //         this.actionOnOff = true;
-    //         this.actionNum = nonActionNum;
-    //       }
-    //     }, rand);
-    //   } else {
-    //     this.actionOnOff = true;
-    //   }
-    // },
-    // actionTimer: function (ms) {
-    //   let cnt = this.actionCnt;
-    //   setTimeout(() => {
-    //     if (cnt == this.actionCnt) {
-    //       this.actionOnOff = false;
-    //       this.actionNum = 0;
-    //       this.characterNonActionAlgo();
-    //     }
-    //   }, ms);
-    // },
-    // wasAction: function () {
-    //   this.actionCnt += 1;
-    // },
-    // eat: function () {
-    //   this.actionNum = 1;
-    //   this.actionOnOff = true;
-    //   this.hungry = false;
-    //   var audio1 = document.getElementById("hungry-sound");
-    //   audio1.pause();
-    //   var audio2 = document.getElementById("eat-sound");
-    //   audio2.play();
-    //   axios
-    //     .put(
-    //       SERVER.URL +
-    //         SERVER.ROUTES.getCharacterInfo +
-    //         this.$route.params.kidId +
-    //         "/",
-    //       { eat_time: new Date(), wash_time: this.character.wash_time },
-    //       this.commonConfig
-    //     )
-    //     .then(() => {
-    //       // this.SET_CHARACTER(null);
+    characterNonActionAlgo: function () {
+      let now = new Date();
+      let nowHours = now.getHours();
+      if (nowHours > 19 || 7 > nowHours) {
+        this.sleep = true;
+      }
+      if (new Date(this.character.eat_time) - now < -30000) {
+        this.hungry = true;
+      }
+      if (new Date(this.character.wash_time) - now < -120000) {
+        this.dirty = true;
+      }
+      if (!(this.hungry || this.dirty)) {
+        let cnt = this.actionCnt;
+        let nonActionList = [4];
+        let nonActionNum =
+          nonActionList[Math.floor(Math.random() * nonActionList.length)];
+        let rand = Math.random() * (10000 - 3000) + 15000;
+        setTimeout(() => {
+          if (cnt == this.actionCnt) {
+            this.actionOnOff = true;
+            this.actionNum = nonActionNum;
+          }
+        }, rand);
+      } else {
+        this.actionOnOff = true;
+      }
+    },
+    actionTimer: function (ms) {
+      let cnt = this.actionCnt;
+      setTimeout(() => {
+        if (cnt == this.actionCnt) {
+          this.actionOnOff = false;
+          this.actionNum = 0;
+          this.characterNonActionAlgo();
+        }
+      }, ms);
+    },
+    wasAction: function () {
+      this.actionCnt += 1;
+    },
+    eat: function () {
+      this.actionNum = 1;
+      this.actionOnOff = true;
+      this.hungry = false;
+      var audio1 = document.getElementById("hungry-sound");
+      audio1.pause();
+      var audio2 = document.getElementById("eat-sound");
+      audio2.play();
+      axios
+        .put(
+          SERVER.URL +
+            SERVER.ROUTES.getCharacterInfo +
+            this.$route.params.kidId +
+            "/",
+          { eat_time: new Date(), wash_time: this.character.wash_time },
+          this.commonConfig
+        )
+        .then(() => {
+          // this.SET_CHARACTER(null);
 
-    //       this.getCharacter(this.$route.params.kidId);
-    //     })
-    //     .catch((err) => {
-    //       console.error(err);
-    //     });
-    // },
+          this.getCharacter(this.$route.params.kidId);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
     wash: function () {
       this.actionNum = 2;
       this.actionOnOff = true;
