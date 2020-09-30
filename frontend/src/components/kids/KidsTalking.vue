@@ -52,18 +52,7 @@ export default {
         interval: null,
         value: 0,
       },
-      scripts: [
-        {
-          id: 1,
-          file_source: "/media/hungry.mp3",
-          state: 0,
-        },
-        {
-          id: 2,
-          file_source: "/media/washing.mp3",
-          state: 0,
-        },
-      ],
+      scripts: [],
       index: 0,
       characterState: "stop",
       server: SERVER.URL,
@@ -108,14 +97,12 @@ export default {
         this.blobUrl = window.URL.createObjectURL(this.result);
         var formData = new FormData();
         formData.append("file_source", this.result, "video");
-        console.log(formData);
         const axiosConfig = {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `jwt ${this.authToken}`,
           },
         };
-        console.log(444444444);
         axios
           .post(
             SERVER.URL +
@@ -127,13 +114,11 @@ export default {
             formData,
             axiosConfig
           )
-          .then((res) => {
-            console.log(res);
+          .then(() => {
             console.log("녹화 저장 성공");
           })
           .catch((err) => {
-            console.error(err);
-            console.log("녹화 저장 실패");
+            console.log(err.response.data, "녹화 저장 실패");
           });
         console.log(this.result, "result");
         console.log(this.blobUrl, "url");
@@ -146,22 +131,38 @@ export default {
       const hello = ["hello1"];
       const bye = ["bye1"];
 
-      // 랜덤으로 처음에 인사 넣기
-      var rand1 = hello[Math.floor(Math.random() * hello.length)];
-      this.scripts.push({
-        id: 0,
-        file_source: `/media/greeting/${rand1}.mp3`,
-        state: 2,
-      });
       // 오디오 가져오는 axios & push
+      axios
+        .get(
+          SERVER.URL + "/contents/kids/" + this.kid.id + "/scripts/",
+          axiosConfig
+        )
+        .then((res) => {
+          // 랜덤으로 처음에 인사 넣기
+          var rand1 = hello[Math.floor(Math.random() * hello.length)];
+          this.scripts.push({
+            id: 0,
+            file_source: `/media/greeting/${rand1}.mp3`,
+            state: 2,
+          });
+          // 준비한 질문 넣기
+          res.data.forEach((script) => {
+            this.scripts.push(script);
+          });
+          this.scripts.push();
+          // 랜덤으로 끝에 인사 넣기
+          var rand2 = bye[Math.floor(Math.random() * bye.length)];
+          this.scripts.push({
+            id: this.scripts.length + 1,
+            file_source: `/media/greeting/${rand2}.mp3`,
+            state: 2,
+          });
 
-      // 랜덤으로 끝에 인사 넣기
-      var rand2 = bye[Math.floor(Math.random() * bye.length)];
-      this.scripts.push({
-        id: 3,
-        file_source: `/media/greeting/${rand2}.mp3`,
-        state: 2,
-      });
+          console.log("녹화 저장 성공");
+        })
+        .catch((err) => {
+          console.log(err.response.data, "녹화 저장 실패");
+        });
     },
     nextScript() {
       // 녹화중이었다면 중지 & 저장
