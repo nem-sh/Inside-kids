@@ -57,6 +57,7 @@ export default {
       characterState: "stop",
       server: SERVER.URL,
       recordFlag: false,
+      startFlag: false,
     };
   },
   computed: {
@@ -109,9 +110,9 @@ export default {
             SERVER.URL +
               "/contents/kids/" +
               this.$route.params.kidId +
-              "/videos/" +
+              "/scripts/" +
               scriptId +
-              "/",
+              "/videos/",
             formData,
             axiosConfig
           )
@@ -131,7 +132,6 @@ export default {
     getScripts() {
       const hello = ["hello1"];
       const bye = ["bye1"];
-
       // 오디오 가져오는 axios & push
       axios
         .get(
