@@ -26,11 +26,11 @@
           style="background-color: #2c2c2c"
           @click="chooseColor(colors.black);changeTool(0) "
         ></div>
-        <div
+        <!-- <div
           class="controls__color jsColor"
           style="background-color: white"
           @click="chooseColor(colors.white);changeTool(0)"
-        ></div>
+        ></div>-->
         <div
           class="controls__color jsColor"
           style="background-color: #ff3b30"

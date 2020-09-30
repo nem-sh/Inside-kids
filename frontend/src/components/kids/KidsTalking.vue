@@ -25,8 +25,8 @@
           <i class="fas fa-arrow-right"></i>
         </v-btn>
         <v-btn class="button is-primary" @click="record" v-else>말하기</v-btn>
-        <div v-for="script in scripts" :key="script.id">
-          <audio :id="`script`+script.id" :src="server + script.file_source"></audio>
+        <div v-for="(script, index) in scripts" :key="script.id">
+          <audio :id="`script`+ index" :src="server + script.file_source"></audio>
         </div>
         <button v-show="characterState === 'stop'" @click="nextScript">다음 대화</button>
       </div>
@@ -38,7 +38,7 @@
 import Swal from "sweetalert2";
 import axios from "axios";
 import SERVER from "@/api/drf";
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import RecordRTC from "recordrtc";
 
 export default {
@@ -60,9 +60,8 @@ export default {
     };
   },
   computed: {
-    ...mapState(["kid", "authToken"]),
+    ...mapState(["authToken"]),
     ...mapGetters(["commonConfig"]),
-    ...mapActions(["getKid"]),
     formatedTime() {
       let hour = Math.floor(this.timer.value / 3600);
       let minute = Math.floor((this.timer.value - hour * 3600) / 60);
@@ -93,6 +92,7 @@ export default {
     },
     stop() {
       console.log("녹화종료");
+      var scriptId = this.scripts[this.index - 1].id;
       this.recorder.stopRecording(() => {
         this.result = this.recorder.getBlob();
         this.blobUrl = window.URL.createObjectURL(this.result);
@@ -110,19 +110,19 @@ export default {
               "/contents/kids/" +
               this.$route.params.kidId +
               "/videos/" +
-              this.index -
-              1,
+              scriptId +
+              "/",
             formData,
             axiosConfig
           )
           .then(() => {
             console.log("녹화 저장 성공");
           })
-          .catch((err) => {
-            console.log(err.response.data, "녹화 저장 실패");
+          .catch(() => {
+            console.log("녹화 저장 실패");
           });
-        console.log(this.result, "result");
-        console.log(this.blobUrl, "url");
+        // console.log(this.result, "result");
+        // console.log(this.blobUrl, "url");
         clearInterval(this.timer.interval);
         this.timer.value = 0;
         this.timer.interval = null;
@@ -157,7 +157,7 @@ export default {
           // 랜덤으로 끝에 인사 넣기
           var rand2 = bye[Math.floor(Math.random() * bye.length)];
           this.scripts.push({
-            id: this.scripts.length + 1,
+            id: -1,
             file_source: `/media/greeting/${rand2}.mp3`,
             state: 2,
           });
@@ -173,7 +173,7 @@ export default {
         this.recordFlag = false;
       }
       // 사용자가 등록한 질문 녹화
-      if (this.scripts[this.index].state == 0) {
+      if (this.scripts[this.index].state === 0) {
         this.record();
         this.recordFlag = true;
       }
@@ -214,7 +214,6 @@ export default {
         video.volume = 0;
         video.play();
       });
-    this.nextScript();
   },
 };
 </script>
