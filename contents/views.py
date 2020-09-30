@@ -10,6 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Video, Paint, Picture, Music, Script, Character
 from .serializers import VideoSerializer, PaintSerializer, PaintListSerializer, PictureSerializer, PictureListSerializer, MusicListSerializer, ScriptSerializer, ScriptCreateSerializer, CharacterSerializer
 
+import random
 
 # video
 
