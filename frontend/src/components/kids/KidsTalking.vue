@@ -38,7 +38,7 @@
 import Swal from "sweetalert2";
 import axios from "axios";
 import SERVER from "@/api/drf";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import RecordRTC from "recordrtc";
 
 export default {
@@ -61,6 +61,7 @@ export default {
   },
   computed: {
     ...mapState(["kid", "authToken"]),
+    ...mapGetters(["commonConfig"]),
     ...mapActions(["getKid"]),
     formatedTime() {
       let hour = Math.floor(this.timer.value / 3600);
@@ -107,7 +108,7 @@ export default {
           .post(
             SERVER.URL +
               "/contents/kids/" +
-              this.kid.id +
+              this.$route.params.kidId +
               "/videos/" +
               this.index -
               1,
@@ -134,8 +135,11 @@ export default {
       // 오디오 가져오는 axios & push
       axios
         .get(
-          SERVER.URL + "/contents/kids/" + this.kid.id + "/scripts/",
-          axiosConfig
+          SERVER.URL +
+            "/contents/kids/" +
+            this.$route.params.kidId +
+            "/scripts/",
+          this.commonConfig
         )
         .then((res) => {
           // 랜덤으로 처음에 인사 넣기
@@ -157,11 +161,9 @@ export default {
             file_source: `/media/greeting/${rand2}.mp3`,
             state: 2,
           });
-
-          console.log("녹화 저장 성공");
         })
-        .catch((err) => {
-          console.log(err.response.data, "녹화 저장 실패");
+        .catch(() => {
+          console.log("스크립트 가져오기 실패");
         });
     },
     nextScript() {
