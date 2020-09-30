@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 
 //도연
 import KidsDetailView from "@/views/parents/KidsDetailView";
+import NavInfoView from "@/views/parents/NavInfoView";
 import KidsTalkingView from "@/views/kids/KidsTalkingView";
 import KidsPictureView from "@/views/kids/KidsPictureView";
 import KidsDrawingView from "@/views/kids/KidsDrawingView";
@@ -72,6 +73,11 @@ const routes = [
     path: "/child/:kidId",
     name: "KidsMainView",
     component: KidsMainView,
+  },
+  {
+    path: "/child/:kidId/info",
+    name: "NavInfoView",
+    component: NavInfoView,
   },
   {
     path: "/child/:kidId/music",

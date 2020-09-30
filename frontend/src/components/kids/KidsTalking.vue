@@ -18,7 +18,6 @@
       </div>
       <div>
         <v-btn
-          class="button is-danger"
           @click="stop"
           v-if="recorder && recorder.getState() === 'recording'"
         >

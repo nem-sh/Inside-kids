@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <section id="main">
-      <v-parallax dark src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">
+      <v-parallax dark src="https://t1.daumcdn.net/cfile/tistory/275FCF3656A1F6E428">
         <v-row align="center" justify="center">
           <v-col class="text-center" cols="12">
             <v-flex>
