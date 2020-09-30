@@ -8,7 +8,14 @@ class ScriptSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Script
-        fields = ('id', 'content')
+        fields = ('id', 'file_source', 'state')
+
+
+class ScriptCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Script
+        fields = ('id', 'content', 'state')
 
 # video
 
