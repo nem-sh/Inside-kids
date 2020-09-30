@@ -22,7 +22,7 @@ urlpatterns = [
     path('musics/', views.music_list),
 
     # script
-    path('kids/<int:kid_id>/scripts/', views.script_create),
+    path('kids/<int:kid_id>/scripts/', views.script_list_or_create),
     path('scripts/<int:script_id>/', views.script_delete),
 
     # character

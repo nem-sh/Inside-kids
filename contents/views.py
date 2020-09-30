@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Video, Paint, Picture, Music, Script, Character
-from .serializers import VideoSerializer, PaintSerializer, PaintListSerializer, PictureSerializer, PictureListSerializer, MusicListSerializer, ScriptSerializer, CharacterSerializer
+from .serializers import VideoSerializer, PaintSerializer, PaintListSerializer, PictureSerializer, PictureListSerializer, MusicListSerializer, ScriptSerializer, ScriptCreateSerializer, CharacterSerializer
 
 
 # video
@@ -112,16 +112,26 @@ def music_list(request):
 # script
 
 
-@api_view(['POST'])
+@api_view(['POST', 'GET'])
 @permission_classes([IsAuthenticated])
-def script_create(request, kid_id):
+def script_list_or_create(request, kid_id):
     kid = get_object_or_404(Kid, pk=kid_id)
-    serializer = ScriptSerializer(data=request.data)
-    if serializer.is_valid(raise_exception=True):
-        serializer.save(kid=kid)
-        return Response(serializer.data)
+    if request.method == 'GET':
+        scripts = Script.objects.filter(kid_id=kid_id, state=0)
+        n = scripts.count()
+        serializer = ScriptSerializer(scripts, many=True)
+        random_scripts = Script.objects.filter(state=2)
+        random_serializer = ScriptSerializer(random_scripts, many=True)
+        response_data = random.sample(
+            random_serializer.data, 5-n) + serializer.data
+        return Response(response_data)
     else:
-        return HttpResponse(status=400)
+        serializer = ScriptCreateSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(kid=kid)
+            return Response(serializer.data)
+        else:
+            return HttpResponse(status=400)
 
 
 @api_view(['DELETE'])

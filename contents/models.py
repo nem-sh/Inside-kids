@@ -19,9 +19,11 @@ class Music(models.Model):
 
 
 class Script(models.Model):
-    kid = models.ForeignKey("accounts.Kid", on_delete=models.CASCADE)
+    kid = models.ForeignKey(
+        "accounts.Kid", on_delete=models.CASCADE, null=True, blank=True)
     content = models.TextField()
-    used = models.BooleanField(default=False)
+    file_source = models.FileField(null=True, blank=True)
+    state = models.IntegerField(null=True)
 
 
 class Video(models.Model):
