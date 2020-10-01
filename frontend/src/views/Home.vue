@@ -64,7 +64,7 @@
     </section> -->
 
     <section id="info-video">
-      <div class="py-12"></div>
+      <div class="py-10"></div>
       <v-container class="text-center">
         <h2 class="display-2 font-weight-bold mb-3">How to use</h2>
 
@@ -85,10 +85,10 @@
           allowfullscreen
         ></iframe>
       </p>
-      <div class="py-12"></div>
+      <div class="py-10"></div>
     </section>
 
-    <section id="parents" class="grey lighten-3">
+    <v-parallax id="parents" src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">
       <div class="py-12"></div>
       <v-container class="text-center">
         <h2 class="display-2 font-weight-bold mb-5">For parents</h2>
@@ -106,21 +106,16 @@
               alt="info_parent"
             />          </v-col>
           <v-col class="my-auto" col="12" sm="6">
-            <h1>AI 캐릭터가 아이에게 대신 물어봐줄거에요!</h1>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias
-              corporis repellat eaque accusantium porro placeat reprehenderit,
-              corrupti omnis nam eos ducimus, sapiente laudantium nemo possimus
-              ipsum perspiciatis vero! Accusamus, tempora?
-            </p>
+            <h2>묻고 싶은 질문을 등록 하세요!</h2>
+            <h2>AI 캐릭터 '시송이' 가 아이에게 대신 물어봐줄거에요</h2>
           </v-col>
         </v-row>
       </v-container>
       <div class="py-12"></div>
-    </section>
+    </v-parallax>
 
  <section id="child">
-      <div class="py-12"></div>
+      <div class="py-8"></div>
       <v-container class="text-center">
         <h2 class="display-2 font-weight-bold mb-5">For children</h2>
         <v-responsive class="mx-auto mb-8" width="56">
@@ -207,7 +202,7 @@
           <v-icon>mdi-chevron-double-up</v-icon>
         </v-btn>
       </v-container>
-      <div class="py-12"></div>
+      <div class="py-8"></div>
     </section>
 
     <Footer />
