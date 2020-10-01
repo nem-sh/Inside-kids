@@ -16,6 +16,7 @@
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
     "vue-cookies": "^1.7.4",
+    "vue-responsive-video-background-player": "^1.1.2",
     "vue-router": "^3.2.0",
     "vue-web-cam": "^1.9.0",
     "vuelidate": "^0.7.5",
