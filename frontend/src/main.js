@@ -4,7 +4,9 @@ import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 import VueCookies from "vue-cookies";
+import { Plugin } from 'vue-responsive-video-background-player'
 
+Vue.use(Plugin);
 Vue.config.productionTip = false;
 Vue.use(VueCookies);
 
