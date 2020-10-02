@@ -255,44 +255,44 @@ export default {
         params: { kidId: this.$route.params.kidId },  
       });
     },
-    characterNonActionAlgo: function () {
-      let now = new Date();
-      let nowHours = now.getHours();
-      if (nowHours > 19 || 7 > nowHours) {
-        this.sleep = true;
-      }
-      if (new Date(this.character.eat_time) - now < -30000) {
-        this.hungry = true;
-      }
-      if (new Date(this.character.wash_time) - now < -120000) {
-        this.dirty = true;
-      }
-      if (!(this.hungry || this.dirty)) {
-        let cnt = this.actionCnt;
-        let nonActionList = [4];
-        let nonActionNum =
-          nonActionList[Math.floor(Math.random() * nonActionList.length)];
-        let rand = Math.random() * (10000 - 3000) + 15000;
-        setTimeout(() => {
-          if (cnt == this.actionCnt) {
-            this.actionOnOff = true;
-            this.actionNum = nonActionNum;
-          }
-        }, rand);
-      } else {
-        this.actionOnOff = true;
-      }
-    },
-    actionTimer: function (ms) {
-      let cnt = this.actionCnt;
-      setTimeout(() => {
-        if (cnt == this.actionCnt) {
-          this.actionOnOff = false;
-          this.actionNum = 0;
-          this.characterNonActionAlgo();
-        }
-      }, ms);
-    },
+    // characterNonActionAlgo: function () {
+    //   let now = new Date();
+    //   let nowHours = now.getHours();
+    //   if (nowHours > 19 || 7 > nowHours) {
+    //     this.sleep = true;
+    //   }
+    //   if (new Date(this.character.eat_time) - now < -30000) {
+    //     this.hungry = true;
+    //   }
+    //   if (new Date(this.character.wash_time) - now < -120000) {
+    //     this.dirty = true;
+    //   }
+    //   if (!(this.hungry || this.dirty)) {
+    //     let cnt = this.actionCnt;
+    //     let nonActionList = [4];
+    //     let nonActionNum =
+    //       nonActionList[Math.floor(Math.random() * nonActionList.length)];
+    //     let rand = Math.random() * (10000 - 3000) + 15000;
+    //     setTimeout(() => {
+    //       if (cnt == this.actionCnt) {
+    //         this.actionOnOff = true;
+    //         this.actionNum = nonActionNum;
+    //       }
+    //     }, rand);
+    //   } else {
+    //     this.actionOnOff = true;
+    //   }
+    // },
+    // actionTimer: function (ms) {
+    //   let cnt = this.actionCnt;
+    //   setTimeout(() => {
+    //     if (cnt == this.actionCnt) {
+    //       this.actionOnOff = false;
+    //       this.actionNum = 0;
+    //       this.characterNonActionAlgo();
+    //     }
+    //   }, ms);
+    // },
     wasAction: function () {
       this.actionCnt += 1;
     },

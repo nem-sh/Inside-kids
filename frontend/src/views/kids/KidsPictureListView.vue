@@ -46,7 +46,7 @@ export default {
     fetchDrawings() {
       axios
         .get(
-          SERVER.URL + `/contents/kids/${this.$route.params.kidId}/picture/`,
+          SERVER.URL + `/contents/kids/${this.$route.params.kidId}/pictures/`,
           this.commonConfig
         )
         .then((res) => {
