@@ -13,39 +13,62 @@ var net;
 var cameraFrame;
 var currentBGIndex = 0;
 var screenMode;
-
-$("#webcam-switch").change(function () {
-    if(this.checked){
-        $('.md-modal').addClass('md-show');
-        webcam.start(false)
-            .then(result =>{
-               $('.flash').hide();
-               cameraStarted();
-               console.log("webcam started");
-               contextPerson.clearRect(0,0,canvasPerson.width,canvasPerson.height);
-               screenMode = window.innerWidth > window.innerHeight? 'l' : 'p';
+$("#webcam-start").ready(function () {
+    cameraStarted();
+    console.log("webcam started");
+    contextPerson.clearRect(0,0,canvasPerson.width,canvasPerson.height);
+    screenMode = window.innerWidth > window.innerHeight? 'l' : 'p';
+    cameraFrame = startDetectBody();
+});
+// $("#webcam-switch").change(function () {
+//     if(this.checked){
+//         $('.md-modal').addClass('md-show');
+//         webcam.start(false)
+//             .then(result =>{
+//                $('.flash').hide();
+//                cameraStarted();
+//                console.log("webcam started");
+//                contextPerson.clearRect(0,0,canvasPerson.width,canvasPerson.height);
+//                screenMode = window.innerWidth > window.innerHeight? 'l' : 'p';
                
-               cameraFrame = startDetectBody();
-            })
-            .catch(err => {
-                displayError();
-            });
-    }
-    else {        
-        cameraStopped(false, "selfie-anywhere-app");
-        webcam.stop();
-        cancelAnimationFrame(cameraFrame);
-        contextPerson.clearRect(0,0,canvasPerson.width,canvasPerson.height);
-        console.log("webcam stopped");
-    }        
-});
+//                cameraFrame = startDetectBody();
+//             })
+//             .catch(err => {
+//                 displayError();
+//             });
+//     }
+//     else {        
+//         cameraStopped(false, "selfie-anywhere-app");
+//         webcam.stop();
+//         cancelAnimationFrame(cameraFrame);
+//         contextPerson.clearRect(0,0,canvasPerson.width,canvasPerson.height);
+//         console.log("webcam stopped");
+//     }        
+// });
 
-$("#webcam").bind("loadedmetadata", function () {
-    screenModeChange();
-    if(net != null){
-        cameraFrame = detectBody();
-    }
-});
+// $("#webcam").bind("loadedmetadata", function () {
+//     screenModeChange();
+//     if(net != null){
+//         cameraFrame = detectBody();
+//     }
+// });
+
+function detectBody(){
+    net.segmentPerson(webcamElement,  {
+        flipHorizontal: false,
+        internalResolution: 'medium',
+        segmentationThreshold: segmentationThreshold
+      })
+    .catch(error => {
+        console.log(error);
+    })
+    .then(personSegmentation => {
+        if(personSegmentation!=null){
+            drawBody(personSegmentation);
+        }
+    });
+    cameraFrame = requestAnimFrame(detectBody);
+}
 
 function startDetectBody() {
     webcam.stream()
@@ -74,23 +97,6 @@ function startDetectBody() {
         .catch(err => {
             displayError();
         });
-}
-
-function detectBody(){
-    net.segmentPerson(webcamElement,  {
-        flipHorizontal: false,
-        internalResolution: 'medium',
-        segmentationThreshold: segmentationThreshold
-      })
-    .catch(error => {
-        console.log(error);
-    })
-    .then(personSegmentation => {
-        if(personSegmentation!=null){
-            drawBody(personSegmentation);
-        }
-    });
-    cameraFrame = requestAnimFrame(detectBody);
 }
 
 function drawBody(personSegmentation)
