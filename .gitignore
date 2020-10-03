@@ -3,8 +3,8 @@ logs
 *.pid
 
 
-tts/audio/
-tts/content/data/
+contents/tts/audio/
+contents/tts/content/data/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
