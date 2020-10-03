@@ -22,8 +22,7 @@ class Script(models.Model):
     kid = models.ForeignKey(
         "accounts.Kid", on_delete=models.CASCADE, null=True, blank=True)
     content = models.TextField()
-    file_source = models.FileField(null=True, blank=True)
-    state = models.IntegerField(null=True)
+    state = models.IntegerField(null=True, default=0)
 
 
 class Video(models.Model):

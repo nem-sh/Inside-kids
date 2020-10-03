@@ -12,6 +12,7 @@ from .serializers import VideoSerializer, PaintSerializer, PaintListSerializer, 
 
 import random
 
+from .tts.infer import save_wav
 # video
 
 
@@ -115,7 +116,7 @@ def music_list(request):
 
 
 @api_view(['POST', 'GET'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def script_list_or_create(request, kid_id):
     kid = get_object_or_404(Kid, pk=kid_id)
     if request.method == 'GET':
@@ -130,7 +131,8 @@ def script_list_or_create(request, kid_id):
     else:
         serializer = ScriptCreateSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save(kid=kid)
+            script = serializer.save(kid=kid)
+            save_wav(script.content, str(script.id))
             return Response(serializer.data)
         else:
             return HttpResponse(status=400)
