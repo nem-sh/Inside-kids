@@ -2,35 +2,16 @@
   <div id="webcam-start">
     <div id="app-panel" class="app-panel md-content">
       <div id="webcam-container" class="webcam-container d-none">
-        <video
-          id="webcam"
-          autoplay
-          playsinline
-          width="640"
-          height="480"
-        ></video>
+        <video id="webcam" autoplay playsinline width="640" height="480"></video>
         <div id="selfie-container">
           <div :id="background[num]"></div>
-          <canvas
-            id="canvasPerson"
-            ref="canvas"
-            width="640"
-            height="480"
-          ></canvas>
+          <canvas id="canvasPerson" ref="canvas" width="640" height="480"></canvas>
         </div>
       </div>
 
       <!-- // -->
-      <img
-        id="arrowLeft"
-        src="../../assets/images/arrow-left.png"
-        @click="left"
-      />
-      <img
-        id="arrowRight"
-        src="../../assets/images/arrow-right.png"
-        @click="right"
-      />
+      <img id="arrowLeft" src="../../assets/images/arrow-left.png" @click="left" />
+      <img id="arrowRight" src="../../assets/images/arrow-right.png" @click="right" />
       <!-- // -->
       <div id="cameraControls" class="cameraControls">
         <v-col class="text-center">
@@ -92,13 +73,7 @@
           </div>
         </v-col>
         <!-- 이유는 모르지만 필수 -->
-        <a
-          id="download-photo"
-          download="selfie.png"
-          target="_blank"
-          title="Save Photo"
-          class="d-none"
-        ></a>
+        <a id="download-photo" download="selfie.png" target="_blank" title="Save Photo"></a>
       </div>
     </div>
   </div>
@@ -157,8 +132,9 @@ export default {
       }
     },
     download() {
-      const imgBase64 = this.$refs.canvas.toDataURL("image/png");
-      const decodImg = atob(imgBase64.split(",")[1]);
+      var imgBase64 = document.getElementById("download-photo");
+
+      const decodImg = atob(imgBase64.href.split(",")[1]);
       let array = [];
       for (let i = 0; i < decodImg.length; i++) {
         array.push(decodImg.charCodeAt(i));
