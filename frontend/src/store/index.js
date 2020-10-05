@@ -63,7 +63,7 @@ export default new Vuex.Store({
     },
     kakaoSocialLogin({ commit }, loginData) {
       axios
-        .post("http://localhost:8000/api/accounts/kakao/", loginData)
+        .post(SERVER.URL + "/accounts/kakao/", loginData)
         .then((res) => {
           commit("SET_TOKEN", res.data.token);
           commit("SET_USER", res.data.user);
@@ -92,7 +92,7 @@ export default new Vuex.Store({
 
     googleSocialLogin({ commit }, loginData) {
       axios
-        .post("http://localhost:8000/api/accounts/google/", loginData)
+        .post(SERVER.URL + "/accounts/google/", loginData)
         .then((res) => {
           commit("SET_TOKEN", res.data.token);
           commit("SET_USER", res.data.user);
