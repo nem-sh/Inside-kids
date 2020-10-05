@@ -1,45 +1,39 @@
 # -*- coding: utf-8 -*-
 
 
-import librosa
-import IPython.display as ipd
-import g2pk
-from unicodedata import normalize
-import re
-from models import FlowGenerator
-from audio_processing import dynamic_range_decompression
-from text import symbols as glow_tts_symbols, text_to_sequence
-from utils import HParams, load_checkpoint
-from tensorflow_tts.models import TFPQMF
-from tensorflow_tts.models import TFMelGANGenerator
-from tensorflow_tts.configs import MultiBandMelGANGeneratorConfig
-from tensorflow_tts.processor.ljspeech import _symbol_to_id
-from tensorflow_tts.processor.ljspeech import symbols as tensorflowtts_symbols
-from tensorflow_tts.processor.ljspeech import LJSpeechProcessor
-from sklearn.preprocessing import StandardScaler
-import tensorflow as tf
-import torch
-import numpy as np
-import json
-import yaml
 import os
 import sys
 from pathlib import Path
 from pprint import pprint
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '-1'  # USE CPU
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1' # USE CPU
 
+import yaml
+import json
+import numpy as np
+import torch
+import tensorflow as tf
+from sklearn.preprocessing import StandardScaler
 
 sys.path.append('/home/ubuntu/tts-test/contents/tts/content/TensorflowTTS')
+from tensorflow_tts.processor.ljspeech import LJSpeechProcessor
+from tensorflow_tts.processor.ljspeech import symbols as tensorflowtts_symbols
+from tensorflow_tts.processor.ljspeech import _symbol_to_id
 
+from tensorflow_tts.configs import MultiBandMelGANGeneratorConfig
+from tensorflow_tts.models import TFMelGANGenerator
+from tensorflow_tts.models import TFPQMF
 sys.path.remove('/home/ubuntu/tts-test/contents/tts/content/TensorflowTTS')
 
 sys.path.append('/home/ubuntu/tts-test/contents/tts/content/glow-tts')
+from utils import HParams, load_checkpoint
+from text import symbols as glow_tts_symbols, text_to_sequence
+from audio_processing import dynamic_range_decompression
+from models import FlowGenerator
 sys.path.remove('/home/ubuntu/tts-test/contents/tts/content/glow-tts')
 
 SAMPLING_RATE = 22050
 processor = LJSpeechProcessor(None, "korean_cleaners")
-
 
 def load_glow_tts(config_path, checkpoint_path):
     with open(config_path, "r") as f:
@@ -54,27 +48,23 @@ def load_glow_tts(config_path, checkpoint_path):
     ).to("cpu")
 
     load_checkpoint(checkpoint_path, model)
-    model.decoder.store_inverse()  # do not calcuate jacobians for fast decoding
+    model.decoder.store_inverse() # do not calcuate jacobians for fast decoding
     _ = model.eval()
 
     return model
-
 
 def inference_glow_tts(text, model, noise_scale=0.333, length_scale=0.9):
     sequence = np.array(text_to_sequence(text, ['korean_cleaners']))[None, :]
     x_tst = torch.autograd.Variable(torch.from_numpy(sequence)).cpu().long()
     x_tst_lengths = torch.tensor([x_tst.shape[1]]).cpu()
     with torch.no_grad():
-        (y_gen_tst, *r), attn_gen, *_ = model(x_tst, x_tst_lengths,
-                                              gen=True, noise_scale=noise_scale, length_scale=length_scale)
+        (y_gen_tst, *r), attn_gen, *_ = model(x_tst, x_tst_lengths, gen=True, noise_scale=noise_scale, length_scale=length_scale)
     return y_gen_tst
-
 
 def convert_mel(mel):
     converted = mel.float().data.cpu().numpy()
     converted = np.expand_dims(np.transpose(converted[0]), axis=0)
     return converted
-
 
 def normalize_mel(mel, mean, sigma):
     normalized = dynamic_range_decompression(mel)
@@ -82,53 +72,48 @@ def normalize_mel(mel, mean, sigma):
     normalized = (np.log10(normalized) - mean) / sigma
     return normalized
 
-
 def load_mb_melgan(config_path, model_path):
     with open(config_path) as f:
         raw_config = yaml.load(f, Loader=yaml.Loader)
-        mb_melgan_config = MultiBandMelGANGeneratorConfig(
-            **raw_config["generator_params"])
-        mb_melgan = TFMelGANGenerator(
-            config=mb_melgan_config, name='melgan_generator')
+        mb_melgan_config = MultiBandMelGANGeneratorConfig(**raw_config["generator_params"])
+        mb_melgan = TFMelGANGenerator(config=mb_melgan_config, name='melgan_generator')
         mb_melgan._build()
         mb_melgan.load_weights(model_path)
         pqmf = TFPQMF(config=mb_melgan_config, name="pqmf")
     return (mb_melgan, pqmf)
-
 
 def load_stats(stats_path):
     mean, scale = np.load(stats_path)
     sigma = np.sqrt(scale)
     return mean, sigma
 
-
 def synthesis(mb_melgan, pqmf, mel):
     generated_subbands = mb_melgan(mel)
     generated_audios = pqmf.synthesis(generated_subbands)
     return generated_audios[0, :, 0]
 
-
 def generate_audio_glow_tts(text, noise_scale=0.333, length_scale=0.9):
-    mel_original = inference_glow_tts(
-        text, glow_tts, noise_scale, length_scale)
+    mel_original = inference_glow_tts(text, glow_tts, noise_scale, length_scale)
     mel_nomalized = normalize_mel(mel_original, mb_mean, mb_sigma)
     audio = synthesis(mb_melgan, pqmf, mel_nomalized)
     return audio
-
 
 def generate_audio_fastspeech2(text):
     mel = inference_fastspeech2(text, fastspeech2)
     audio = synthesis(mb_melgan, pqmf, mel)
     return audio
 
+import sys
+import re
+from unicodedata import normalize
 
 sys.path.append('/home/ubuntu/tts-test/contents/tts/content/g2pK')
+import g2pk
 sys.path.remove('/home/ubuntu/tts-test/contents/tts/content/g2pK')
 
 all_symbols = set(tensorflowtts_symbols + glow_tts_symbols)
 
 g2p = g2pk.G2p()
-
 
 def normalize_text(text):
     text = simple_replace(text)
@@ -146,7 +131,6 @@ def normalize_text(text):
     text = normalize('NFC', text)
     return text
 
-
 def split_text(text):
     texts = []
     pi = 0
@@ -160,7 +144,6 @@ def split_text(text):
             pi = ci + 1
     texts.append(text[pi:])
     return texts
-
 
 def eng_cap(text):
     text = re.sub(r'(a|A)', "에이", text)
@@ -191,7 +174,6 @@ def eng_cap(text):
     text = re.sub(r'(z|Z)', "지", text)
 
     return text
-
 
 def simple_replace(text):
     # 중복된 문장 부호는 마지막 문장부호로 변경
@@ -294,17 +276,16 @@ mb_melgan, pqmf = load_mb_melgan(
 
 # long_text = "테스트 문장 입니다2"
 
+import IPython.display as ipd
 # from scipy.io.wavfile import write
+import librosa
 
-
-def save_wav(target_text, file_name):
+def save_wav(target_text,file_name):
     text = normalize_text(target_text).strip()
     if text:
-        audio = generate_audio_glow_tts(
-            text, noise_scale=0.333, length_scale=0.9)
+        audio = generate_audio_glow_tts(text, noise_scale=0.333, length_scale=0.9)
         # type(audio)
         # print(audio.numpy)
         # print(audiofile.data)
-        librosa.output.write_wav(
-            'media/audio/'+file_name+'.wav', audio.numpy(), 22050)
+        librosa.output.write_wav('media/'+file_name+'.wav', audio.numpy(), 22050)
         # ipd.display(ipd.Audio(audio, rate=SAMPLING_RATE))
