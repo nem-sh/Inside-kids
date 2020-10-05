@@ -8,10 +8,6 @@
       flex-direction: column;
     "
   >
-    <v-row
-      ><div @click="back" style="font-size: 2em" height="60" v-if="isStart">
-        <i class="fas fa-home"></i></div
-    ></v-row>
     <div v-if="isStart" class="sun"></div>
     <v-row
       style="
@@ -59,13 +55,25 @@
         >세상은 놀이터 ♪</v-btn
       >
       <div>
+        <div @click="back" style="font-size: 2em" height="60" v-if="isStart">
+          <i class="fas fa-home"></i>
+        </div>
+      </div>
+      <div>
         <h1 style="text-align: center">{{ text1 }}</h1>
       </div>
       <div>
         <h1 style="text-align: center">{{ text2 }}</h1>
       </div>
     </v-row>
-    <v-row style="display: flex; justify-content: center; align-items: center">
+    <v-row
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2;
+      "
+    >
       <div
         v-if="isStart"
         class="action-box"

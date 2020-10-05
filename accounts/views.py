@@ -92,8 +92,7 @@ def kid_detail_or_update_or_delete(request, kid_id):
 def email_verification(request, key):
     # res = requests.post(
     #     'http://localhost:8000/api/accounts/signup/verify-email/', json={'key': key})
-    res = requests.post(
-        'https://j3b106.p.ssafy.io/api/accounts/signup/verify-email/', json={'key': key})
+    res = requests.post('https://j3b106.p.ssafy.io/api/accounts/signup/verify-email/', json={'key': key})
     if res.status_code == 200:
         return render(request, 'email_verification.html')
     else:

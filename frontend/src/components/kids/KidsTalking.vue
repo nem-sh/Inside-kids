@@ -22,7 +22,10 @@
         </v-btn>-->
         <!-- <v-btn class="button is-primary" @click="record" v-else>말하기</v-btn> -->
         <div v-for="(script, index) in scripts" :key="script.id">
-          <audio :id="`script` + index" :src="server + script.file_source"></audio>
+          <audio
+            :id="`script` + index"
+            :src="server + script.file_source"
+          ></audio>
         </div>
         <button v-show="characterState === 'stop'" @click="nextScript">
           <img src="../../assets/icons/scriptNext.png" alt="script-next" />
@@ -83,7 +86,6 @@ export default {
       return value < 9 ? "0" + value : value;
     },
     record() {
-      console.log("녹화시작");
       this.recorder && this.recorder.startRecording();
       this.result = null;
       this.blobUrl && URL.revokeObjectURL(this.blobUrl);
@@ -91,7 +93,6 @@ export default {
       this.timer.interval = setInterval(() => ++this.timer.value, 1000);
     },
     stop() {
-      console.log("녹화종료");
       var scriptId = this.scripts[this.index - 1].id;
       this.recorder.stopRecording(() => {
         this.result = this.recorder.getBlob();
@@ -115,12 +116,8 @@ export default {
             formData,
             axiosConfig
           )
-          .then(() => {
-            console.log("녹화 저장 성공");
-          })
-          .catch(() => {
-            console.log("녹화 저장 실패");
-          });
+          .then(() => {})
+          .catch(() => {});
         // console.log(this.result, "result");
         // console.log(this.blobUrl, "url");
         clearInterval(this.timer.interval);
@@ -166,9 +163,7 @@ export default {
           });
           this.LoadCheck();
         })
-        .catch(() => {
-          console.log("스크립트 가져오기 실패");
-        });
+        .catch(() => {});
     },
     LoadCheck() {
       if (document.getElementById("script0")) {
@@ -194,14 +189,14 @@ export default {
         this.recordFlag = true;
       }
       // 오디오 실행
-      // var audio = document.getElementById(`script${this.index}`);
-      // audio.play();
+      var audio = document.getElementById(`script${this.index}`);
+      audio.play();
 
-      var audio = document.querySelector("audio").play();
+      // var audio = document.querySelector("audio").play();
 
-      if (audio !== undefined) {
-        audio.then(function () {}).catch(function () {});
-      }
+      // if (audio !== undefined) {
+      //   audio.then(function () {}).catch(function () {});
+      // }
 
       this.characterState = "talking";
 
@@ -252,7 +247,7 @@ export default {
 } */
 .stop {
   width: 680px;
-  height: 600px;
+  height: 767px;
   background: url("../../assets/characters/talking.png") left center;
 }
 .talking {

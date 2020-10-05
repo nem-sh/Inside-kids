@@ -5,7 +5,7 @@
   >
     <div>
       <!-- 윗 탭 -->
-      <v-col class="text-center my-10">
+      <v-col class="text-center my-10" style="min-height: 250px">
         <div style="display: flex; justify-content: center">
           <!-- 그림그리기 -->
           <button
@@ -68,7 +68,7 @@
       </v-col>
 
       <!-- 캐릭터 -->
-      <v-col class="text-center my-10">
+      <v-col class="text-center my-10" style="min-height: 300px">
         <!-- 기본 -->
         <img
           v-if="!actionOnOff"
@@ -116,7 +116,7 @@
       </v-col>
 
       <!-- 아랫 탭 -->
-      <v-col class="text-center my-10">
+      <v-col class="text-center my-10" style="min-height: 250px">
         <div style="display: flex; justify-content: center">
           <!-- 먹기 -->
           <button
@@ -245,14 +245,14 @@ export default {
     },
     gotalking() {
       this.$router.push({
-        name: "KidsTalkingView", 
+        name: "KidsTalkingView",
         params: { kidId: this.$route.params.kidId },
-         });
+      });
     },
     gopicture() {
-      this.$router.push({ 
-        name: "KidsPictureView", 
-        params: { kidId: this.$route.params.kidId },  
+      this.$router.push({
+        name: "KidsPictureView",
+        params: { kidId: this.$route.params.kidId },
       });
     },
     characterNonActionAlgo: function () {

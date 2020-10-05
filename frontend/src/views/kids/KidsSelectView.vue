@@ -1,9 +1,9 @@
 <template>
   <div class="bg-2 d-flex flex-column justify-center">
     <v-card class="mx-auto opacity-form pb-3" min-width="400" min-height="150" max-width="600">
-      <v-card-title class="mx-2 my-2">
-        <h2>Inside Kids를 이용할 프로필 선택</h2>
-      </v-card-title>
+      <div class="mx-2 my-2 text-center">
+        <h1>프로필 선택</h1>
+      </div>
       <div v-if="!kidslist.length" class="text-center">
         <h2>
           <i class="fas fa-exclamation-circle"></i> 등록된 프로필이 없습니다

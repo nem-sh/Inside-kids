@@ -2,7 +2,10 @@
   <div class="bg-2 d-flex flex-column justify-center">
     <v-card class="mx-auto opacity-form" min-width="400">
       <div>
-        <v-card-title class="text-h4 d-flex justify-center primary--text font-weight-bold">LOG IN</v-card-title>
+        <v-card-title
+          class="text-h4 d-flex justify-center primary--text font-weight-bold"
+          >LOG IN</v-card-title
+        >
         <div class="pa-5">
           <v-text-field
             label="email"
@@ -25,6 +28,20 @@
           <v-spacer></v-spacer>
           <v-btn color="primary darken-1" text @click="submit">Login</v-btn>
         </v-card-actions>
+        <div style="display: flex; justify-content: center" class="my-3">
+          <g-signin-button
+            style="cursor: pointer; max-width: 350px"
+            :params="googleSignInParams"
+            @success="onGoogleSignInSuccess"
+            @error="onGoogleSignInError"
+          >
+            <img src="../../assets/google.png" alt style="max-width: 180px; height: 55px" />
+          </g-signin-button>
+
+          <button @click="kakaoLogin">
+            <img src="../../assets/kakao.png" alt style="max-width: 180px; height: 55px" />
+          </button>
+        </div>
       </div>
     </v-card>
   </div>
@@ -35,7 +52,7 @@ import router from "@/router";
 import axios from "axios";
 import SERVER from "@/api/drf";
 import Swal from "sweetalert2";
-import { mapMutations } from "vuex";
+import { mapMutations, mapActions } from "vuex";
 
 export default {
   name: "KidsLoginView",
@@ -46,6 +63,8 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["googleSocialLogin", "kakaoSocialLogin"]),
+
     ...mapMutations(["SET_TOKEN", "SET_USER"]),
     submit() {
       if (!this.email || !this.password) {
@@ -80,6 +99,31 @@ export default {
             });
           });
       }
+    },
+    onGoogleSignInSuccess(resp) {
+      const token = resp.wc.access_token;
+      console.log(resp);
+      this.googleSocialLogin({
+        access_token: token,
+      });
+    },
+    onGoogleSignInError(error) {
+      console.log("OH NOES", error);
+    },
+    kakaoLogin() {
+      window.Kakao.Auth.login({
+        success: this.kakaoLoginSuccess,
+        fail: function (error) {
+          console.log(error);
+        },
+      });
+    },
+    kakaoLoginSuccess(response) {
+      console.log(response);
+      const token = response.access_token;
+      this.kakaoSocialLogin({
+        access_token: token,
+      });
     },
   },
 };

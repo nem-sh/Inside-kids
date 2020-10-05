@@ -2,12 +2,10 @@
   <div class>
     <Nav />
     <div class="container kids-detail-body">
-      <KidProfile />
-      <div class="text-center justify-center">
-        <h1 class="font-weight-bold mb-5">
-          <i class="fas fa-house-user"></i>
-          {{kid.name}}
-        </h1>
+      <div class="d-flex justify-center">
+        <div>
+          <KidProfile />
+        </div>
       </div>
       <v-tabs fixed-tabs color="cyan accent-4">
         <v-tab>질문관리</v-tab>

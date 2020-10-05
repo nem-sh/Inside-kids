@@ -1,6 +1,6 @@
 <template>
   <v-card class="mx-auto my-15" color="grey lighten-5" dark width="700">
-    <v-card-title class="mx-2 my-2 text--primary">
+    <v-card-title class="mx-2 my-2 text--primary" v-if="kid.scripts">
       <h3>질문 관리 ({{kid.scripts.length}}/3)</h3>
     </v-card-title>
 
@@ -97,9 +97,7 @@ export default {
               this.script = "";
               this.dialog = false;
             })
-            .catch((err) => {
-              console.error(err.response);
-            });
+            .catch(() => {});
         } else {
           Swal.fire({
             position: "center",
@@ -131,9 +129,7 @@ export default {
               });
               this.kid.scripts = newScripts;
             })
-            .catch((err) => {
-              console.error(err.response);
-            });
+            .catch(() => {});
         }
       });
     },
