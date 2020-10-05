@@ -1,7 +1,9 @@
+import requests
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from allauth.socialaccount.providers.kakao.views import KakaoOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from rest_auth.registration.views import SocialLoginView
 
@@ -14,8 +16,10 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Kid
 from .serializers import KidSerializer, KidListSerializer
 
-from contents.models import Paint, Video, Picture, Script
+from contents.models import Paint, Video, Picture, Script, Character
 from contents.serializers import PaintListSerializer, VideoSerializer, PictureListSerializer, ScriptSerializer
+
+from django.shortcuts import render
 
 
 @api_view(['DELETE'])
@@ -32,6 +36,7 @@ def kid_create_or_list(request):
         serializer = KidSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user)
+            Character.objects.create(kid_id=serializer.data['id'])
             return Response(serializer.data)
 
     else:
@@ -58,7 +63,7 @@ def kid_detail_or_update_or_delete(request, kid_id):
             many=True
         )
         script_serializer = ScriptSerializer(
-            Script.objects.filter(kid=kid, used=False),
+            Script.objects.filter(kid=kid, state=0),
             many=True
         )
         serializer = KidSerializer(kid)
@@ -84,6 +89,22 @@ def kid_detail_or_update_or_delete(request, kid_id):
         return Response({'status': 'success'})
 
 
+def email_verification(request, key):
+    # res = requests.post(
+    #     'http://localhost:8000/api/accounts/signup/verify-email/', json={'key': key})
+    res = requests.post(
+        'https://j3b106.p.ssafy.io/api/accounts/signup/verify-email/', json={'key': key})
+    if res.status_code == 200:
+        return render(request, 'email_verification.html')
+    else:
+        return render(request, 'email_fail.html')
+
+
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
+    client_class = OAuth2Client
+
+
+class KakaoLogin(SocialLoginView):
+    adapter_class = KakaoOAuth2Adapter
     client_class = OAuth2Client

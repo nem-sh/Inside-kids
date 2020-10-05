@@ -1,9 +1,10 @@
 # Initially taken from Github's Python gitignore file
 logs
 *.pid
-# Image Files
-images/
 
+
+contents/tts/audio/
+contents/tts/content/data/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -41,6 +41,10 @@
       <v-spacer></v-spacer>
       <v-btn color="green darken-1" text @click="submit">Signup</v-btn>
     </v-card-actions>
+
+    <v-overlay :value="overlay">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </div>
 </template>
 
@@ -50,6 +54,7 @@ import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 
 import axios from "axios";
 import SERVER from "@/api/drf";
+import Swal from "sweetalert2";
 
 export default {
   mixins: [validationMixin],
@@ -69,13 +74,20 @@ export default {
       email: "",
       password: "",
       repeatPassword: "",
+      overlay: false,
     };
   },
   methods: {
     submit() {
       this.$v.$touch();
       if (this.$v.$invalid) {
-        alert("입력한 내용을 다시 한번 확인해주세요.");
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: "입력한 내용을 다시 한번 확인해주세요.",
+          showConfirmButton: false,
+          timer: 1000,
+        });
       } else {
         const signupData = {
           email: this.email,
@@ -86,21 +98,42 @@ export default {
       }
     },
     signup(signupData) {
+      this.overlay = true;
       axios
         .post(SERVER.URL + SERVER.ROUTES.signup, signupData)
         .then(() => {
+          this.overlay = false;
           this.email = null;
           this.password = null;
           this.repeatPassword = null;
           this.$emit("signup");
         })
         .catch((err) => {
+          this.overlay = false;
           if ("email" in err.response.data) {
-            alert(err.response.data.email);
+            Swal.fire({
+              position: "center",
+              icon: "warning",
+              title: err.response.data.email,
+              showConfirmButton: false,
+              timer: 1000,
+            });
           } else if ("password1" in err.response.data) {
-            alert(err.response.data.password1);
+            Swal.fire({
+              position: "center",
+              icon: "warning",
+              title: err.response.data.password1,
+              showConfirmButton: false,
+              timer: 1000,
+            });
           } else {
-            alert("이메일 혹은 비밀번호를 확인해주세요.");
+            Swal.fire({
+              position: "center",
+              icon: "warning",
+              title: "이메일 혹은 비밀번호를 확인해주세요.",
+              showConfirmButton: false,
+              timer: 1000,
+            });
           }
         });
     },

@@ -6,16 +6,16 @@
         <img :src="imagePath" alt="kids-profile" />
       </v-avatar>
     </div>
-    <!-- <div class="col-12 text-center my-auto">
-      <v-btn>대화하기</v-btn>
-    </div>-->
+    <div class="col-12 text-center my-auto">
+      <v-btn @click="moveToChildPage">{{kid.name}} 놀이터</v-btn>
+    </div>
   </div>
 </template>
 
 <script>
-import SERVER from "@/api/drf";
-
+import router from "@/router";
 import { mapState } from "vuex";
+import SERVER from "@/api/drf";
 
 // import axios from 'axios'
 export default {
@@ -24,6 +24,11 @@ export default {
     ...mapState(["kid"]),
     imagePath() {
       return SERVER.URL + this.kid.image;
+    },
+  },
+  methods: {
+    moveToChildPage() {
+      router.push({ name: "KidsMainView", params: { kidId: this.kid.id } });
     },
   },
 };

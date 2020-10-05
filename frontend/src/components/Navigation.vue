@@ -3,12 +3,12 @@
     <v-app-bar dense class="deep-orange lighten-3">
       <div class="container d-flex">
         <v-toolbar-title>
-          <v-btn text dark>
-            <span>로고</span>
+          <v-btn text dark @click="moveToMain">
+            <img src="../assets/logo.png" alt="" width="80" />
           </v-btn>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn text dark>
+        <v-btn text dark @click="moveToInfo">
           <v-icon>fas fa-question-circle</v-icon>
         </v-btn>
         <div class="text-center">
@@ -31,6 +31,20 @@ export default {
   components: {
     EditUser,
     SelectKid,
+  },
+  methods: {
+    moveToMain() {
+      this.$router.push({
+        name: "KidsDetailView",
+        params: { kidId: this.$route.params.kidId },
+      });
+    },
+    moveToInfo() {
+      this.$router.push({
+        name: "NavInfoView",
+        params: { kidId: this.$route.params.kidId },
+      });
+    },
   },
 };
 </script>

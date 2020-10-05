@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '4()9jj#6v9+0w$l%5^!qh4es=su9it&oehlt*b-d0#um&5m%oj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+
+    'allauth.socialaccount.providers.kakao',
 
     # rest auth
     'rest_auth',
@@ -155,8 +157,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 # AUTH
 AUTH_USER_MODEL = 'accounts.User'
 
+# Email verification setting
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_SUBJECT_PREFIX = '[인사이드 키즈]'
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_UNIQUE_EMAIL = True
 OLD_PASSWORD_FIELD_ENABLED = True
@@ -173,7 +178,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
-    # 'EXCEPTION_HANDLER': 'accounts.utils.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'accounts.utils.custom_exception_handler'
 }
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -185,6 +190,16 @@ SOCIALACCOUNT_PROVIDERS = {
             'client_id': '356066814463-bsu1bq7npgqee92bhao0slaib1p5gvcg.apps.googleusercontent.com',
             'secret': 'PvCdJpVK3kgGbaWjI3A6LAbq',
             'key': ''
+        }
+    },
+
+    'kakao': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '4b566a63a487519e52bcd20aec5f9326',
+
         }
     }
 }

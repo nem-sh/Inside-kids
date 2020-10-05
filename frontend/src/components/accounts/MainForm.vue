@@ -1,17 +1,7 @@
 <template>
   <div>
+    <v-btn @click="start" rounded large color="white" class="red--text ma-5 font-weight-bold">시작하기</v-btn>
     <v-dialog v-model="dialog" width="450">
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          v-bind="attrs"
-          v-on="on"
-          rounded
-          large
-          color="white"
-          class="red--text ma-5 font-weight-bold"
-        >시작하기</v-btn>
-      </template>
-
       <v-card>
         <div class="d-flex justify-center">
           <v-switch v-if="!switchBoolean2" v-model="switchBoolean" inset color="secondary"></v-switch>
@@ -37,6 +27,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import router from "@/router";
 import Login from "@/components/accounts/Login";
 import Signup from "@/components/accounts/Signup";
 import ResetPassword from "@/components/accounts/ResetPassword";
@@ -55,6 +47,9 @@ export default {
       switchBoolean: false,
       switchBoolean2: false,
     };
+  },
+  computed: {
+    ...mapState(["authToken"]),
   },
   methods: {
     switchForm() {
@@ -88,6 +83,13 @@ export default {
           "가입하신 이메일로 인증 메일을 보냈습니다. 인증 후 로그인해주세요.",
       });
       this.switchBoolean = !this.switchBoolean;
+    },
+    start() {
+      if (this.authToken) {
+        router.push({ name: "KidsManageView" });
+      } else {
+        this.dialog = true;
+      }
     },
   },
   watch: {

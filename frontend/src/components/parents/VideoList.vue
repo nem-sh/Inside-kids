@@ -5,7 +5,7 @@
         <i class="fas fa-exclamation-triangle" style="color:orange"></i> 기록이 없습니다.
       </h1>
       <v-expansion-panels>
-        <VideoItem v-for="video in kid.videos" :key="video.id" :video="video"/>
+        <VideoItem v-for="video in kid.videos" :key="video.id" :video="video" />
       </v-expansion-panels>
     </v-col>
   </v-row>
@@ -21,11 +21,11 @@ export default {
   components: {
     VideoItem,
   },
-  computed:{
-      ...mapState(["kid", "authToken"]),
+  computed: {
+    ...mapState(["kid", "authToken"]),
   },
-  methods:{
-      ...mapActions(["getKid"]),
+  methods: {
+    ...mapActions(["getKid"]),
   },
 };
 </script>

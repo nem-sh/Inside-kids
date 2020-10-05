@@ -1,5 +1,10 @@
 <template>
-  <div><KidsTalking/></div>
+  <div
+    class="kid-main"
+    style="display: flex; justify-content: center; align-items: center"
+  >
+    <KidsTalking/>
+  </div>
 </template>
 
 <script>

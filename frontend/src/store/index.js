@@ -15,6 +15,7 @@ export default new Vuex.Store({
     user: {},
     kid: {},
     kidslist: {},
+    character: {},
   },
   getters: {
     isLoggedIn: (state) => !!state.authToken,
@@ -36,6 +37,9 @@ export default new Vuex.Store({
     SET_KIDSLIST(state, kids) {
       state.kidslist = kids;
     },
+    SET_CHARACTER(state, character) {
+      state.character = character;
+    },
   },
   actions: {
     login({ commit }, loginData) {
@@ -44,20 +48,97 @@ export default new Vuex.Store({
         .then((res) => {
           commit("SET_TOKEN", res.data.token);
           commit("SET_USER", res.data.user);
+          console.log(res.data.user);
           router.push({ name: "KidsManageView" });
         })
         .catch(() => {
-          alert("아이디 혹은 비밀번호를 확인해주세요.");
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "아이디 혹은 비밀번호를 확인해주세요.",
+            showConfirmButton: false,
+            timer: 1000,
+          });
         });
     },
+    kakaoSocialLogin({ commit }, loginData) {
+      axios
+        .post("http://localhost:8000/api/accounts/kakao/", loginData)
+        .then((res) => {
+          commit("SET_TOKEN", res.data.token);
+          commit("SET_USER", res.data.user);
+          router.push({ name: "KidsManageView" });
+        })
+        .catch((err) => {
+          if ("non_field_errors" in err.response.data) {
+            Swal.fire({
+              position: "center",
+              icon: "warning",
+              title: err.response.data.non_field_errors,
+              showConfirmButton: false,
+              timer: 1000,
+            });
+          } else {
+            Swal.fire({
+              position: "center",
+              icon: "warning",
+              title: "아이디 혹은 비밀번호를 확인해주세요.",
+              showConfirmButton: false,
+              timer: 1000,
+            });
+          }
+        });
+    },
+
+    googleSocialLogin({ commit }, loginData) {
+      axios
+        .post("http://localhost:8000/api/accounts/google/", loginData)
+        .then((res) => {
+          commit("SET_TOKEN", res.data.token);
+          commit("SET_USER", res.data.user);
+          router.push({ name: "KidsManageView" });
+        })
+        .catch((err) => {
+          if ("non_field_errors" in err.response.data) {
+            Swal.fire({
+              position: "center",
+              icon: "warning",
+              title: err.response.data.non_field_errors,
+              showConfirmButton: false,
+              timer: 1000,
+            });
+          } else {
+            Swal.fire({
+              position: "center",
+              icon: "warning",
+              title: "아이디 혹은 비밀번호를 확인해주세요.",
+              showConfirmButton: false,
+              timer: 1000,
+            });
+          }
+        });
+    },
+
     resetPwd(context, emailData) {
       axios
         .post(SERVER.URL + SERVER.ROUTES.resetPwd, emailData)
         .then(() => {
-          alert("비밀번호 초기화 메일을 전송했습니다.");
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "비밀번호 초기화 메일을 전송했습니다.",
+            showConfirmButton: false,
+            timer: 1000,
+          });
         })
         .catch(() => {
-          alert("존재하지 않는 이메일입니다.");
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "존재하지 않는 이메일입니다.",
+            showConfirmButton: false,
+            timer: 1000,
+          });
         });
     },
     logout({ getters, commit }) {
@@ -75,34 +156,33 @@ export default new Vuex.Store({
         })
         .catch((err) => console.log(err));
     },
-    // getUser({ getters, commit, state }) {
-    getUser({ getters, commit }) {
+    getUser({ getters, commit, state }) {
       axios
         .get(SERVER.URL + SERVER.ROUTES.getUserInfo, getters.commonConfig)
         .then((res) => {
           commit("SET_USER", res.data);
-          // if (state.authToken !== cookies.get('auth-token')) {
-          //   commit('SET_TOKEN', null)
-          //   cookies.remove('auth-token')
-          //   Swal.fire({
-          //     position: 'center',
-          //     icon: 'warning',
-          //     title: '로그인해 주세요.',
-          //   })
-          //   router.push({ name: "Home" })
-          // }
+          if (state.authToken !== cookies.get("auth-token")) {
+            commit("SET_TOKEN", null);
+            cookies.remove("auth-token");
+            Swal.fire({
+              position: "center",
+              icon: "warning",
+              title: "로그인해 주세요.",
+            });
+            router.push({ name: "Home" });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          commit("SET_TOKEN", null);
+          cookies.remove("auth-token");
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "로그인해 주세요.",
+          });
+          router.push({ name: "Home" });
         });
-      // .catch((err) => {
-      //   console.error(err)
-      //   commit('SET_TOKEN', null)
-      //   cookies.remove('auth-token')
-      //   Swal.fire({
-      //     position: 'center',
-      //     icon: 'warning',
-      //     title: '로그인해 주세요.',
-      //   })
-      //   router.push({ name: "Home" })
-      // })
     },
     getKidsList({ getters, commit }) {
       axios
@@ -135,11 +215,23 @@ export default new Vuex.Store({
           getters.commonConfig
         )
         .then(() => {
-          alert("비밀번호 변경이 완료되었습니다.");
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "비밀번호 변경이 완료되었습니다.",
+            showConfirmButton: false,
+            timer: 1000,
+          });
           location.reload();
         })
         .catch(() => {
-          alert("일상적이거나, 아이디와 비슷한 비밀번호로 바꿀 수 없습니다.");
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "일상적이거나, 아이디와 비슷한 비밀번호로 바꿀 수 없습니다.",
+            showConfirmButton: false,
+            timer: 1000,
+          });
         });
     },
     deleteUser({ getters, commit }) {
@@ -158,7 +250,13 @@ export default new Vuex.Store({
               getters.commonConfig
             )
             .then(() => {
-              alert("회원 탈퇴되었습니다.");
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "회원 탈퇴되었습니다.",
+                showConfirmButton: false,
+                timer: 1000,
+              });
               commit("SET_TOKEN", null);
               cookies.remove("auth-token");
               router.push({ name: "Home" });
@@ -168,6 +266,19 @@ export default new Vuex.Store({
             });
         }
       });
+    },
+    getCharacter({ getters, commit }, kidId) {
+      axios
+        .get(
+          SERVER.URL + SERVER.ROUTES.getCharacterInfo + kidId + "/",
+          getters.commonConfig
+        )
+        .then((res) => {
+          commit("SET_CHARACTER", res.data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     },
   },
   modules: {},
