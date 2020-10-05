@@ -17,12 +17,18 @@
         <video v-show="false" controls :src="blobUrl"></video>
       </div>
       <div>
-        <v-btn @click="stop" v-if="recorder && recorder.getState() === 'recording'">
+        <v-btn
+          @click="stop"
+          v-if="recorder && recorder.getState() === 'recording'"
+        >
           <i class="fas fa-arrow-right"></i>
         </v-btn>
         <!-- <v-btn class="button is-primary" @click="record" v-else>말하기</v-btn> -->
         <div v-for="(script, index) in scripts" :key="script.id">
-          <audio :id="`script`+ index" :src="server + script.file_source"></audio>
+          <audio
+            :id="`script` + index"
+            :src="server + script.file_source"
+          ></audio>
         </div>
         <button v-show="characterState === 'stop'" @click="nextScript">
           <img src="../../assets/icons/scriptNext.png" alt="script-next" />
@@ -56,6 +62,7 @@ export default {
       server: SERVER.URL,
       recordFlag: false,
       startFlag: false,
+      scriptsLoaded: false,
     };
   },
   computed: {
@@ -163,11 +170,25 @@ export default {
             file_source: `/media/greeting/${rand2}.mp3`,
             state: 2,
           });
+          this.LoadCheck();
         })
         .catch(() => {
           console.log("스크립트 가져오기 실패");
         });
     },
+    LoadCheck() {
+      console.log("1");
+      if (document.getElementById("script0")) {
+        if (this.index == 0) {
+          this.nextScript();
+        }
+      } else {
+        setTimeout(() => {
+          this.LoadCheck();
+        }, 1);
+      }
+    },
+
     nextScript() {
       // 녹화중이었다면 중지 & 저장
       if (this.recordFlag) {
@@ -182,6 +203,13 @@ export default {
       // 오디오 실행
       var audio = document.getElementById(`script${this.index}`);
       audio.play();
+
+      var audio = document.querySelector("audio").play();
+
+      if (audio !== undefined) {
+        audio.then(function () {}).catch(function () {});
+      }
+
       this.characterState = "talking";
 
       // 입모양 움직이기
