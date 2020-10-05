@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
 
+    'allauth.socialaccount.providers.kakao',
+
     # rest auth
     'rest_auth',
     'rest_auth.registration',
@@ -188,6 +190,16 @@ SOCIALACCOUNT_PROVIDERS = {
             'client_id': '356066814463-bsu1bq7npgqee92bhao0slaib1p5gvcg.apps.googleusercontent.com',
             'secret': 'PvCdJpVK3kgGbaWjI3A6LAbq',
             'key': ''
+        }
+    },
+
+    'kakao': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '4b566a63a487519e52bcd20aec5f9326',
+
         }
     }
 }

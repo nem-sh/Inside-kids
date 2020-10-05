@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from allauth.socialaccount.providers.kakao.views import KakaoOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from rest_auth.registration.views import SocialLoginView
 
@@ -100,4 +101,9 @@ def email_verification(request, key):
 
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
+    client_class = OAuth2Client
+
+
+class KakaoLogin(SocialLoginView):
+    adapter_class = KakaoOAuth2Adapter
     client_class = OAuth2Client

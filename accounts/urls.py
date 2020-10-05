@@ -6,4 +6,5 @@ urlpatterns = [
     path('kids/', views.kid_create_or_list),
     path('kids/<int:kid_id>/', views.kid_detail_or_update_or_delete),
     path('google/', views.GoogleLogin.as_view()),
+    path('kakao/', views.KakaoLogin.as_view()),
 ]
