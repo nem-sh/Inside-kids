@@ -41,7 +41,6 @@
   </div>
 </template>
 
-    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script>
 import { mapActions } from "vuex";
 import Swal from "sweetalert2";
@@ -88,7 +87,7 @@ export default {
       console.log("OH NOES", error);
     },
     kakaoLogin() {
-      Kakao.Auth.login({
+      window.Kakao.Auth.login({
         success: this.kakaoLoginSuccess,
         fail: function (error) {
           console.log(error);

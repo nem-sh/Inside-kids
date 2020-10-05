@@ -2,7 +2,10 @@
   <div class="bg-2 d-flex flex-column justify-center">
     <v-card class="mx-auto opacity-form" min-width="400">
       <div>
-        <v-card-title class="text-h4 d-flex justify-center primary--text font-weight-bold">LOG IN</v-card-title>
+        <v-card-title
+          class="text-h4 d-flex justify-center primary--text font-weight-bold"
+          >LOG IN</v-card-title
+        >
         <div class="pa-5">
           <v-text-field
             label="email"
