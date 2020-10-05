@@ -8,6 +8,10 @@
       flex-direction: column;
     "
   >
+    <v-row
+      ><div @click="back" style="font-size: 2em" height="60" v-if="isStart">
+        <i class="fas fa-home"></i></div
+    ></v-row>
     <div v-if="isStart" class="sun"></div>
     <v-row
       style="
@@ -15,9 +19,16 @@
         justify-content: flex-end;
         align-items: center;
         flex-direction: column;
+        z-index: 2;
       "
     >
-      <v-btn @click="back" class="blue" style="font-size: 2em" height="70" v-if="!isStart">
+      <v-btn
+        @click="backHome"
+        class="blue"
+        style="font-size: 2em"
+        height="70"
+        v-if="!isStart"
+      >
         <i class="fas fa-home"></i>
       </v-btn>
       <v-btn
@@ -27,7 +38,8 @@
         height="70"
         v-if="!isStart"
         width="100%"
-      >싹이 싹이 나네요 ♪</v-btn>
+        >싹이 싹이 나네요 ♪</v-btn
+      >
       <v-btn
         @click="music2"
         class="orange mt-4"
@@ -35,8 +47,17 @@
         height="70"
         v-if="!isStart"
         width="100%"
-      >하루 ♪</v-btn>
-
+        >하루 ♪</v-btn
+      >
+      <v-btn
+        @click="music3"
+        class="orange mt-4"
+        style="font-size: 2em"
+        height="70"
+        v-if="!isStart"
+        width="100%"
+        >세상은 놀이터 ♪</v-btn
+      >
       <div>
         <h1 style="text-align: center">{{ text1 }}</h1>
       </div>
@@ -51,14 +72,24 @@
         style="display: flex; justify-content: center; align-items: center"
       >
         <div class="dancing"></div>
-        <img
-          v-if="isMusic1"
-          class="character"
-          src="../../assets/characters/sprout.png"
-          height="280px"
-          width="350px"
-          alt="character"
-        />
+        <div height="280px" width="350px">
+          <img
+            v-if="isMusic1 && !isGrow"
+            class="character"
+            src="../../assets/characters/sprout.png"
+            height="280px"
+            width="350px"
+            alt="character"
+          />
+          <img
+            v-if="isGrow"
+            class="character"
+            src="../../assets/characters/tree.png"
+            height="280px"
+            width="350px"
+            alt="character"
+          />
+        </div>
       </div>
       <div v-else>
         <img
@@ -74,6 +105,8 @@
     <audio id="1" src="../../assets/music/1.wav"></audio>
 
     <audio id="2" src="../../assets/music/2.mp3"></audio>
+
+    <audio id="3" src="../../assets/music/3.mp3"></audio>
   </div>
 </template>
 
@@ -86,6 +119,7 @@ export default {
       text2: "",
       isStart: false,
       isMusic1: false,
+      isGrow: false,
     };
   },
   methods: {
@@ -101,14 +135,20 @@ export default {
         this.text1 = "싹이 싹이 나네요 작은 새싹이나네요.";
         this.text2 = "둥근둥근 씨앗이 이쁜 새싹이 되어요.";
       }, 8000);
+
       setTimeout(() => {
         this.text1 = "싹이트고 자라서 커다란 나무가 되면";
         this.text2 = "새들의 놀이터 되지요~";
+        this.isGrow = true;
       }, 18000);
       setTimeout(() => {
         this.text1 = "싹이 싹이 나네요 작은 새싹이나네요";
         this.text2 = "어서어서 자라서 함께함께 놀아요";
       }, 28000);
+      setTimeout(() => {
+        this.text1 = "전주 ♪";
+        this.text2 = "";
+      }, 36000);
       setTimeout(() => {
         this.text1 = "싹이 싹이 나네요 작은 새싹이나네요.";
         this.text2 = "둥근둥근 씨앗이 이쁜 새싹이 되어요.";
@@ -177,7 +217,54 @@ export default {
         this.isStart = false;
       }, 70000);
     },
+    music3: function () {
+      this.isStart = true;
+      var audio = document.getElementById("3");
+      audio.play();
+      this.text1 = "세상은 놀이터 ♪";
+      this.text2 = "";
+      setTimeout(() => {
+        this.text1 = "세상은 놀이터";
+        this.text2 = "신나게 뛰어놀자";
+      }, 5000);
+      setTimeout(() => {
+        this.text1 = "흐르는 시냇물 따라";
+        this.text2 = "물고기와 헤엄치고";
+      }, 12000);
+      setTimeout(() => {
+        this.text1 = "푸른 잔디 위로 뛰면";
+        this.text2 = "곤충들도 함께 뛰네";
+      }, 20000);
+      setTimeout(() => {
+        this.text1 = "하늘 위에 뭉게구름은";
+        this.text2 = "재미있는 만화영화";
+      }, 27000);
+      setTimeout(() => {
+        this.text1 = "세상은 놀이터";
+        this.text2 = "신나게 뛰어놀자";
+      }, 38000);
+      setTimeout(() => {
+        this.text1 = "흐르는 시냇물 따라";
+        this.text2 = "물고기와 헤엄치고";
+      }, 45000);
+      setTimeout(() => {
+        this.text1 = "푸른 잔디 위로 뛰면";
+        this.text2 = "곤충들도 함께 뛰네";
+      }, 53000);
+      setTimeout(() => {
+        this.text1 = "하늘 위에 뭉게구름은";
+        this.text2 = "재미있는 만화영화";
+      }, 60000);
+      setTimeout(() => {
+        this.text1 = "";
+        this.text2 = "";
+        this.isStart = false;
+      }, 66000);
+    },
     back: function () {
+      this.$router.go();
+    },
+    backHome: function () {
       this.$router.push(`/child/${this.$route.params.kidId}`);
     },
   },
@@ -207,7 +294,7 @@ export default {
   }
 }
 .sun {
-  width: 180px;
+  width: 188px;
   height: 180px;
   background: url("../../assets/characters/sun.png") left center;
   animation: play-sun 1.5s steps(8);
