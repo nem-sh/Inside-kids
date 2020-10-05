@@ -17,9 +17,9 @@
         <video v-show="false" controls :src="blobUrl"></video>
       </div>
       <div>
-        <v-btn @click="stop" v-if="recorder && recorder.getState() === 'recording'">
+        <!-- <v-btn @click="stop" v-if="recorder && recorder.getState() === 'recording'">
           <i class="fas fa-arrow-right"></i>
-        </v-btn>
+        </v-btn>-->
         <!-- <v-btn class="button is-primary" @click="record" v-else>말하기</v-btn> -->
         <div v-for="(script, index) in scripts" :key="script.id">
           <audio :id="`script`+ index" :src="server + script.file_source"></audio>
@@ -140,6 +140,7 @@ export default {
           this.commonConfig
         )
         .then((res) => {
+          console.log(res.data);
           // 랜덤으로 처음에 인사 넣기
           var rand1 = hello[Math.floor(Math.random() * hello.length)];
           this.scripts.push({
@@ -216,6 +217,9 @@ export default {
         video.volume = 0;
         video.play();
       });
+  },
+  beforeDestroy() {
+    location.reload();
   },
 };
 </script>

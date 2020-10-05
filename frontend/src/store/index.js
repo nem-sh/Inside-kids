@@ -48,29 +48,18 @@ export default new Vuex.Store({
         .then((res) => {
           commit("SET_TOKEN", res.data.token);
           commit("SET_USER", res.data.user);
-          console.log(res.data.user)
+          console.log(res.data.user);
           router.push({ name: "KidsManageView" });
         })
-        .catch((err) => {
-          if ("non_field_errors" in err.response.data) {
-            Swal.fire({
-              position: "center",
-              icon: "warning",
-              title: err.response.data.non_field_errors,
-              showConfirmButton: false,
-              timer: 1000,
-            });
-          } else {
-            Swal.fire({
-              position: "center",
-              icon: "warning",
-              title: "아이디 혹은 비밀번호를 확인해주세요.",
-              showConfirmButton: false,
-              timer: 1000,
-            });
-          }
+        .catch(() => {
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "아이디 혹은 비밀번호를 확인해주세요.",
+            showConfirmButton: false,
+            timer: 1000,
+          });
         });
-
     },
     kakaoSocialLogin({ commit }, loginData) {
       axios
