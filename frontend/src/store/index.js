@@ -48,7 +48,6 @@ export default new Vuex.Store({
         .then((res) => {
           commit("SET_TOKEN", res.data.token);
           commit("SET_USER", res.data.user);
-          console.log(res.data.user);
           router.push({ name: "KidsManageView" });
         })
         .catch(() => {
@@ -154,7 +153,7 @@ export default new Vuex.Store({
           });
           router.push({ name: "Home" });
         })
-        .catch((err) => console.log(err));
+        .catch(() => {});
     },
     getUser({ getters, commit, state }) {
       axios
@@ -172,8 +171,7 @@ export default new Vuex.Store({
             router.push({ name: "Home" });
           }
         })
-        .catch((err) => {
-          console.error(err);
+        .catch(() => {
           commit("SET_TOKEN", null);
           cookies.remove("auth-token");
           Swal.fire({
@@ -190,9 +188,7 @@ export default new Vuex.Store({
         .then((res) => {
           commit("SET_KIDSLIST", res.data);
         })
-        .catch((err) => {
-          console.error(err);
-        });
+        .catch(() => {});
     },
     getKid({ getters, commit }, kidId) {
       axios
@@ -203,9 +199,7 @@ export default new Vuex.Store({
         .then((res) => {
           commit("SET_KID", res.data);
         })
-        .catch((err) => {
-          console.error(err);
-        });
+        .catch(() => {});
     },
     changePassword({ getters }, data) {
       axios
@@ -261,9 +255,7 @@ export default new Vuex.Store({
               cookies.remove("auth-token");
               router.push({ name: "Home" });
             })
-            .catch((err) => {
-              console.log(err.response);
-            });
+            .catch(() => {});
         }
       });
     },
@@ -276,9 +268,7 @@ export default new Vuex.Store({
         .then((res) => {
           commit("SET_CHARACTER", res.data);
         })
-        .catch((err) => {
-          console.error(err);
-        });
+        .catch(() => {});
     },
   },
   modules: {},

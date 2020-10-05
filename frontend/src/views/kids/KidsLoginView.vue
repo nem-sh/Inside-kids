@@ -28,30 +28,19 @@
           <v-spacer></v-spacer>
           <v-btn color="primary darken-1" text @click="submit">Login</v-btn>
         </v-card-actions>
-        <div>
-          <div style="display: flex; justify-content: center">
-            <g-signin-button
-              style="cursor: pointer; max-width: 350px"
-              :params="googleSignInParams"
-              @success="onGoogleSignInSuccess"
-              @error="onGoogleSignInError"
-            >
-              <img
-                src="../../assets/google.png"
-                alt=""
-                style="max-height: 70px"
-              />
-            </g-signin-button>
-          </div>
-          <div style="display: flex; justify-content: center">
-            <button @click="kakaoLogin">
-              <img
-                src="../../assets/kakao.png"
-                alt=""
-                style="max-height: 70px"
-              />
-            </button>
-          </div>
+        <div style="display: flex; justify-content: center" class="my-3">
+          <g-signin-button
+            style="cursor: pointer; max-width: 350px"
+            :params="googleSignInParams"
+            @success="onGoogleSignInSuccess"
+            @error="onGoogleSignInError"
+          >
+            <img src="../../assets/google.png" alt style="max-width: 180px; height: 55px" />
+          </g-signin-button>
+
+          <button @click="kakaoLogin">
+            <img src="../../assets/kakao.png" alt style="max-width: 180px; height: 55px" />
+          </button>
         </div>
       </div>
     </v-card>

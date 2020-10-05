@@ -2,7 +2,7 @@
   <v-row>
     <v-col offset="2" cols="8">
       <v-container class="pa-4 text-center">
-        <v-row class="fill-height" align="center" justify="left">
+        <v-row class="fill-height" align="center">
           <h1 v-if="!kid.paints.length" class="mx-auto pt-10">
             <i class="fas fa-exclamation-triangle" style="color:orange"></i> 기록이 없습니다.
           </h1>
