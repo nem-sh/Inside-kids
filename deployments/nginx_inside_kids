@@ -4,11 +4,15 @@ upstream inside_kids_server {
 
 }
 
-
-
 server {
     listen 80;
+    server_name j3b106.p.ssafy.io;
+    return 301 https://$host$request_uri;
+}
 
+server {
+    listen 443 ssl; # managed by Certbot
+    
     server_name j3b106.p.ssafy.io;
 
     error_page 405 =200 $uri;
@@ -27,7 +31,7 @@ server {
 
 
 
-    location /media/ {
+    location /api/media/ {
 
         alias /home/ubuntu/inside_kids/media/;
 
@@ -61,24 +65,10 @@ server {
 
         try_files $uri $uri/ /index.html;
     }
-
-
-    listen 443 ssl; # managed by Certbot
     ssl_certificate /etc/letsencrypt/live/j3b106.p.ssafy.io/fullchain.pem; # managed by Certbot
     ssl_certificate_key /etc/letsencrypt/live/j3b106.p.ssafy.io/privkey.pem; # managed by Certbot
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-}
 
 
-server {
-    if ($host = j3b106.p.ssafy.io) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
-
-
-    listen 80;
-
-    server_name j3b106.p.ssafy.io;
-    return 404; # managed by Certbot
 }

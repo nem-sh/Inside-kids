@@ -1,6 +1,6 @@
 export default {
   URL: "http://localhost:8000/api",
-  // URL: "https://j3b106.p.ssafy.io",
+  // URL: "https://j3b106.p.ssafy.io/api",
   ROUTES: {
     // auth
     login: "/accounts/login/",

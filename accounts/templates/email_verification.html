@@ -4,9 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>[인사이드 키즈] 이메일 확인</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body>
-    <h1>이메일 인증이 완료되었습니다!</h1>
-    <a href="https://j3b106.p.ssafy.io">사이트로 이동</a>
+    <h2>[인사이드 키즈]</h2>
+    <a href="https://j3b106.p.ssafy.io/">사이트로 이동</a>
+    
+    <script>
+      const key = "{{key}}"
+      const data = {
+        'key':key
+      }
+      // axios.post('https://j3b106.p.ssafy.io/api/accounts/signup/verify-email/',data)
+      axios.post('http://localhost:8000/api/accounts/signup/verify-email/',data)
+        .then((res)=>{
+          if (res.data.detail=="ok"){
+            alert("이메일 확인이 완료되었습니다!")
+          }
+          else{
+            alert("이메일 확인이 실패하였습니다.. 사이트 관리자에게 문의하세요. kkobuk.root@gmail.com")
+          }
+        })
+        .catch((err)=>{
+          alert("이메일 확인이 실패하였습니다.. 사이트 관리자에게 문의하세요. kkobuk.root@gmail.com")
+          }) 
+    </script>
   </body>
 </html>
