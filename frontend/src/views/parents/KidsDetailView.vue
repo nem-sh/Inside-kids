@@ -2,12 +2,25 @@
   <div class>
     <Nav />
     <div class="container kids-detail-body">
-      <KidProfile />
-      <div class="text-center justify-center">
-        <h1 class="font-weight-bold mb-5">
-          <i class="fas fa-house-user"></i>
-          {{kid.name}}
-        </h1>
+      <div class="d-flex justify-center">
+        <div>
+          <KidProfile />
+          <div class="text-center justify-center">
+            <h1 class="font-weight-bold mb-5">
+              <i class="fas fa-house-user"></i>
+              {{kid.name}}
+            </h1>
+          </div>
+        </div>
+        <div class="my-auto" style="cursor:pointer">
+          <img
+            @click="moveToChildPage"
+            width="50px"
+            src="../../assets/characters/character.png"
+            alt="playroom"
+          />
+          <!-- <v-btn @click="moveToChildPage">{{kid.name}} 놀이터</v-btn> -->
+        </div>
       </div>
       <v-tabs fixed-tabs color="cyan accent-4">
         <v-tab>질문관리</v-tab>
@@ -33,6 +46,7 @@
 </template>
 
 <script>
+import router from "@/router";
 import { mapActions, mapState } from "vuex";
 import KidProfile from "@/components/parents/KidProfile";
 import VideoList from "@/components/parents/VideoList";
@@ -58,6 +72,9 @@ export default {
   },
   methods: {
     ...mapActions(["getUser", "getKid"]),
+    moveToChildPage() {
+      router.push({ name: "KidsMainView", params: { kidId: this.kid.id } });
+    },
   },
   created() {
     this.getUser();

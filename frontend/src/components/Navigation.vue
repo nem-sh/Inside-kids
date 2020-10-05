@@ -4,7 +4,7 @@
       <div class="container d-flex">
         <v-toolbar-title>
           <v-btn text dark @click="moveToMain">
-            <img src="../assets/logo.png" alt="" width="80" />
+            <img src="../assets/logo.png" alt width="80" />
           </v-btn>
         </v-toolbar-title>
         <v-spacer></v-spacer>
@@ -35,8 +35,7 @@ export default {
   methods: {
     moveToMain() {
       this.$router.push({
-        name: "KidsDetailView",
-        params: { kidId: this.$route.params.kidId },
+        name: "Home",
       });
     },
     moveToInfo() {

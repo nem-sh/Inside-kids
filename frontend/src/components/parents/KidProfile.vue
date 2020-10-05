@@ -2,13 +2,13 @@
   <div class="row my-5 mx-5">
     <!-- <div class="col-lg-2 col-md-3 col-4 box"> -->
     <div class="col-lg-12 text-center">
-      <v-avatar size="120px">
+      <v-avatar size="120px" v-if="kid.image">
         <img :src="imagePath" alt="kids-profile" />
       </v-avatar>
     </div>
-    <div class="col-12 text-center my-auto">
+    <!-- <div class="col-12 text-center my-auto">
       <v-btn @click="moveToChildPage">{{kid.name}} 놀이터</v-btn>
-    </div>
+    </div>-->
   </div>
 </template>
 
