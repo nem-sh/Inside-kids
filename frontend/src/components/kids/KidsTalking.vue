@@ -201,8 +201,8 @@ export default {
         this.recordFlag = true;
       }
       // 오디오 실행
-      var audio = document.getElementById(`script${this.index}`);
-      audio.play();
+      // var audio = document.getElementById(`script${this.index}`);
+      // audio.play();
 
       var audio = document.querySelector("audio").play();
 
