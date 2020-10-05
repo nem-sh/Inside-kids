@@ -10,24 +10,23 @@
     />-->
     <div class="text-center">
       <div v-show="!result">
-        <h4 class="title is-4">{{ timer.interval ? `${formatedTime}` : "00:00:00" }}</h4>
+        <!-- <h4 class="title is-4">{{ timer.interval ? `${formatedTime}` : "00:00:00" }}</h4> -->
         <video v-show="false" ref="video"></video>
       </div>
       <div v-show="result">
         <video v-show="false" controls :src="blobUrl"></video>
       </div>
       <div>
-        <v-btn
-          @click="stop"
-          v-if="recorder && recorder.getState() === 'recording'"
-        >
+        <v-btn @click="stop" v-if="recorder && recorder.getState() === 'recording'">
           <i class="fas fa-arrow-right"></i>
         </v-btn>
-        <v-btn class="button is-primary" @click="record" v-else>말하기</v-btn>
+        <!-- <v-btn class="button is-primary" @click="record" v-else>말하기</v-btn> -->
         <div v-for="(script, index) in scripts" :key="script.id">
           <audio :id="`script`+ index" :src="server + script.file_source"></audio>
         </div>
-        <button v-show="characterState === 'stop'" @click="nextScript">다음 대화</button>
+        <button v-show="characterState === 'stop'" @click="nextScript">
+          <img src="../../assets/icons/scriptNext.png" alt="script-next" />
+        </button>
       </div>
     </div>
   </div>
@@ -150,7 +149,11 @@ export default {
           });
           // 준비한 질문 넣기
           res.data.forEach((script) => {
-            this.scripts.push(script);
+            this.scripts.push({
+              id: script.id,
+              file_source: `/media/audio/${script.id}.wav`,
+              state: script.state,
+            });
           });
           this.scripts.push();
           // 랜덤으로 끝에 인사 넣기
