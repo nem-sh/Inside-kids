@@ -4,7 +4,7 @@
       <div class="container d-flex">
         <v-toolbar-title>
           <v-btn text dark @click="moveToMain">
-            <span>로고</span>
+            <img src="../assets/logo.png" alt="" width="80" />
           </v-btn>
         </v-toolbar-title>
         <v-spacer></v-spacer>
@@ -35,15 +35,15 @@ export default {
   methods: {
     moveToMain() {
       this.$router.push({
-        name: "KidsDetailView", 
+        name: "KidsDetailView",
         params: { kidId: this.$route.params.kidId },
-         });
+      });
     },
     moveToInfo() {
       this.$router.push({
-        name: "NavInfoView", 
+        name: "NavInfoView",
         params: { kidId: this.$route.params.kidId },
-         });
+      });
     },
   },
 };
