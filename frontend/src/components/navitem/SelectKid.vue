@@ -19,9 +19,7 @@
             {{ kid.name }}
           </v-list-item-title>
         </v-list-item>
-        <v-btn @click="movePage">
-          <v-icon>fas fa-cog</v-icon>설정
-        </v-btn>
+        <v-btn @click="movePage"> <v-icon>fas fa-cog</v-icon>설정 </v-btn>
       </v-list>
     </v-menu>
   </div>
@@ -44,6 +42,9 @@ export default {
   methods: {
     ...mapActions(["getKidsList"]),
     kidDetail(index) {
+      if (index == this.$route.params.kidId) {
+        this.$router.go();
+      }
       this.$router.push({ name: "KidsDetailView", params: { kidId: index } });
     },
     movePage() {
