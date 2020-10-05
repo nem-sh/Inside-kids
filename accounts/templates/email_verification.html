@@ -15,7 +15,8 @@
       const data = {
         'key':key
       }
-      axios.post('https://j3b106.p.ssafy.io/api/accounts/signup/verify-email/',data)
+      // axios.post('https://j3b106.p.ssafy.io/api/accounts/signup/verify-email/',data)
+      axios.post('http://localhost:8000/api/accounts/signup/verify-email/',data)
         .then((res)=>{
           if (res.data.detail=="ok"){
             alert("이메일 확인이 완료되었습니다!")

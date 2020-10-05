@@ -12,7 +12,7 @@ from .serializers import VideoSerializer, PaintSerializer, PaintListSerializer, 
 
 import random
 
-from .tts.infer import save_wav
+# from .tts.infer import save_wav
 # video
 
 
@@ -134,7 +134,7 @@ def script_list_or_create(request, kid_id):
         serializer = ScriptCreateSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             script = serializer.save(kid=kid)
-            save_wav(script.content, str(script.id))
+            # save_wav(script.content, str(script.id))
             return Response(serializer.data)
         else:
             return HttpResponse(status=400)
