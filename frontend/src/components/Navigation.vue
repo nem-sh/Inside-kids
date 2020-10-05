@@ -8,15 +8,43 @@
           </v-btn>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn text dark @click="moveToInfo">
+        <!-- <v-btn  @click="moveToInfo">
           <v-icon>fas fa-question-circle</v-icon>
-        </v-btn>
+        </v-btn>-->
         <div class="text-center">
           <SelectKid />
         </div>
         <div class="text-center">
           <EditUser />
         </div>
+
+        <v-dialog v-model="dialog" width="600">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn text dark v-bind="attrs" v-on="on">
+              <v-icon>fas fa-question-circle</v-icon>
+            </v-btn>
+          </template>
+          <v-card class="mx-auto my-auto">
+            <v-card-title class="text-center">
+              <h2>서비스 사용 안내</h2>
+            </v-card-title>
+            <div class="p-5">
+              <iframe
+                v-if="dialog"
+                src="https://www.youtube.com/embed/nNONgE0KWR4"
+                frameborder="no"
+                scrolling="no"
+                width="600px"
+                height="400px"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </div>
     </v-app-bar>
   </nav>
@@ -32,18 +60,23 @@ export default {
     EditUser,
     SelectKid,
   },
+  data() {
+    return {
+      dialog: false,
+    };
+  },
   methods: {
     moveToMain() {
       this.$router.push({
         name: "Home",
       });
     },
-    moveToInfo() {
-      this.$router.push({
-        name: "NavInfoView",
-        params: { kidId: this.$route.params.kidId },
-      });
-    },
+    // moveToInfo() {
+    //   this.$router.push({
+    //     name: "NavInfoView",
+    //     params: { kidId: this.$route.params.kidId },
+    //   });
+    // },
   },
 };
 </script>
