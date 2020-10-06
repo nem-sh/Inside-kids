@@ -100,6 +100,17 @@
               width="150px"
               style="position: absolute; top: -200px; right: -250px"
             />
+            <img
+              v-if="
+                !(sleep || dirty || hungry) &&
+                actionNum == 0 &&
+                character.exist_talk
+              "
+              src="../../assets/characters/wantTalk.png"
+              height="140px"
+              width="150px"
+              style="position: absolute; top: -200px; right: -250px"
+            />
           </div>
           <div style="z-index: 2; position: absolute">
             <img
@@ -261,10 +272,10 @@ export default {
       if (nowHours > 19 || 7 > nowHours) {
         this.sleep = true;
       }
-      if (new Date(this.character.eat_time) - now < -30000) {
+      if (new Date(this.character.eat_time) - now < -1000000) {
         this.hungry = true;
       }
-      if (new Date(this.character.wash_time) - now < -120000) {
+      if (new Date(this.character.wash_time) - now < -1500000) {
         this.dirty = true;
       }
       if (!(this.hungry || this.dirty)) {
@@ -321,7 +332,7 @@ export default {
         .catch((err) => {
           if (err.response.status == 403) {
             alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
-            router.push({ name: "Home" });
+            this.$router.push({ name: "Home" });
           } else {
             console.log(err.response);
           }
@@ -352,7 +363,7 @@ export default {
         .catch((err) => {
           if (err.response.status == 403) {
             alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
-            router.push({ name: "Home" });
+            this.$router.push({ name: "Home" });
           } else {
             console.log(err.response);
           }

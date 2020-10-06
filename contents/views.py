@@ -174,7 +174,14 @@ def character_detail_or_update(request, kid_id):
             character.eat_time = request.data['eat_time']
             character.wash_time = request.data['wash_time']
             character.save()
-        serializer = CharacterSerializer(character)
-        return Response(serializer.data)
+            serializer = CharacterSerializer(character)
+            return Response(serializer.data)
+        else:
+            if Script.objects.filter(kid_id=kid_id, state=0).exists():
+                exist_talk = True
+            else:
+                exist_talk = False
+            serializer = CharacterSerializer(character)
+            return Response({**serializer.data, **{"exist_talk": exist_talk}})
     else:
         return HttpResponse(status=403)

@@ -165,7 +165,7 @@ export default {
           .catch((err) => {
             if (err.response.status == 403) {
               alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
-              router.push({ name: "Home" });
+              this.$router.push({ name: "Home" });
             } else {
               console.error(err.response);
             }
@@ -210,7 +210,7 @@ export default {
           .catch((err) => {
             if (err.response.status == 403) {
               alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
-              router.push({ name: "Home" });
+              this.$router.push({ name: "Home" });
             } else {
               console.error(err.response);
             }
@@ -246,7 +246,7 @@ export default {
             .catch((err) => {
               if (err.response.status == 403) {
                 alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
-                router.push({ name: "Home" });
+                this.$router.push({ name: "Home" });
               } else {
                 console.error(err.response);
               }
