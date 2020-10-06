@@ -6,7 +6,7 @@
           <h1 v-if="!kid.paints.length" class="mx-auto pt-10">
             <i class="fas fa-exclamation-triangle" style="color:orange"></i> 기록이 없습니다.
           </h1>
-          <ContentItem v-for="paint in kid.paints" :key="paint.id" :content="paint" />
+          <ContentItem v-for="paint in kid.paints" :key="paint.id" :content="paint" :flag="false" />
         </v-row>
       </v-container>
     </v-col>

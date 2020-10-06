@@ -44,6 +44,9 @@
                       <i class="far fa-comment"></i>카카오톡 공유하기
                     </v-btn>
                   </div>
+                  <div class="ml-3">
+                    <v-btn color="red accent-2" dark @click="remove">삭제하기</v-btn>
+                  </div>
                 </div>
               </v-col>
             </v-row>
@@ -55,12 +58,16 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from "vuex";
+import axios from "axios";
 import SERVER from "@/api/drf";
+import Swal from "sweetalert2";
 
 export default {
   name: "ContentItem",
   props: {
     content: Object,
+    flag: Boolean,
   },
   data() {
     return {
@@ -68,6 +75,8 @@ export default {
     };
   },
   computed: {
+    ...mapState(["kid"]),
+    ...mapGetters(["commonConfig"]),
     contentImg() {
       return SERVER.URL + this.content.file_source;
     },
@@ -75,11 +84,64 @@ export default {
   methods: {
     sendLink() {
       window.Kakao.Link.sendCustom({
-        templateId: 37115,
+        templateId: 38029,
         templateArgs: {
           THU: this.contentImg,
         },
       });
+    },
+    remove() {
+      if (this.flag === true) {
+        // 사진 삭제
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: "삭제하시겠습니까?",
+          showCancelButton: true,
+          confirmButtonText: `Yes`,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            axios
+              .delete(
+                SERVER.URL + "/contents/pictures/" + this.content.id + "/",
+                this.commonConfig
+              )
+              .then(() => {
+                this.$emit("pictureRemove", this.content.id);
+                const newPictures = this.kid.pictures.filter((picture) => {
+                  return picture.id !== this.content.id;
+                });
+                this.kid.pictures = newPictures;
+              })
+              .catch(() => {});
+          }
+        });
+      } else {
+        // 그림 삭제
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: "삭제하시겠습니까?",
+          showCancelButton: true,
+          confirmButtonText: `Yes`,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            axios
+              .delete(
+                SERVER.URL + "/contents/paints/" + this.content.id + "/",
+                this.commonConfig
+              )
+              .then(() => {
+                this.$emit("drawRemove", this.content.id);
+                const newPaints = this.kid.paints.filter((paint) => {
+                  return paint.id !== this.content.id;
+                });
+                this.kid.paints = newPaints;
+              })
+              .catch(() => {});
+          }
+        });
+      }
     },
   },
 };
