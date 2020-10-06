@@ -1,2 +1,3 @@
-0 Class 1
-1 Class 2
+0 True
+1 Lie
+2 None
