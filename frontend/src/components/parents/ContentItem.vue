@@ -2,13 +2,18 @@
   <v-col cols="6" md="4">
     <v-hover v-slot:default="{ hover }">
       <v-card
-        @click.stop="dialog=true"
+        @click.stop="dialog = true"
         class="custom-card"
         :elevation="hover ? 12 : 2"
         :class="{ 'on-hover': hover }"
       >
-        <img :src="contentImg" alt="content-image" width="100%" height="150px" />
-        <p>{{content.created_at.slice(0,10)}}</p>
+        <img
+          :src="contentImg"
+          alt="content-image"
+          width="100%"
+          height="150px"
+        />
+        <p>{{ content.created_at.slice(0, 10) }}</p>
       </v-card>
     </v-hover>
     <v-dialog v-model="dialog" max-width="40rem">
@@ -31,7 +36,7 @@
                   <div class="mr-5">
                     <v-btn color="cyan lighten-1" dark>
                       <a
-                        style="text-decoration:none; color:white"
+                        style="text-decoration: none; color: white"
                         :download="content.file_source"
                         :href="content.file_source"
                       >
@@ -45,7 +50,9 @@
                     </v-btn>
                   </div>
                   <div class="ml-3">
-                    <v-btn color="red accent-2" dark @click="remove">삭제하기</v-btn>
+                    <v-btn color="red accent-2" dark @click="remove"
+                      >삭제하기</v-btn
+                    >
                   </div>
                 </div>
               </v-col>
@@ -113,7 +120,14 @@ export default {
                 });
                 this.kid.pictures = newPictures;
               })
-              .catch(() => {});
+              .catch((err) => {
+                if (err.response.status == 403) {
+                  alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
+                  router.push({ name: "Home" });
+                } else {
+                  console.log(err.response);
+                }
+              });
           }
         });
       } else {
@@ -138,7 +152,14 @@ export default {
                 });
                 this.kid.paints = newPaints;
               })
-              .catch(() => {});
+              .catch((err) => {
+                if (err.response.status == 403) {
+                  alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
+                  router.push({ name: "Home" });
+                } else {
+                  console.log(err.response);
+                }
+              });
           }
         });
       }

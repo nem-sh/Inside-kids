@@ -319,7 +319,12 @@ export default {
           this.getCharacter(this.$route.params.kidId);
         })
         .catch((err) => {
-          console.error(err);
+          if (err.response.status == 403) {
+            alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
+            router.push({ name: "Home" });
+          } else {
+            console.log(err.response);
+          }
         });
     },
     wash: function () {
@@ -345,7 +350,12 @@ export default {
           this.getCharacter(this.$route.params.kidId);
         })
         .catch((err) => {
-          console.error(err);
+          if (err.response.status == 403) {
+            alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
+            router.push({ name: "Home" });
+          } else {
+            console.log(err.response);
+          }
         });
     },
     hungrySoundOn: function () {

@@ -153,7 +153,7 @@ export default new Vuex.Store({
           });
           router.push({ name: "Home" });
         })
-        .catch(() => {});
+        .catch(() => { });
     },
     getUser({ getters, commit, state }) {
       axios
@@ -188,7 +188,12 @@ export default new Vuex.Store({
         .then((res) => {
           commit("SET_KIDSLIST", res.data);
         })
-        .catch(() => {});
+        .catch((err) => {
+          if (err.response.status == 403) {
+            alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.")
+            router.push({ name: "Home" });
+          }
+        });
     },
     getKid({ getters, commit }, kidId) {
       axios
@@ -199,7 +204,12 @@ export default new Vuex.Store({
         .then((res) => {
           commit("SET_KID", res.data);
         })
-        .catch(() => {});
+        .catch((err) => {
+          if (err.response.status == 403) {
+            alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.")
+            router.push({ name: "Home" });
+          }
+        });
     },
     changePassword({ getters }, data) {
       axios
@@ -218,7 +228,11 @@ export default new Vuex.Store({
           });
           location.reload();
         })
-        .catch(() => {
+        .catch((err) => {
+          if (err.response.status == 403) {
+            alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.")
+            router.push({ name: "Home" });
+          }
           Swal.fire({
             position: "center",
             icon: "warning",
@@ -255,7 +269,12 @@ export default new Vuex.Store({
               cookies.remove("auth-token");
               router.push({ name: "Home" });
             })
-            .catch(() => {});
+            .catch((err) => {
+              if (err.response.status == 403) {
+                alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.")
+                router.push({ name: "Home" });
+              }
+            });
         }
       });
     },
@@ -268,7 +287,12 @@ export default new Vuex.Store({
         .then((res) => {
           commit("SET_CHARACTER", res.data);
         })
-        .catch(() => {});
+        .catch((err) => {
+          if (err.response.status == 403) {
+            alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.")
+            router.push({ name: "Home" });
+          }
+        });
     },
   },
   modules: {},

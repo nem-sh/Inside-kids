@@ -13,7 +13,8 @@
       <v-container class="pa-4 text-center">
         <v-row class="fill-height" align="center">
           <h1 v-if="!pictures.length" class="mx-auto pt-10">
-            <i class="fas fa-exclamation-triangle" style="color:orange"></i> 기록이 없습니다.
+            <i class="fas fa-exclamation-triangle" style="color: orange"></i>
+            기록이 없습니다.
           </h1>
           <ContentItem
             v-for="picture in pictures"
@@ -60,7 +61,12 @@ export default {
           this.pictures = res.data;
         })
         .catch((err) => {
-          console.error(err.response);
+          if (err.response.status == 403) {
+            alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
+            router.push({ name: "Home" });
+          } else {
+            console.log(err.response);
+          }
         });
     },
     back() {

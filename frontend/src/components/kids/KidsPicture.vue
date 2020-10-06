@@ -2,16 +2,35 @@
   <div id="webcam-start">
     <div id="app-panel" class="app-panel md-content">
       <div id="webcam-container" class="webcam-container d-none">
-        <video id="webcam" autoplay playsinline width="640" height="480"></video>
+        <video
+          id="webcam"
+          autoplay
+          playsinline
+          width="640"
+          height="480"
+        ></video>
         <div id="selfie-container">
           <div :id="background[num]"></div>
-          <canvas id="canvasPerson" ref="canvas" width="640" height="480"></canvas>
+          <canvas
+            id="canvasPerson"
+            ref="canvas"
+            width="640"
+            height="480"
+          ></canvas>
         </div>
       </div>
 
       <!-- // -->
-      <img id="arrowLeft" src="../../assets/images/arrow-left.png" @click="left" />
-      <img id="arrowRight" src="../../assets/images/arrow-right.png" @click="right" />
+      <img
+        id="arrowLeft"
+        src="../../assets/images/arrow-left.png"
+        @click="left"
+      />
+      <img
+        id="arrowRight"
+        src="../../assets/images/arrow-right.png"
+        @click="right"
+      />
       <!-- // -->
       <div id="cameraControls" class="cameraControls">
         <v-col class="text-center">
@@ -73,7 +92,12 @@
           </div>
         </v-col>
         <!-- 이유는 모르지만 필수 -->
-        <a id="download-photo" download="selfie.png" target="_blank" title="Save Photo"></a>
+        <a
+          id="download-photo"
+          download="selfie.png"
+          target="_blank"
+          title="Save Photo"
+        ></a>
       </div>
     </div>
   </div>
@@ -167,7 +191,12 @@ export default {
           });
         })
         .catch((err) => {
-          console.error(err.response);
+          if (err.response.status == 403) {
+            alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
+            router.push({ name: "Home" });
+          } else {
+            console.log(err.response);
+          }
         });
     },
   },
