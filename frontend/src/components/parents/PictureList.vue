@@ -6,7 +6,12 @@
           <h1 v-if="!kid.pictures.length" class="mx-auto pt-10">
             <i class="fas fa-exclamation-triangle" style="color:orange"></i> 기록이 없습니다.
           </h1>
-          <ContentItem v-for="picture in kid.pictures" :key="picture.id" :content="picture" />
+          <ContentItem
+            v-for="picture in kid.pictures"
+            :key="picture.id"
+            :content="picture"
+            :flag="true"
+          />
         </v-row>
       </v-container>
     </v-col>

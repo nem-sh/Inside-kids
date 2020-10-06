@@ -15,7 +15,13 @@
           <h1 v-if="!drawings.length" class="mx-auto pt-10">
             <i class="fas fa-exclamation-triangle" style="color:orange"></i> 기록이 없습니다.
           </h1>
-          <ContentItem v-for="drawing in drawings" :key="drawing.id" :content="drawing" />
+          <ContentItem
+            v-for="drawing in drawings"
+            :key="drawing.id"
+            :content="drawing"
+            :flag="false"
+            @drawRemove="refresh"
+          />
         </v-row>
       </v-container>
     </v-col>
@@ -23,7 +29,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import axios from "axios";
 import SERVER from "@/api/drf";
 
@@ -40,6 +46,7 @@ export default {
     };
   },
   computed: {
+    ...mapState(["kid"]),
     ...mapGetters(["commonConfig"]),
   },
   methods: {
@@ -58,6 +65,12 @@ export default {
     },
     back() {
       history.back();
+    },
+    refresh(contentId) {
+      const newPaints = this.drawings.filter((paint) => {
+        return paint.id !== contentId;
+      });
+      this.drawings = newPaints;
     },
   },
   created() {
