@@ -21,8 +21,6 @@ pil_image = Image.fromarray(image)
 d = ImageDraw.Draw(pil_image)
 
 for face_landmarks in face_landmarks_list:
-    # for facial_feature in face_landmarks.keys():
-    #     print("The {} in this face has the following points: {}".format(facial_feature, face_landmarks[facial_feature]))
     right_eye=face_landmarks["right_eye"]
     left_eye=face_landmarks["left_eye"]
     
@@ -57,12 +55,11 @@ for face_landmarks in face_landmarks_list:
 
 plt.rcParams["figure.figsize"] = (16,16)
 plt.imshow(image)
-plt.show()
 
 left_eye = image[left_min[1]:left_max[1],left_min[0]:left_max[0]]
 plt.imshow(left_eye)
-plt.savefig('media/left.png',bbox_inches='tight')
+plt.savefig('media/left.jpg',bbox_inches='tight')
 
 right_eye = image[right_min[1]:right_max[1],right_min[0]:right_max[0]]
 plt.imshow(right_eye)
-plt.savefig('media/right.png',bbox_inches='tight')
+plt.savefig('media/right.jpg',bbox_inches='tight')
