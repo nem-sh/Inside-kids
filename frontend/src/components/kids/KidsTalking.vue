@@ -22,7 +22,10 @@
         </v-btn>-->
         <!-- <v-btn class="button is-primary" @click="record" v-else>말하기</v-btn> -->
         <div v-for="(script, index) in scripts" :key="script.id">
-          <audio :id="`script` + index" :src="server + script.file_source"></audio>
+          <audio
+            :id="`script` + index"
+            :src="server + script.file_source"
+          ></audio>
         </div>
         <audio id="reaction"></audio>
         <button v-show="characterState === 'stop'" @click="nextScript">
@@ -117,7 +120,14 @@ export default {
               axiosConfig
             )
             .then(() => {})
-            .catch(() => {});
+            .catch((err) => {
+              if (err.response.status == 403) {
+                alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
+                router.push({ name: "Home" });
+              } else {
+                console.log(err.response);
+              }
+            });
         }
         // console.log(this.result, "result");
         // console.log(this.blobUrl, "url");
@@ -164,7 +174,14 @@ export default {
           });
           this.LoadCheck();
         })
-        .catch(() => {});
+        .catch((err) => {
+          if (err.response.status == 403) {
+            alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
+            router.push({ name: "Home" });
+          } else {
+            console.log(err.response);
+          }
+        });
     },
     LoadCheck() {
       if (document.getElementById("script0")) {
