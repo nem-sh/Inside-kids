@@ -119,23 +119,15 @@ router.beforeEach((to, from, next) => {
   ];
   const authRequiredC = loggedInPagesC.includes(to.name);
 
-  // Login 되어 있으면 안됨
-  const notLoggedInPages = ["KidsLoginView"];
-  const unAuthRequired = notLoggedInPages.includes(to.name);
-
   // Login 판단
   const isLoggedIn = !!Vue.$cookies.isKey("auth-token");
 
-  if (unAuthRequired && isLoggedIn) {
-    next(from);
+  if (authRequiredP && !isLoggedIn) {
+    next("/");
+  } else if (authRequiredC && !isLoggedIn) {
+    next("/child");
   } else {
-    if (authRequiredP && !isLoggedIn) {
-      next("/");
-    } else if (authRequiredC && !isLoggedIn) {
-      next("/child");
-    } else {
-      next();
-    }
+    next();
   }
 });
 

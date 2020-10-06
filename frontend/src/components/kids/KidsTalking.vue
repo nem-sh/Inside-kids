@@ -22,11 +22,9 @@
         </v-btn>-->
         <!-- <v-btn class="button is-primary" @click="record" v-else>말하기</v-btn> -->
         <div v-for="(script, index) in scripts" :key="script.id">
-          <audio
-            :id="`script` + index"
-            :src="server + script.file_source"
-          ></audio>
+          <audio :id="`script` + index" :src="server + script.file_source"></audio>
         </div>
+        <audio id="reaction"></audio>
         <button v-show="characterState === 'stop'" @click="nextScript">
           <img src="../../assets/icons/scriptNext.png" alt="script-next" />
         </button>
@@ -60,6 +58,7 @@ export default {
       recordFlag: false,
       startFlag: false,
       scriptsLoaded: false,
+      reactions: ["react1"],
     };
   },
   computed: {
@@ -97,27 +96,29 @@ export default {
       this.recorder.stopRecording(() => {
         this.result = this.recorder.getBlob();
         this.blobUrl = window.URL.createObjectURL(this.result);
-        var formData = new FormData();
-        formData.append("file_source", this.result, "video");
-        const axiosConfig = {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `jwt ${this.authToken}`,
-          },
-        };
-        axios
-          .post(
-            SERVER.URL +
-              "/contents/kids/" +
-              this.$route.params.kidId +
-              "/scripts/" +
-              scriptId +
-              "/videos/",
-            formData,
-            axiosConfig
-          )
-          .then(() => {})
-          .catch(() => {});
+        if (this.scripts[this.index - 1].state === 0) {
+          var formData = new FormData();
+          formData.append("file_source", this.result, "video");
+          const axiosConfig = {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `jwt ${this.authToken}`,
+            },
+          };
+          axios
+            .post(
+              SERVER.URL +
+                "/contents/kids/" +
+                this.$route.params.kidId +
+                "/scripts/" +
+                scriptId +
+                "/videos/",
+              formData,
+              axiosConfig
+            )
+            .then(() => {})
+            .catch(() => {});
+        }
         // console.log(this.result, "result");
         // console.log(this.blobUrl, "url");
         clearInterval(this.timer.interval);
@@ -184,14 +185,28 @@ export default {
         this.recordFlag = false;
       }
       // 사용자가 등록한 질문 녹화
-      if (this.scripts[this.index].state === 0) {
+      if (this.scripts[this.index].state === 0 || this.index === 6) {
         this.record();
         this.recordFlag = true;
       }
+
+      // 처음 질문과 끝 인사 제외하고 리액션 넣기
+      var react_duration = 0;
+      if (this.index > 1 && this.index < this.scripts.length) {
+        react_duration = 2000;
+        var react_audio = document.getElementById("reaction");
+        var rand3 = this.reactions[
+          Math.floor(Math.random() * this.reactions.length)
+        ];
+        react_audio.src = this.server + `/media/reaction/${rand3}.wav`;
+        react_audio.play();
+      }
+
       // 오디오 실행
       var audio = document.getElementById(`script${this.index}`);
-      audio.play();
-
+      setTimeout(() => {
+        audio.play();
+      }, react_duration);
       // var audio = document.querySelector("audio").play();
 
       // if (audio !== undefined) {
@@ -210,7 +225,7 @@ export default {
             params: { kidId: this.$route.params.kidId },
           });
         }
-      }, audio.duration * 1000);
+      }, react_duration + audio.duration * 1000);
     },
   },
   created() {
@@ -257,6 +272,7 @@ export default {
   animation: play-talking 0.6s steps(3);
   animation-iteration-count: infinite;
 }
+
 @keyframes play-talking {
   100% {
     background-position: -2040px;
