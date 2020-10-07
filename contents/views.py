@@ -125,7 +125,7 @@ def music_list(request):
 
 
 @api_view(['POST', 'GET'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def script_list_or_create(request, kid_id):
     kid = get_object_or_404(Kid, pk=kid_id)
     if request.user == kid.user:
