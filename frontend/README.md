@@ -2,6 +2,7 @@
 
 ## Project setup
 ```
+cd frontend # {project root}/frontend
 npm install
 ```
 
@@ -10,15 +11,11 @@ npm install
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Compiles for deploy
 ```
 npm run build
+cd .. # {project root}
+python manage.py runserver
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
