@@ -1,6 +1,6 @@
 <template>
   <div>
-      <Nav/>
+    <Nav />
     <div class="py-5"></div>
     <v-container class="text-center">
       <h2 class="display-2 font-weight-bold mb-3">How to use</h2>
@@ -30,10 +30,8 @@
 import Nav from "@/components/Navigation";
 export default {
   name: "NavInfoView",
-  components:{
-      Nav
+  components: {
+    Nav,
   },
 };
 </script>
-
-<style></style>

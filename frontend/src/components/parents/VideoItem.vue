@@ -8,13 +8,13 @@
     </v-expansion-panel-header>
     <v-expansion-panel-content>
       <video :src="videoUrl" controls width="100%" height="400px"></video>
-      <div style="display: flex; justify-content: center" class="mt-5">
+      <!-- <div style="display: flex; justify-content: center" class="mt-5">
         <p v-if="lieDetectResult" style="line-height: 36px">
           아이가 <b :class="resultColor">{{ lieDetectResult }}</b> 답변하고
           있어요.
         </p>
         <p v-else>영상을 분석하고 있어요.</p>
-      </div>
+      </div> -->
       <div class="text-right">
         <a style="color: red" @click="deleteVideo">삭제</a>
       </div>
@@ -73,32 +73,29 @@ export default {
               if (err.response.status == 403) {
                 alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
                 this.$router.push({ name: "Home" });
-              } else {
-                console.log(err.response);
               }
             });
         }
       });
     },
-    getLieDetectResult: function () {
-      let result = this.video.analysis;
-      if (result == "true") {
-        this.lieDetectResult = "솔직히";
-        this.resultColor = "greenfont";
-      } else if (result == "lie") {
-        this.lieDetectResult = "상상해서";
-        this.resultColor = "redfont";
-      } else if (result == "nature") {
-        this.lieDetectResult = "부담없이";
-        this.resultColor = "bluefont";
-      } else {
-        this.lieDetectResult = "";
-      }
-    },
+    // getLieDetectResult: function () {
+    //   let result = this.video.analysis;
+    //   if (result == "true") {
+    //     this.lieDetectResult = "솔직히";
+    //     this.resultColor = "greenfont";
+    //   } else if (result == "lie") {
+    //     this.lieDetectResult = "상상해서";
+    //     this.resultColor = "redfont";
+    //   } else if (result == "nature") {
+    //     this.lieDetectResult = "부담없이";
+    //     this.resultColor = "bluefont";
+    //   } else {
+    //     this.lieDetectResult = "";
+    //   }
+    // },
   },
   created() {
-    this.getLieDetectResult();
-    console.log(this.video);
+    // this.getLieDetectResult();
   },
 };
 </script>

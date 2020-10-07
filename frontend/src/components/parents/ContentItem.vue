@@ -7,7 +7,12 @@
         :elevation="hover ? 12 : 2"
         :class="{ 'on-hover': hover }"
       >
-        <img :src="contentImg" alt="content-image" width="100%" height="150px" />
+        <img
+          :src="contentImg"
+          alt="content-image"
+          width="100%"
+          height="150px"
+        />
         <p>{{ content.created_at.slice(0, 10) }}</p>
       </v-card>
     </v-hover>
@@ -33,7 +38,7 @@
                       <a
                         style="text-decoration: none; color: white"
                         :download="content.file_source"
-                        :href="`/api`+content.file_source"
+                        :href="`/api` + content.file_source"
                       >
                         <i class="fas fa-download"></i>다운로드
                       </a>
@@ -119,8 +124,6 @@ export default {
                 if (err.response.status == 403) {
                   alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
                   this.$router.push({ name: "Home" });
-                } else {
-                  console.log(err.response);
                 }
               });
           }
@@ -151,8 +154,6 @@ export default {
                 if (err.response.status == 403) {
                   alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
                   this.$router.push({ name: "Home" });
-                } else {
-                  console.log(err.response);
                 }
               });
           }

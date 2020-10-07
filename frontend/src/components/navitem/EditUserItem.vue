@@ -7,18 +7,14 @@
           <v-list-item-title v-bind="attrs" v-on="on">계정설정</v-list-item-title>
         </template>
         <v-card>
-          <!-- <v-card-title>
-            <span class="headline">계정 설정</span>
-          </v-card-title>-->
           <v-card-text>
             <v-container>
               <v-row>
                 <v-col cols="12">
-                  <span class="h1 font-weight-bold">이메일: {{user.email}}</span>
+                  <span class="h1 font-weight-bold">이메일: {{ user.email }}</span>
                 </v-col>
 
                 <v-col cols="12">
-                  <!-- <span class="h1 font-weight-bold">비밀번호 변경</span> -->
                   <v-text-field v-model="currentPwd" label="현재 비밀번호" type="password" required></v-text-field>
                   <v-text-field
                     v-model="changePwd"
@@ -127,5 +123,3 @@ export default {
   },
 };
 </script>
-
-<style></style>

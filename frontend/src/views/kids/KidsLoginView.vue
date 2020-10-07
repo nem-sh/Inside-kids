@@ -26,7 +26,7 @@
         <v-card-actions
           @click="submit"
           class="d-flex justify-center mx-5 my-2 form-btn"
-          style="background-color:#FF8A65; cursor:pointer"
+          style="background-color: #ff8a65; cursor: pointer"
         >
           <div>
             <v-btn color="white" text>Login</v-btn>
@@ -110,27 +110,27 @@ export default {
     },
     onGoogleSignInSuccess(resp) {
       const token = resp.wc.access_token;
-      console.log(resp);
       this.googleSocialLogin({
         access_token: token,
+        isParent: false,
       });
     },
     onGoogleSignInError(error) {
-      console.log("OH NOES", error);
+      console.error(error);
     },
     kakaoLogin() {
       window.Kakao.Auth.login({
         success: this.kakaoLoginSuccess,
         fail: function (error) {
-          console.log(error);
+          console.error(error);
         },
       });
     },
     kakaoLoginSuccess(response) {
-      console.log(response);
       const token = response.access_token;
       this.kakaoSocialLogin({
         access_token: token,
+        isParent: false,
       });
     },
   },
