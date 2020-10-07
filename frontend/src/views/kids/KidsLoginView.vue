@@ -3,9 +3,8 @@
     <v-card class="mx-auto opacity-form" min-width="400">
       <div>
         <v-card-title
-          class="text-h4 d-flex justify-center primary--text font-weight-bold"
-          >LOG IN</v-card-title
-        >
+          class="text-h4 d-flex justify-center deep-orange--text font-weight-bold"
+        >LOG IN</v-card-title>
         <div class="pa-5">
           <v-text-field
             label="email"
@@ -24,9 +23,14 @@
             @keyup.enter="submit"
           ></v-text-field>
         </div>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary darken-1" text @click="submit">Login</v-btn>
+        <v-card-actions
+          @click="submit"
+          class="d-flex justify-center mx-5 my-2 form-btn"
+          style="background-color:#FF8A65; cursor:pointer"
+        >
+          <div>
+            <v-btn color="white" text>Login</v-btn>
+          </div>
         </v-card-actions>
         <div style="display: flex; justify-content: center" class="my-3">
           <g-signin-button
@@ -60,6 +64,10 @@ export default {
     return {
       email: "",
       password: "",
+      googleSignInParams: {
+        client_id:
+          "692091835929-e5bhto8anq0j3v7k21kb4f87gfn2gt6s.apps.googleusercontent.com",
+      },
     };
   },
   methods: {
