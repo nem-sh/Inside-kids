@@ -61,12 +61,18 @@ export default new Vuex.Store({
         });
     },
     kakaoSocialLogin({ commit }, loginData) {
+      let token = { access_token: loginData.access_token }
       axios
-        .post(SERVER.URL + "/accounts/kakao/", loginData)
+        .post(SERVER.URL + "/accounts/kakao/", token)
         .then((res) => {
           commit("SET_TOKEN", res.data.token);
           commit("SET_USER", res.data.user);
-          router.push({ name: "KidsManageView" });
+          if (loginData.isParent) {
+            router.push({ name: "KidsManageView" });
+          }
+          else {
+            router.push({ name: "KidsSelectView" });
+          }
         })
         .catch((err) => {
           if ("non_field_errors" in err.response.data) {
@@ -90,12 +96,18 @@ export default new Vuex.Store({
     },
 
     googleSocialLogin({ commit }, loginData) {
+      let token = { access_token: loginData.access_token }
       axios
-        .post(SERVER.URL + "/accounts/google/", loginData)
+        .post(SERVER.URL + "/accounts/google/", token)
         .then((res) => {
           commit("SET_TOKEN", res.data.token);
           commit("SET_USER", res.data.user);
-          router.push({ name: "KidsManageView" });
+          if (loginData.isParent) {
+            router.push({ name: "KidsManageView" });
+          }
+          else {
+            router.push({ name: "KidsSelectView" });
+          }
         })
         .catch((err) => {
           if ("non_field_errors" in err.response.data) {
