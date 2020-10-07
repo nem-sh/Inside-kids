@@ -114,17 +114,6 @@
               width="150px"
               style="position: absolute; top: -200px; right: -250px"
             />
-            <img
-              v-if="
-                !(sleep || dirty || hungry) &&
-                actionNum == 0 &&
-                character.exist_talk
-              "
-              src="../../assets/characters/wantTalk.png"
-              height="140px"
-              width="150px"
-              style="position: absolute; top: -200px; right: -250px"
-            />
           </div>
           <div style="z-index: 2; position: absolute">
             <img
