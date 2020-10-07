@@ -307,8 +307,6 @@ export default {
           if (err.response.status == 403) {
             alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
             this.$router.push({ name: "Home" });
-          } else {
-            console.log(err.response);
           }
         });
     },
