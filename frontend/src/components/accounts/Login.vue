@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card-title class="text-h4 d-flex justify-center green--text font-weight-bold">LOG IN</v-card-title>
+    <v-card-title class="text-h4 d-flex justify-center deep-orange--text font-weight-bold">LOG IN</v-card-title>
     <div class="pa-5">
       <v-text-field
         label="email"
@@ -20,8 +20,8 @@
       ></v-text-field>
     </div>
     <v-card-actions
-      class="d-flex justify-center bg-green mx-5 my-2"
-      style="background-color:#4CAF50; cursor:pointer"
+      class="d-flex justify-center bg-green mx-5 my-2 form-btn"
+      style="background-color:#FF8A65; cursor:pointer"
       @click="submit"
     >
       <div>
@@ -108,4 +108,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.form-btn {
+  display: flex;
+  justify-content: center;
+  border: 1px solid #ff8a65;
+  border-radius: 5px;
+}
+</style>

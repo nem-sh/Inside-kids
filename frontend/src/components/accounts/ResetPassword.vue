@@ -1,6 +1,8 @@
 <template>
   <div>
-    <v-card-title class="text-h4 d-flex justify-center green--text font-weight-bold">FIND PASSWORD</v-card-title>
+    <v-card-title
+      class="text-h4 d-flex justify-center deep-orange--text font-weight-bold"
+    >Find Password</v-card-title>
     <div class="pa-5">
       <v-text-field
         label="email"
@@ -11,9 +13,14 @@
         @keyup.enter="submit"
       ></v-text-field>
     </div>
-    <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn color="green darken-1" text @click="submit">Send email</v-btn>
+    <v-card-actions
+      class="d-flex justify-center mx-5 my-2 form-btn"
+      style="background-color:#FF8A65; cursor:pointer"
+      @click="submit"
+    >
+      <div>
+        <v-btn color="white" text>Send email</v-btn>
+      </div>
     </v-card-actions>
   </div>
 </template>

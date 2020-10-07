@@ -3,14 +3,8 @@
     <v-btn @click="start" rounded large color="white" class="red--text ma-5 font-weight-bold">시작하기</v-btn>
     <v-dialog v-model="dialog" width="450">
       <v-card>
-        <div class="d-flex justify-center">
-          <v-btn-toggle
-            v-if="!switchBoolean2"
-            v-model="switchBoolean"
-            tile
-            color="green lighten-1"
-            group
-          >
+        <div class="d-flex justify-center pt-2">
+          <v-btn-toggle v-if="!switchBoolean2" v-model="switchBoolean" tile color="#FF8A65" group>
             <v-btn :value="false">Login</v-btn>
 
             <v-btn :value="true">Signup</v-btn>
@@ -28,9 +22,12 @@
         <div id="find-pwd-form" style="display:none">
           <ResetPassword />
         </div>
-
-        <a v-if="!switchBoolean2" class="ml-2" @click="findPwdForm">비밀번호를 잊으셨나요?</a>
-        <a v-else class="ml-2" @click="switchForm">로그인/회원가입하기</a>
+        <div class="ml-4 pb-1">
+          <a v-if="!switchBoolean2" @click="findPwdForm">비밀번호를 잊으셨나요?</a>
+        </div>
+        <div class="ml-4 pb-1">
+          <a v-if="switchBoolean2" @click="switchForm">로그인/회원가입하기</a>
+        </div>
       </v-card>
     </v-dialog>
   </div>
