@@ -231,7 +231,7 @@ export default {
 #taj {
   height: 100vh;
   width: 100vw;
-  background-image: url("../../assets/images/taj.jpg");
+  background-image: url("../../assets/images/Taj.png");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -240,7 +240,7 @@ export default {
 #desert {
   height: 100vh;
   width: 100vw;
-  background-image: url("../../assets/images/desert.jpg");
+  background-image: url("../../assets/images/Desert.png");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -249,7 +249,7 @@ export default {
 #moon {
   height: 100vh;
   width: 100vw;
-  background-image: url("../../assets/images/moon.jpg");
+  background-image: url("../../assets/images/Moon.png");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -258,7 +258,7 @@ export default {
 #beach {
   height: 100vh;
   width: 100vw;
-  background-image: url("../../assets/images/beach.jpg");
+  background-image: url("../../assets/images/Beach.png");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -267,7 +267,7 @@ export default {
 #christ {
   height: 100vh;
   width: 100vw;
-  background-image: url("../../assets/images/Christ.jpg");
+  background-image: url("../../assets/images/Christ.png");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
