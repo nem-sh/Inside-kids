@@ -119,7 +119,17 @@ export default {
               formData,
               axiosConfig
             )
-            .then(() => {})
+            .then((res) => {
+              let responseVideoId = res.data.id;
+              axios
+                .post(
+                  SERVER.URL + "/contents/videos/" + responseVideoId + "/",
+                  null,
+                  axiosConfig
+                )
+                .then(() => {})
+                .catch(() => {});
+            })
             .catch((err) => {
               if (err.response.status == 403) {
                 alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
