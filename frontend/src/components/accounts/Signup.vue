@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card-title class="text-h4 d-flex justify-center green--text font-weight-bold">SIGN UP</v-card-title>
+    <v-card-title class="text-h4 d-flex justify-center deep-orange--text font-weight-bold">SIGN UP</v-card-title>
     <div class="pa-5">
       <v-text-field
         label="email"
@@ -39,11 +39,26 @@
 
     <v-card-actions
       @click="submit"
-      class="d-flex justify-center mx-5 my-2"
-      style="background-color:#4CAF50; cursor:pointer"
+      class="d-flex justify-center mx-5 my-2 form-btn"
+      style="background-color:#FF8A65; cursor:pointer"
     >
       <v-btn color="white" text>Signup</v-btn>
     </v-card-actions>
+    <div>
+      <div style="display: flex; justify-content: center" class="my-3">
+        <g-signin-button
+          style="cursor: pointer; max-width: 350px"
+          :params="googleSignInParams"
+          @success="onGoogleSignInSuccess"
+          @error="onGoogleSignInError"
+        >
+          <img src="../../assets/google.png" alt style="max-width: 220px; max-height: 50px" />
+        </g-signin-button>
+        <button @click="kakaoLogin">
+          <img src="../../assets/kakao.png" alt style="max-width: 220px; max-height: 50px" />
+        </button>
+      </div>
+    </div>
 
     <v-overlay :value="overlay">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
@@ -52,6 +67,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import { validationMixin } from "vuelidate";
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 
@@ -78,9 +94,14 @@ export default {
       password: "",
       repeatPassword: "",
       overlay: false,
+      googleSignInParams: {
+        client_id:
+          "692091835929-e5bhto8anq0j3v7k21kb4f87gfn2gt6s.apps.googleusercontent.com",
+      },
     };
   },
   methods: {
+    ...mapActions(["login", "googleSocialLogin", "kakaoSocialLogin"]),
     submit() {
       this.$v.$touch();
       if (this.$v.$invalid) {
@@ -139,6 +160,29 @@ export default {
             });
           }
         });
+    },
+    onGoogleSignInSuccess(resp) {
+      const token = resp.wc.access_token;
+      this.googleSocialLogin({
+        access_token: token,
+      });
+    },
+    onGoogleSignInError(error) {
+      console.log("OH NOES", error);
+    },
+    kakaoLogin() {
+      window.Kakao.Auth.login({
+        success: this.kakaoLoginSuccess,
+        fail: function (error) {
+          console.log(error);
+        },
+      });
+    },
+    kakaoLoginSuccess(response) {
+      const token = response.access_token;
+      this.kakaoSocialLogin({
+        access_token: token,
+      });
     },
   },
   computed: {

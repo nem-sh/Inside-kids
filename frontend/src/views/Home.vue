@@ -75,14 +75,9 @@
         </v-responsive>
       </v-container>
       <p align="middle">
-        <iframe
-          :src="require(`@/assets/videos/service_intro.mp4`)"
-          frameborder="no"
-          scrolling="no"
-          width="50%"
-          height="400"
-          allowfullscreen
-        ></iframe>
+        <video width="50%" height="400" controls>
+          <source :src="require(`@/assets/videos/service_intro.mp4`)" />
+        </video>
       </p>
       <div class="py-10"></div>
     </section>
@@ -90,7 +85,7 @@
     <v-parallax id="parents" src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">
       <div class="py-12"></div>
       <v-container class="text-center">
-        <h2 class="display-2 font-weight-bold mb-5">For parents</h2>
+        <h2 class="display-2 font-weight-bold mb-5">For Parents</h2>
         <v-responsive class="mx-auto mb-8" width="56">
           <v-divider class="mb-1 p-5"></v-divider>
 
@@ -98,7 +93,7 @@
         </v-responsive>
         <v-row>
           <v-col col="12" sm="6">
-            <img width="45%" height="300px" src="../assets/character3.png" alt="info_parent" />
+            <img width="45%" height="300px" src="../assets/characters/family.png" alt="info_parent" />
           </v-col>
           <v-col class="my-auto" col="12" sm="6">
             <h2>묻고 싶은 질문을 등록 하세요!</h2>
@@ -112,7 +107,7 @@
     <section id="child">
       <div class="py-8"></div>
       <v-container class="text-center">
-        <h2 class="display-2 font-weight-bold mb-5">For children</h2>
+        <h2 class="display-2 font-weight-bold mb-5">For Children</h2>
         <v-responsive class="mx-auto mb-8" width="56">
           <v-divider class="mb-1"></v-divider>
           <v-divider></v-divider>

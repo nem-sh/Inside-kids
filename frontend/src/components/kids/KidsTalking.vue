@@ -22,12 +22,11 @@
         </v-btn>-->
         <!-- <v-btn class="button is-primary" @click="record" v-else>말하기</v-btn> -->
         <div v-for="(script, index) in scripts" :key="script.id">
-          <audio
-            :id="`script` + index"
-            :src="server + script.file_source"
-          ></audio>
+          <audio :id="`script` + index" :src="server + script.file_source"></audio>
         </div>
-        <audio id="reaction"></audio>
+        <div v-for="(react, index) in reactions" :key="`r`+index">
+          <audio :id="`react` + index" :src="server + react.file_source"></audio>
+        </div>
         <button v-show="characterState === 'stop'" @click="nextScript">
           <img src="../../assets/icons/scriptNext.png" alt="script-next" />
         </button>
@@ -61,7 +60,11 @@ export default {
       recordFlag: false,
       startFlag: false,
       scriptsLoaded: false,
-      reactions: ["react1"],
+      reactions: [
+        { file_source: "/media/greeting/react1.mp3" },
+        { file_source: "/media/greeting/react2.mp3" },
+        { file_source: "/media/greeting/react3.mp3" },
+      ],
     };
   },
   computed: {
@@ -119,7 +122,17 @@ export default {
               formData,
               axiosConfig
             )
-            .then(() => {})
+            .then((res) => {
+              let responseVideoId = res.data.id;
+              axios
+                .post(
+                  SERVER.URL + "/contents/videos/" + responseVideoId + "/",
+                  null,
+                  axiosConfig
+                )
+                .then(() => {})
+                .catch(() => {});
+            })
             .catch((err) => {
               if (err.response.status == 403) {
                 alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
@@ -137,8 +150,8 @@ export default {
       });
     },
     getScripts() {
-      const hello = ["hello1"];
-      const bye = ["bye1"];
+      const hello = ["hello1", "hello2", "hello3"];
+      const bye = ["bye1", "bye2", "bye3"];
       // 오디오 가져오는 axios & push
       axios
         .get(
@@ -208,41 +221,59 @@ export default {
       }
 
       // 처음 질문과 끝 인사 제외하고 리액션 넣기
-      var react_duration = 0;
       if (this.index > 1 && this.index < this.scripts.length) {
-        react_duration = 2000;
-        var react_audio = document.getElementById("reaction");
-        var rand3 = this.reactions[
-          Math.floor(Math.random() * this.reactions.length)
-        ];
-        react_audio.src = this.server + `/media/reaction/${rand3}.wav`;
+        var rand_num = Math.floor(Math.random() * this.reactions.length);
+        var react_audio = document.getElementById(`react${rand_num}`);
         react_audio.play();
       }
-
-      // 오디오 실행
       var audio = document.getElementById(`script${this.index}`);
-      setTimeout(() => {
+      if (this.index > 1 && this.index < this.scripts.length) {
+        // 오디오 실행
+        setTimeout(() => {
+          audio.play();
+        }, react_audio.duration * 1000 + 500);
+
+        this.characterState = "talking";
+
+        // 입모양 움직이기
+        setTimeout(() => {
+          this.characterState = "pause";
+        }, react_audio.duration * 1000);
+
+        setTimeout(() => {
+          this.characterState = "talking";
+        }, react_audio.duration * 1000 + 500);
+        setTimeout(() => {
+          this.characterState = "stop";
+          this.index += 1;
+          if (this.index === this.scripts.length) {
+            setTimeout(() => {
+              this.$router.push({
+                name: "KidsMainView",
+                params: { kidId: this.$route.params.kidId },
+              });
+            }, 1000);
+          }
+        }, react_audio.duration * 1000 + 500 + audio.duration * 1000);
+      } else {
+        // 오디오 실행
         audio.play();
-      }, react_duration);
-      // var audio = document.querySelector("audio").play();
+        this.characterState = "talking";
 
-      // if (audio !== undefined) {
-      //   audio.then(function () {}).catch(function () {});
-      // }
-
-      this.characterState = "talking";
-
-      // 입모양 움직이기
-      setTimeout(() => {
-        this.characterState = "stop";
-        this.index += 1;
-        if (this.index === this.scripts.length) {
-          this.$router.push({
-            name: "KidsMainView",
-            params: { kidId: this.$route.params.kidId },
-          });
-        }
-      }, react_duration + audio.duration * 1000);
+        // 입모양 움직이기
+        setTimeout(() => {
+          this.characterState = "stop";
+          this.index += 1;
+          if (this.index === this.scripts.length) {
+            setTimeout(() => {
+              this.$router.push({
+                name: "KidsMainView",
+                params: { kidId: this.$route.params.kidId },
+              });
+            }, 1000);
+          }
+        }, audio.duration * 1000);
+      }
     },
   },
   created() {
@@ -277,7 +308,8 @@ export default {
   margin: 0 auto;
   box-shadow: 0 4px 8px 2px #999;
 } */
-.stop {
+.stop,
+.pause {
   width: 680px;
   height: 767px;
   background: url("../../assets/characters/talking.png") left center;

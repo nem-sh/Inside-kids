@@ -45,7 +45,9 @@
                     </v-btn>
                   </div>
                   <div class="ml-3">
-                    <v-btn color="red accent-2" dark @click="remove">삭제하기</v-btn>
+                    <v-btn color="red accent-2" dark @click="remove">
+                      <i class="fas fa-trash-alt"></i>삭제하기
+                    </v-btn>
                   </div>
                 </div>
               </v-col>

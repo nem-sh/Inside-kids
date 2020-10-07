@@ -21,7 +21,8 @@
         <v-dialog v-model="dialog" width="600">
           <template v-slot:activator="{ on, attrs }">
             <v-btn text dark v-bind="attrs" v-on="on">
-              <v-icon>fas fa-question-circle</v-icon>
+              <i class="fas fa-question-circle mr-1"></i>
+              도움말
             </v-btn>
           </template>
           <v-card class="mx-auto my-auto">
@@ -41,9 +42,7 @@
             </div>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="dialog = false"
-                >Close</v-btn
-              >
+              <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
