@@ -19,6 +19,7 @@ from .tts.infer import save_wav
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def video_delete(request, video_id):
+
     video = get_object_or_404(Video, pk=video_id)
     if request.user == video.kid.user:
         video.delete()
@@ -49,17 +50,20 @@ def video_create(request, kid_id, script_id):
 @permission_classes([IsAuthenticated])
 def paint_list_or_create(request, kid_id):
     kid = get_object_or_404(Kid, pk=kid_id)
-    if request.method == 'GET':
-        paints = kid.paint_set.order_by()
-        serializer = PaintListSerializer(paints, many=True)
-        return Response(serializer.data)
-    else:
-        serializer = PaintSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save(kid=kid)
+    if request.user == kid.user:
+        if request.method == 'GET':
+            paints = kid.paint_set.order_by()
+            serializer = PaintListSerializer(paints, many=True)
             return Response(serializer.data)
         else:
-            return HttpResponse(status=400)
+            serializer = PaintSerializer(data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save(kid=kid)
+                return Response(serializer.data)
+            else:
+                return HttpResponse(status=400)
+    else:
+        return HttpResponse(status=403)
 
 
 @api_view(['DELETE'])
@@ -81,17 +85,20 @@ def paint_delete(request, paint_id):
 @permission_classes([IsAuthenticated])
 def picture_list_or_create(request, kid_id):
     kid = get_object_or_404(Kid, pk=kid_id)
-    if request.method == 'GET':
-        pictures = kid.picture_set.order_by()
-        serializer = PictureListSerializer(pictures, many=True)
-        return Response(serializer.data)
-    else:
-        serializer = PictureSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save(kid=kid)
+    if request.user == kid.user:
+        if request.method == 'GET':
+            pictures = kid.picture_set.order_by()
+            serializer = PictureListSerializer(pictures, many=True)
             return Response(serializer.data)
         else:
-            return HttpResponse(status=400)
+            serializer = PictureSerializer(data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save(kid=kid)
+                return Response(serializer.data)
+            else:
+                return HttpResponse(status=400)
+    else:
+        return HttpResponse(status=403)
 
 
 @api_view(['DELETE'])
@@ -121,23 +128,26 @@ def music_list(request):
 @permission_classes([IsAuthenticated])
 def script_list_or_create(request, kid_id):
     kid = get_object_or_404(Kid, pk=kid_id)
-    if request.method == 'GET':
-        scripts = Script.objects.filter(kid_id=kid_id, state=0)
-        n = scripts.count()
-        serializer = ScriptSerializer(scripts, many=True)
-        random_scripts = Script.objects.filter(state=2)
-        random_serializer = ScriptSerializer(random_scripts, many=True)
-        response_data = random.sample(
-            random_serializer.data, 5-n) + serializer.data
-        return Response(response_data)
-    else:
-        serializer = ScriptCreateSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            script = serializer.save(kid=kid)
-            save_wav(script.content, str(script.id))
-            return Response(serializer.data)
+    if request.user == kid.user:
+        if request.method == 'GET':
+            scripts = Script.objects.filter(kid_id=kid_id, state=0)
+            n = scripts.count()
+            serializer = ScriptSerializer(scripts, many=True)
+            random_scripts = Script.objects.filter(state=2)
+            random_serializer = ScriptSerializer(random_scripts, many=True)
+            response_data = random.sample(
+                random_serializer.data, 5-n) + serializer.data
+            return Response(response_data)
         else:
-            return HttpResponse(status=400)
+            serializer = ScriptCreateSerializer(data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                script = serializer.save(kid=kid)
+                save_wav(script.content, str(script.id))
+                return Response(serializer.data)
+            else:
+                return HttpResponse(status=400)
+    else:
+        return HttpResponse(status=403)
 
 
 @api_view(['DELETE'])
@@ -156,11 +166,22 @@ def script_delete(request, script_id):
 
 @api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
-def character_detail_or_update(request, character_id):
-    character = get_object_or_404(Character, kid_id=character_id)
-    if request.method == 'PUT':
-        character.eat_time = request.data['eat_time']
-        character.wash_time = request.data['wash_time']
-        character.save()
-    serializer = CharacterSerializer(character)
-    return Response(serializer.data)
+def character_detail_or_update(request, kid_id):
+    character = get_object_or_404(Character, kid_id=kid_id)
+    kid = get_object_or_404(Kid, id=character.kid_id)
+    if request.user == kid.user:
+        if request.method == 'PUT':
+            character.eat_time = request.data['eat_time']
+            character.wash_time = request.data['wash_time']
+            character.save()
+            serializer = CharacterSerializer(character)
+            return Response(serializer.data)
+        else:
+            if Script.objects.filter(kid_id=kid_id, state=0).exists():
+                exist_talk = True
+            else:
+                exist_talk = False
+            serializer = CharacterSerializer(character)
+            return Response({**serializer.data, **{"exist_talk": exist_talk}})
+    else:
+        return HttpResponse(status=403)

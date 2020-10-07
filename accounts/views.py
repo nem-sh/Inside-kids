@@ -48,52 +48,56 @@ def kid_create_or_list(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def kid_detail_or_update_or_delete(request, kid_id):
+
     kid = get_object_or_404(Kid, id=kid_id)
-    if request.method == 'GET':
-        paint_serializer = PaintListSerializer(
-            Paint.objects.filter(kid=kid),
-            many=True
-        )
-        video_serializer = VideoSerializer(
-            Video.objects.filter(kid=kid),
-            many=True
-        )
-        picture_serializer = PictureListSerializer(
-            Picture.objects.filter(kid=kid),
-            many=True
-        )
-        script_serializer = ScriptSerializer(
-            Script.objects.filter(kid=kid, state=0),
-            many=True
-        )
-        serializer = KidSerializer(kid)
+    if request.user == kid.user:
+        if request.method == 'GET':
+            paint_serializer = PaintListSerializer(
+                Paint.objects.filter(kid=kid),
+                many=True
+            )
+            video_serializer = VideoSerializer(
+                Video.objects.filter(kid=kid),
+                many=True
+            )
+            picture_serializer = PictureListSerializer(
+                Picture.objects.filter(kid=kid),
+                many=True
+            )
+            script_serializer = ScriptSerializer(
+                Script.objects.filter(kid=kid, state=0),
+                many=True
+            )
+            serializer = KidSerializer(kid)
 
-        return Response(
-            {
-                **serializer.data,
-                "paints": paint_serializer.data,
-                "videos": video_serializer.data,
-                "pictures": picture_serializer.data,
-                "scripts": script_serializer.data,
+            return Response(
+                {
+                    **serializer.data,
+                    "paints": paint_serializer.data,
+                    "videos": video_serializer.data,
+                    "pictures": picture_serializer.data,
+                    "scripts": script_serializer.data,
 
-            }
-        )
+                }
+            )
 
-    elif request.method == 'PUT':
-        serializer = KidSerializer(kid, data=request.data, partial=True)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            return Response(serializer.data)
+        elif request.method == 'PUT':
+            serializer = KidSerializer(kid, data=request.data, partial=True)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                return Response(serializer.data)
+        else:
+            kid.delete()
+            return Response({'status': 'success'})
     else:
-        kid.delete()
-        return Response({'status': 'success'})
+        return HttpResponse(status=403)
 
 
 def email_verification(request, key):
     context = {
-        "key":key
+        "key": key
     }
-    return render(request,'email_verification.html',context)
+    return render(request, 'email_verification.html', context)
 
 
 class GoogleLogin(SocialLoginView):

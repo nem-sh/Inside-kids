@@ -163,7 +163,12 @@ export default {
             this.kidsImage = null;
           })
           .catch((err) => {
-            console.error(err.response);
+            if (err.response.status == 403) {
+              alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
+              this.$router.push({ name: "Home" });
+            } else {
+              console.error(err.response);
+            }
           });
       } else {
         Swal.fire({
@@ -203,7 +208,12 @@ export default {
             this.kidsImage = null;
           })
           .catch((err) => {
-            console.error(err.response);
+            if (err.response.status == 403) {
+              alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
+              this.$router.push({ name: "Home" });
+            } else {
+              console.error(err.response);
+            }
           });
       } else {
         Swal.fire({
@@ -234,7 +244,12 @@ export default {
               this.getKidsList();
             })
             .catch((err) => {
-              console.error(err.response);
+              if (err.response.status == 403) {
+                alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
+                this.$router.push({ name: "Home" });
+              } else {
+                console.error(err.response);
+              }
             });
         }
       });

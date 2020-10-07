@@ -2,13 +2,18 @@
   <v-col cols="6" md="4">
     <v-hover v-slot:default="{ hover }">
       <v-card
-        @click.stop="dialog=true"
+        @click.stop="dialog = true"
         class="custom-card"
         :elevation="hover ? 12 : 2"
         :class="{ 'on-hover': hover }"
       >
-        <img :src="contentImg" alt="content-image" width="100%" height="150px" />
-        <p>{{content.created_at.slice(0,10)}}</p>
+        <img
+          :src="contentImg"
+          alt="content-image"
+          width="100%"
+          height="150px"
+        />
+        <p>{{ content.created_at.slice(0, 10) }}</p>
       </v-card>
     </v-hover>
     <v-dialog v-model="dialog" max-width="40rem">
@@ -31,7 +36,7 @@
                   <div class="mr-5">
                     <v-btn color="cyan lighten-1" dark>
                       <a
-                        style="text-decoration:none; color:white"
+                        style="text-decoration: none; color: white"
                         :download="content.file_source"
                         :href="content.file_source"
                       >
@@ -44,6 +49,11 @@
                       <i class="far fa-comment"></i>카카오톡 공유하기
                     </v-btn>
                   </div>
+                  <div class="ml-3">
+                    <v-btn color="red accent-2" dark @click="remove"
+                      >삭제하기</v-btn
+                    >
+                  </div>
                 </div>
               </v-col>
             </v-row>
@@ -55,12 +65,16 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from "vuex";
+import axios from "axios";
 import SERVER from "@/api/drf";
+import Swal from "sweetalert2";
 
 export default {
   name: "ContentItem",
   props: {
     content: Object,
+    flag: Boolean,
   },
   data() {
     return {
@@ -68,6 +82,8 @@ export default {
     };
   },
   computed: {
+    ...mapState(["kid"]),
+    ...mapGetters(["commonConfig"]),
     contentImg() {
       return SERVER.URL + this.content.file_source;
     },
@@ -75,11 +91,78 @@ export default {
   methods: {
     sendLink() {
       window.Kakao.Link.sendCustom({
-        templateId: 37115,
+        templateId: 38029,
         templateArgs: {
           THU: this.contentImg,
         },
       });
+    },
+    remove() {
+      if (this.flag === true) {
+        // 사진 삭제
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: "삭제하시겠습니까?",
+          showCancelButton: true,
+          confirmButtonText: `Yes`,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            axios
+              .delete(
+                SERVER.URL + "/contents/pictures/" + this.content.id + "/",
+                this.commonConfig
+              )
+              .then(() => {
+                this.$emit("pictureRemove", this.content.id);
+                const newPictures = this.kid.pictures.filter((picture) => {
+                  return picture.id !== this.content.id;
+                });
+                this.kid.pictures = newPictures;
+              })
+              .catch((err) => {
+                if (err.response.status == 403) {
+                  alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
+                  this.$router.push({ name: "Home" });
+                } else {
+                  console.log(err.response);
+                }
+              });
+          }
+        });
+      } else {
+        // 그림 삭제
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: "삭제하시겠습니까?",
+          showCancelButton: true,
+          confirmButtonText: `Yes`,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            axios
+              .delete(
+                SERVER.URL + "/contents/paints/" + this.content.id + "/",
+                this.commonConfig
+              )
+              .then(() => {
+                this.$emit("drawRemove", this.content.id);
+                const newPaints = this.kid.paints.filter((paint) => {
+                  return paint.id !== this.content.id;
+                });
+                this.kid.paints = newPaints;
+              })
+              .catch((err) => {
+                if (err.response.status == 403) {
+                  alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
+                  this.$router.push({ name: "Home" });
+                } else {
+                  console.log(err.response);
+                }
+              });
+          }
+        });
+      }
     },
   },
 };

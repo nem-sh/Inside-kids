@@ -17,14 +17,20 @@
         <div
           class="controls__color"
           :class="{ active: selectedToolIdx === 1 }"
-          @click="chooseColor(colors.white);changeTool(0)"
+          @click="
+            chooseColor(colors.white);
+            changeTool(0);
+          "
         >
           <img src="@/assets/icons/eraser.png" width="100%" />
         </div>
         <div
           class="controls__color jsColor"
           style="background-color: #2c2c2c"
-          @click="chooseColor(colors.black);changeTool(0) "
+          @click="
+            chooseColor(colors.black);
+            changeTool(0);
+          "
         ></div>
         <!-- <div
           class="controls__color jsColor"
@@ -34,42 +40,69 @@
         <div
           class="controls__color jsColor"
           style="background-color: #ff3b30"
-          @click="chooseColor(colors.red);changeTool(0)"
+          @click="
+            chooseColor(colors.red);
+            changeTool(0);
+          "
         ></div>
         <div
           class="controls__color jsColor"
           style="background-color: #ff9500"
-          @click="chooseColor(colors.orange);changeTool(0)"
+          @click="
+            chooseColor(colors.orange);
+            changeTool(0);
+          "
         ></div>
         <div
           class="controls__color jsColor"
           style="background-color: #ffcc00"
-          @click="chooseColor(colors.yellow);changeTool(0)"
+          @click="
+            chooseColor(colors.yellow);
+            changeTool(0);
+          "
         ></div>
         <div
           class="controls__color jsColor"
           style="background-color: #4cd963"
-          @click="chooseColor(colors.green);changeTool(0)"
+          @click="
+            chooseColor(colors.green);
+            changeTool(0);
+          "
         ></div>
         <div
           class="controls__color jsColor"
           style="background-color: #5ac8fa"
-          @click="chooseColor(colors.skyBlue);changeTool(0)"
+          @click="
+            chooseColor(colors.skyBlue);
+            changeTool(0);
+          "
         ></div>
         <div
           class="controls__color jsColor"
-          style="background-color: #0579FF"
-          @click="chooseColor(colors.blue);changeTool(0)"
+          style="background-color: #0579ff"
+          @click="
+            chooseColor(colors.blue);
+            changeTool(0);
+          "
         ></div>
         <div
           class="controls__color jsColor"
-          style="background-color: #5856D6"
-          @click="chooseColor(colors.purple);changeTool(0)"
+          style="background-color: #5856d6"
+          @click="
+            chooseColor(colors.purple);
+            changeTool(0);
+          "
         ></div>
       </div>
     </div>
     <div class="content" ref="canvasWrapper">
-      <canvas id="canvas" class="canvas" ref="canvas" :width="width" :height="height"></canvas>
+      <canvas
+        id="canvas"
+        class="canvas"
+        ref="canvas"
+        :width="width"
+        :height="height"
+      ></canvas>
       <!-- <canvas id="cursor" ref="cursor"></canvas> -->
     </div>
     <div class="d-flex justify-center mt-5">
@@ -85,7 +118,12 @@
         src="../../assets/icons/save.png"
         alt="download"
       />
-      <img class="save-btn" @click="reset()" src="../../assets/icons/trashcan.png" alt="save" />
+      <img
+        class="save-btn"
+        @click="reset()"
+        src="../../assets/icons/trashcan.png"
+        alt="save"
+      />
     </div>
   </div>
 </template>
@@ -266,7 +304,12 @@ export default {
           });
         })
         .catch((err) => {
-          console.error(err.response);
+          if (err.response.status == 403) {
+            alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
+            this.$router.push({ name: "Home" });
+          } else {
+            console.log(err.response);
+          }
         });
     },
     reset() {

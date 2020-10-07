@@ -12,10 +12,17 @@
     <v-col offset="2" cols="8">
       <v-container class="pa-4 text-center">
         <v-row class="fill-height" align="center">
-          <h1 v-if="!drawings.length" class="mx-auto pt-10">
-            <i class="fas fa-exclamation-triangle" style="color:orange"></i> 기록이 없습니다.
+          <h1 v-if="!pictures.length" class="mx-auto pt-10">
+            <i class="fas fa-exclamation-triangle" style="color: orange"></i>
+            기록이 없습니다.
           </h1>
-          <ContentItem v-for="drawing in drawings" :key="drawing.id" :content="drawing" />
+          <ContentItem
+            v-for="picture in pictures"
+            :key="picture.id"
+            :content="picture"
+            :flag="true"
+            @pictureRemove="refresh"
+          />
         </v-row>
       </v-container>
     </v-col>
@@ -23,7 +30,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import axios from "axios";
 import SERVER from "@/api/drf";
 
@@ -36,32 +43,44 @@ export default {
   },
   data() {
     return {
-      drawings: [],
+      pictures: [],
     };
   },
   computed: {
+    ...mapState(["kid"]),
     ...mapGetters(["commonConfig"]),
   },
   methods: {
-    fetchDrawings() {
+    fetchPictures() {
       axios
         .get(
           SERVER.URL + `/contents/kids/${this.$route.params.kidId}/pictures/`,
           this.commonConfig
         )
         .then((res) => {
-          this.drawings = res.data;
+          this.pictures = res.data;
         })
         .catch((err) => {
-          console.error(err.response);
+          if (err.response.status == 403) {
+            alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
+            this.$router.push({ name: "Home" });
+          } else {
+            console.log(err.response);
+          }
         });
     },
     back() {
       history.back();
     },
+    refresh(contentId) {
+      const newPictures = this.pictures.filter((picture) => {
+        return picture.id !== contentId;
+      });
+      this.pictures = newPictures;
+    },
   },
   created() {
-    this.fetchDrawings();
+    this.fetchPictures();
   },
 };
 </script>
