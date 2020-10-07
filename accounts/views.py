@@ -20,7 +20,7 @@ from contents.models import Paint, Video, Picture, Script, Character
 from contents.serializers import PaintListSerializer, VideoSerializer, PictureListSerializer, ScriptSerializer
 
 from django.shortcuts import render
-
+from django.http import HttpResponse
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])

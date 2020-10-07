@@ -4,7 +4,17 @@
     <v-dialog v-model="dialog" width="450">
       <v-card>
         <div class="d-flex justify-center">
-          <v-switch v-if="!switchBoolean2" v-model="switchBoolean" inset color="secondary"></v-switch>
+          <v-btn-toggle
+            v-if="!switchBoolean2"
+            v-model="switchBoolean"
+            tile
+            color="green lighten-1"
+            group
+          >
+            <v-btn :value="false">Login</v-btn>
+
+            <v-btn :value="true">Signup</v-btn>
+          </v-btn-toggle>
         </div>
 
         <div id="login-form">

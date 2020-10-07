@@ -14,6 +14,7 @@ import random
 
 from .tts.infer import save_wav
 # video
+# from .lie_detector import lie_detector
 
 
 @api_view(['DELETE'])
@@ -43,6 +44,22 @@ def video_create(request, kid_id, script_id):
         return HttpResponse(status=400)
 
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def video_analysis(request, video_id):
+    video = get_object_or_404(Video, id=video_id)
+    path = video.file_source
+    # res = lie_detector.get('media/'+str(path))
+    # if res['true']==0 and res['lie']==0:
+    #     video.analysis = 'nature'
+    # elif res['true']<res['lie']:
+    #     video.analysis = 'lie'
+    # else:
+    #     video.analysis = 'true'
+
+    # video.save()
+
+    return Response({'status': 'ok'})
 # paint
 
 
