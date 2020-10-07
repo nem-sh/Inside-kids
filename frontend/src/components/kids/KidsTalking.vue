@@ -123,7 +123,10 @@ export default {
               let responseVideoId = res.data.id;
               axios
                 .post(
-                  SERVER.URL + "/contents/videos/" + responseVideoId + "/",
+                  SERVER.URL +
+                    "/contents/videos/" +
+                    responseVideoId +
+                    "/analysis/",
                   null,
                   axiosConfig
                 )
