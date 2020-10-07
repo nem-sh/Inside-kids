@@ -180,7 +180,7 @@ export default {
           formData,
           axiosConfig
         )
-        .then((res) => {
+        .then(() => {
           Swal.fire({
             position: "center",
             icon: "success",

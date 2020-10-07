@@ -44,8 +44,9 @@ export default {
     kidDetail(index) {
       if (index == this.$route.params.kidId) {
         this.$router.go();
+      } else {
+        this.$router.push({ name: "KidsDetailView", params: { kidId: index } });
       }
-      this.$router.push({ name: "KidsDetailView", params: { kidId: index } });
     },
     movePage() {
       if (this.$route.name != "KidsManageView") {
