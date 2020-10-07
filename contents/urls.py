@@ -8,6 +8,7 @@ urlpatterns = [
 
     # video
     path('videos/<int:video_id>/', views.video_delete),
+    path('videos/<int:video_id>/analysis/', views.video_analysis),
     path('kids/<int:kid_id>/scripts/<int:script_id>/videos/', views.video_create),
 
     # paint
