@@ -1,9 +1,6 @@
 <template>
   <div>
-    <v-card-title
-      class="text-h4 d-flex justify-center green--text font-weight-bold"
-      >LOG IN</v-card-title
-    >
+    <v-card-title class="text-h4 d-flex justify-center green--text font-weight-bold">LOG IN</v-card-title>
     <div class="pa-5">
       <v-text-field
         label="email"
@@ -22,9 +19,14 @@
         @keyup.enter="submit"
       ></v-text-field>
     </div>
-    <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn color="green darken-1" text @click="submit">Login</v-btn>
+    <v-card-actions
+      class="d-flex justify-center bg-green mx-5 my-2"
+      style="background-color:#4CAF50; cursor:pointer"
+      @click="submit"
+    >
+      <div>
+        <v-btn color="white" text>Login</v-btn>
+      </div>
     </v-card-actions>
     <div>
       <div style="display: flex; justify-content: center" class="my-3">
@@ -34,18 +36,10 @@
           @success="onGoogleSignInSuccess"
           @error="onGoogleSignInError"
         >
-          <img
-            src="../../assets/google.png"
-            alt
-            style="max-width: 220px; max-height: 50px"
-          />
+          <img src="../../assets/google.png" alt style="max-width: 220px; max-height: 50px" />
         </g-signin-button>
         <button @click="kakaoLogin">
-          <img
-            src="../../assets/kakao.png"
-            alt
-            style="max-width: 220px; max-height: 50px"
-          />
+          <img src="../../assets/kakao.png" alt style="max-width: 220px; max-height: 50px" />
         </button>
       </div>
     </div>

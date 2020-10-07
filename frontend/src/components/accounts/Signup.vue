@@ -37,9 +37,12 @@
       ></v-text-field>
     </div>
 
-    <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn color="green darken-1" text @click="submit">Signup</v-btn>
+    <v-card-actions
+      @click="submit"
+      class="d-flex justify-center mx-5 my-2"
+      style="background-color:#4CAF50; cursor:pointer"
+    >
+      <v-btn color="white" text>Signup</v-btn>
     </v-card-actions>
 
     <v-overlay :value="overlay">

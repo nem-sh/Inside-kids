@@ -7,12 +7,7 @@
         :elevation="hover ? 12 : 2"
         :class="{ 'on-hover': hover }"
       >
-        <img
-          :src="contentImg"
-          alt="content-image"
-          width="100%"
-          height="150px"
-        />
+        <img :src="contentImg" alt="content-image" width="100%" height="150px" />
         <p>{{ content.created_at.slice(0, 10) }}</p>
       </v-card>
     </v-hover>
@@ -38,7 +33,7 @@
                       <a
                         style="text-decoration: none; color: white"
                         :download="content.file_source"
-                        :href="content.file_source"
+                        :href="`/api`+content.file_source"
                       >
                         <i class="fas fa-download"></i>다운로드
                       </a>
@@ -50,9 +45,7 @@
                     </v-btn>
                   </div>
                   <div class="ml-3">
-                    <v-btn color="red accent-2" dark @click="remove"
-                      >삭제하기</v-btn
-                    >
+                    <v-btn color="red accent-2" dark @click="remove">삭제하기</v-btn>
                   </div>
                 </div>
               </v-col>
