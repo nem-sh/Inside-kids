@@ -30,6 +30,7 @@ class Video(models.Model):
     script = models.OneToOneField(Script, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     file_source = models.FileField()
+    analysis = models.CharField(max_length=50,null=True)
 
 
 class Character(models.Model):

@@ -25,7 +25,7 @@ class VideoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Video
-        fields = ('id', 'file_source', 'script')
+        fields = ('id', 'file_source', 'script','analysis')
 
 
 # paint
