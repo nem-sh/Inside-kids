@@ -109,17 +109,14 @@ https://www.erdcloud.com/d/Sp7M42wxDDvtge6pi
 
 ### 디렉토리 구조도
 
-- AI/ : AI 테스트
-
-- backend/ : django설정
-
-- accounts/, contents/ : django app
-
-- frontend/ : vue.js 프로젝트
-
-- deployments/: 배포 설정 파일
-
-- tts/ : 음성 변환에 사용되는 AI 모듈
+- study : 프로젝트 수행을 위한 사전 학습 및 테스트
+- backend : django project 설정
+- accounts : 계정 관리 dajngo app
+- contents : 컨텐츠 관리 django app
+- contents/tts : 텍스트 음성 합성 처리 ai 모듈
+- contents/lie_detector: 눈동자의 움직임을 통한 거짓말 판단 ai  모듈
+- frontend : vue.js 
+- deployments: 배포 설정 파일 ( gunicorn, supervisor, nginx )
 
 
 
@@ -210,7 +207,7 @@ https://docs.google.com/spreadsheets/d/13YrPIV2G8iPM4RlGT9UtUlvjRybJrfWg3j3Yb12O
 
 
 ## 테스트 방법
-- url : http://j3b106.p.ssafy.io/   ~~http://inside-kids.cf~~ (준비중)
+- url : http://j3b106.p.ssafy.io/
 
 - TEST 계정
 
