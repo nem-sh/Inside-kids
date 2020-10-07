@@ -128,19 +128,19 @@ export default {
               formData,
               axiosConfig
             )
-            .then((res) => {
-              let responseVideoId = res.data.id;
-              axios
-                .post(
-                  SERVER.URL +
-                    "/contents/videos/" +
-                    responseVideoId +
-                    "/analysis/",
-                  null,
-                  axiosConfig
-                )
-                .then(() => {})
-                .catch(() => {});
+            .then(() => {
+              // let responseVideoId = res.data.id;
+              // axios
+              //   .post(
+              //     SERVER.URL +
+              //       "/contents/videos/" +
+              //       responseVideoId +
+              //       "/analysis/",
+              //     null,
+              //     axiosConfig
+              // )
+              // .then(() => {})
+              // .catch(() => {});
             })
             .catch((err) => {
               if (err.response.status == 403) {
