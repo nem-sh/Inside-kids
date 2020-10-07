@@ -22,10 +22,16 @@
         </v-btn>-->
         <!-- <v-btn class="button is-primary" @click="record" v-else>말하기</v-btn> -->
         <div v-for="(script, index) in scripts" :key="script.id">
-          <audio :id="`script` + index" :src="server + script.file_source"></audio>
+          <audio
+            :id="`script` + index"
+            :src="server + script.file_source"
+          ></audio>
         </div>
-        <div v-for="(react, index) in reactions" :key="`r`+index">
-          <audio :id="`react` + index" :src="server + react.file_source"></audio>
+        <div v-for="(react, index) in reactions" :key="`r` + index">
+          <audio
+            :id="`react` + index"
+            :src="server + react.file_source"
+          ></audio>
         </div>
         <button v-show="characterState === 'stop'" @click="nextScript">
           <img src="../../assets/icons/scriptNext.png" alt="script-next" />
@@ -140,13 +146,9 @@ export default {
               if (err.response.status == 403) {
                 alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
                 this.$router.push({ name: "Home" });
-              } else {
-                console.log(err.response);
               }
             });
         }
-        // console.log(this.result, "result");
-        // console.log(this.blobUrl, "url");
         clearInterval(this.timer.interval);
         this.timer.value = 0;
         this.timer.interval = null;
@@ -194,8 +196,6 @@ export default {
           if (err.response.status == 403) {
             alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
             this.$router.push({ name: "Home" });
-          } else {
-            console.log(err.response);
           }
         });
     },
