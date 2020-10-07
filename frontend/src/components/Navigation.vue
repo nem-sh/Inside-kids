@@ -31,7 +31,7 @@
             <div class="p-5">
               <iframe
                 v-if="dialog"
-                src="https://www.youtube.com/embed/nNONgE0KWR4"
+                :src="require(`@/assets/videos/service_tutorial.mp4`)"
                 frameborder="no"
                 scrolling="no"
                 width="600px"
@@ -41,7 +41,9 @@
             </div>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+              <v-btn color="blue darken-1" text @click="dialog = false"
+                >Close</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-dialog>
