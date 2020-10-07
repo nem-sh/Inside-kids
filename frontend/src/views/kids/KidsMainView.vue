@@ -71,16 +71,30 @@
       <v-col class="text-center my-10" style="min-height: 300px">
         <!-- 기본 -->
         <img
-          v-if="!actionOnOff"
+          v-show="!actionOnOff"
           class="character"
           src="../../assets/characters/character.png"
           height="240px"
           width="150px"
           alt="character"
         />
+        <div
+          v-show="!actionOnOff"
+          style="display: flex; justify-content: center; align-items: center"
+        >
+          <div style="z-index: 2; position: absolute">
+            <img
+              v-if="!(sleep || dirty || hungry) && character.exist_talk"
+              src="../../assets/characters/wantTalk.png"
+              height="140px"
+              width="150px"
+              style="position: absolute; top: -350px; right: -250px"
+            />
+          </div>
+        </div>
         <!-- 행동 -->
         <div
-          v-else
+          v-show="actionOnOff"
           style="display: flex; justify-content: center; align-items: center"
         >
           <div style="z-index: 2; position: absolute">
@@ -96,17 +110,6 @@
                 !sleep && dirty && !hungry && actionNum != 1 && actionNum != 2
               "
               src="../../assets/characters/wantDirty.png"
-              height="140px"
-              width="150px"
-              style="position: absolute; top: -200px; right: -250px"
-            />
-            <img
-              v-if="
-                !(sleep || dirty || hungry) &&
-                actionNum == 0 &&
-                character.exist_talk
-              "
-              src="../../assets/characters/wantTalk.png"
               height="140px"
               width="150px"
               style="position: absolute; top: -200px; right: -250px"
