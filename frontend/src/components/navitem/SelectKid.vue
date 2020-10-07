@@ -19,7 +19,9 @@
             {{ kid.name }}
           </v-list-item-title>
         </v-list-item>
-        <v-btn @click="movePage"> <v-icon>fas fa-cog</v-icon>설정 </v-btn>
+        <v-btn @click="movePage">
+          <v-icon>fas fa-cog</v-icon>설정
+        </v-btn>
       </v-list>
     </v-menu>
   </div>
@@ -61,5 +63,3 @@ export default {
   },
 };
 </script>
-
-<style></style>
