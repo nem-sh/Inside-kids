@@ -21,7 +21,7 @@
     </div>
     <v-card-actions
       class="d-flex justify-center bg-green mx-5 my-2 form-btn"
-      style="background-color:#FF8A65; cursor:pointer"
+      style="background-color: #ff8a65; cursor: pointer"
       @click="submit"
     >
       <div>
@@ -85,16 +85,17 @@ export default {
       const token = resp.wc.access_token;
       this.googleSocialLogin({
         access_token: token,
+        isParent: true,
       });
     },
     onGoogleSignInError(error) {
-      console.log("OH NOES", error);
+      console.error(error);
     },
     kakaoLogin() {
       window.Kakao.Auth.login({
         success: this.kakaoLoginSuccess,
         fail: function (error) {
-          console.log(error);
+          console.error(error);
         },
       });
     },
@@ -102,6 +103,7 @@ export default {
       const token = response.access_token;
       this.kakaoSocialLogin({
         access_token: token,
+        isParent: true,
       });
     },
   },

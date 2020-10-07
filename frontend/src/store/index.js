@@ -50,23 +50,42 @@ export default new Vuex.Store({
           commit("SET_USER", res.data.user);
           router.push({ name: "KidsManageView" });
         })
-        .catch(() => {
-          Swal.fire({
-            position: "center",
-            icon: "warning",
-            title: "아이디 혹은 비밀번호를 확인해주세요.",
-            showConfirmButton: false,
-            timer: 1000,
-          });
+        .catch((err) => {
+          if (
+            "non_field_errors" in err.response.data &&
+            err.response.data.non_field_errors ==
+              "이메일 주소가 확인되지 않았습니다."
+          ) {
+            Swal.fire({
+              position: "center",
+              icon: "warning",
+              title: "이메일 주소가 확인되지 않았습니다.",
+              showConfirmButton: false,
+              timer: 1000,
+            });
+          } else {
+            Swal.fire({
+              position: "center",
+              icon: "warning",
+              title: "아이디 혹은 비밀번호를 확인해주세요.",
+              showConfirmButton: false,
+              timer: 1000,
+            });
+          }
         });
     },
     kakaoSocialLogin({ commit }, loginData) {
+      let token = { access_token: loginData.access_token };
       axios
-        .post(SERVER.URL + "/accounts/kakao/", loginData)
+        .post(SERVER.URL + "/accounts/kakao/", token)
         .then((res) => {
           commit("SET_TOKEN", res.data.token);
           commit("SET_USER", res.data.user);
-          router.push({ name: "KidsManageView" });
+          if (loginData.isParent) {
+            router.push({ name: "KidsManageView" });
+          } else {
+            router.push({ name: "KidsSelectView" });
+          }
         })
         .catch((err) => {
           if ("non_field_errors" in err.response.data) {
@@ -90,12 +109,17 @@ export default new Vuex.Store({
     },
 
     googleSocialLogin({ commit }, loginData) {
+      let token = { access_token: loginData.access_token };
       axios
-        .post(SERVER.URL + "/accounts/google/", loginData)
+        .post(SERVER.URL + "/accounts/google/", token)
         .then((res) => {
           commit("SET_TOKEN", res.data.token);
           commit("SET_USER", res.data.user);
-          router.push({ name: "KidsManageView" });
+          if (loginData.isParent) {
+            router.push({ name: "KidsManageView" });
+          } else {
+            router.push({ name: "KidsSelectView" });
+          }
         })
         .catch((err) => {
           if ("non_field_errors" in err.response.data) {
@@ -153,7 +177,7 @@ export default new Vuex.Store({
           });
           router.push({ name: "Home" });
         })
-        .catch(() => { });
+        .catch(() => {});
     },
     getUser({ getters, commit, state }) {
       axios
@@ -190,7 +214,7 @@ export default new Vuex.Store({
         })
         .catch((err) => {
           if (err.response.status == 403) {
-            alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.")
+            alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
             router.push({ name: "Home" });
           }
         });
@@ -206,7 +230,7 @@ export default new Vuex.Store({
         })
         .catch((err) => {
           if (err.response.status == 403) {
-            alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.")
+            alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
             router.push({ name: "Home" });
           }
         });
@@ -230,7 +254,7 @@ export default new Vuex.Store({
         })
         .catch((err) => {
           if (err.response.status == 403) {
-            alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.")
+            alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
             router.push({ name: "Home" });
           }
           Swal.fire({
@@ -271,7 +295,7 @@ export default new Vuex.Store({
             })
             .catch((err) => {
               if (err.response.status == 403) {
-                alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.")
+                alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
                 router.push({ name: "Home" });
               }
             });
@@ -289,7 +313,7 @@ export default new Vuex.Store({
         })
         .catch((err) => {
           if (err.response.status == 403) {
-            alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.")
+            alert("잘못된 접근입니다. 메인페이지로 돌아갑니다.");
             router.push({ name: "Home" });
           }
         });

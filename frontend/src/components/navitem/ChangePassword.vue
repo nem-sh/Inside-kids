@@ -1,12 +1,10 @@
 <template>
-<!-- modal 정보수정 -->
-  <v-list-item >
+  <!-- modal 정보수정 -->
+  <v-list-item>
     <v-row justify="center">
       <v-dialog v-model="dialog" persistent max-width="600px">
         <template v-slot:activator="{ on, attrs }">
-          <v-list-item-title v-bind="attrs" v-on="on">
-            비밀번호 변경
-          </v-list-item-title>
+          <v-list-item-title v-bind="attrs" v-on="on">비밀번호 변경</v-list-item-title>
         </template>
         <v-card>
           <v-card-title>
@@ -16,10 +14,7 @@
             <v-container>
               <v-row>
                 <v-col cols="12" sm="6" md="4">
-                  <v-text-field
-                    label="Legal first name*"
-                    required
-                  ></v-text-field>
+                  <v-text-field label="Legal first name*" required></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="4">
                   <v-text-field
@@ -39,18 +34,10 @@
                   <v-text-field label="Email*" required></v-text-field>
                 </v-col>
                 <v-col cols="12">
-                  <v-text-field
-                    label="Password*"
-                    type="password"
-                    required
-                  ></v-text-field>
+                  <v-text-field label="Password*" type="password" required></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6">
-                  <v-select
-                    :items="['0-17', '18-29', '30-54', '54+']"
-                    label="Age*"
-                    required
-                  ></v-select>
+                  <v-select :items="['0-17', '18-29', '30-54', '54+']" label="Age*" required></v-select>
                 </v-col>
                 <v-col cols="12" sm="6">
                   <v-autocomplete
@@ -75,12 +62,8 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="dialog = false"
-              >Close</v-btn
-            >
-            <v-btn color="blue darken-1" text @click="dialog = false"
-              >Save</v-btn
-            >
+            <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+            <v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -98,5 +81,3 @@ export default {
   },
 };
 </script>
-
-<style></style>
