@@ -4,7 +4,8 @@
       <div>
         <v-card-title
           class="text-h4 d-flex justify-center deep-orange--text font-weight-bold"
-        >LOG IN</v-card-title>
+          >LOG IN</v-card-title
+        >
         <div class="pa-5">
           <v-text-field
             label="email"
@@ -26,7 +27,7 @@
         <v-card-actions
           @click="submit"
           class="d-flex justify-center mx-5 my-2 form-btn"
-          style="background-color:#FF8A65; cursor:pointer"
+          style="background-color: #ff8a65; cursor: pointer"
         >
           <div>
             <v-btn color="white" text>Login</v-btn>
@@ -39,11 +40,19 @@
             @success="onGoogleSignInSuccess"
             @error="onGoogleSignInError"
           >
-            <img src="../../assets/google.png" alt style="max-width: 180px; height: 55px" />
+            <img
+              src="../../assets/google.png"
+              alt
+              style="max-width: 180px; height: 55px"
+            />
           </g-signin-button>
 
           <button @click="kakaoLogin">
-            <img src="../../assets/kakao.png" alt style="max-width: 180px; height: 55px" />
+            <img
+              src="../../assets/kakao.png"
+              alt
+              style="max-width: 180px; height: 55px"
+            />
           </button>
         </div>
       </div>
@@ -110,9 +119,9 @@ export default {
     },
     onGoogleSignInSuccess(resp) {
       const token = resp.wc.access_token;
-      console.log(resp);
       this.googleSocialLogin({
         access_token: token,
+        isParent: false,
       });
     },
     onGoogleSignInError(error) {
@@ -127,10 +136,10 @@ export default {
       });
     },
     kakaoLoginSuccess(response) {
-      console.log(response);
       const token = response.access_token;
       this.kakaoSocialLogin({
         access_token: token,
+        isParent: false,
       });
     },
   },

@@ -48,7 +48,11 @@ export default {
       this.$router.push({ name: "KidsDetailView", params: { kidId: index } });
     },
     movePage() {
-      this.$router.push({ name: "KidsManageView" });
+      if (this.$route.name != "KidsManageView") {
+        this.$router.push({ name: "KidsManageView" });
+      } else {
+        this.$router.go();
+      }
     },
   },
   created() {
