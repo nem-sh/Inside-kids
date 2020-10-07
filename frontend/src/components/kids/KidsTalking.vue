@@ -247,10 +247,12 @@ export default {
           this.characterState = "stop";
           this.index += 1;
           if (this.index === this.scripts.length) {
-            this.$router.push({
-              name: "KidsMainView",
-              params: { kidId: this.$route.params.kidId },
-            });
+            setTimeout(() => {
+              this.$router.push({
+                name: "KidsMainView",
+                params: { kidId: this.$route.params.kidId },
+              });
+            }, 1000);
           }
         }, react_audio.duration * 1000 + 500 + audio.duration * 1000);
       } else {
@@ -263,10 +265,12 @@ export default {
           this.characterState = "stop";
           this.index += 1;
           if (this.index === this.scripts.length) {
-            this.$router.push({
-              name: "KidsMainView",
-              params: { kidId: this.$route.params.kidId },
-            });
+            setTimeout(() => {
+              this.$router.push({
+                name: "KidsMainView",
+                params: { kidId: this.$route.params.kidId },
+              });
+            }, 1000);
           }
         }, audio.duration * 1000);
       }

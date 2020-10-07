@@ -75,14 +75,9 @@
         </v-responsive>
       </v-container>
       <p align="middle">
-        <iframe
-          :src="require(`@/assets/videos/service_intro.mp4`)"
-          frameborder="no"
-          scrolling="no"
-          width="50%"
-          height="400"
-          allowfullscreen
-        ></iframe>
+        <video width="50%" height="400" controls>
+          <source :src="require(`@/assets/videos/service_intro.mp4`)" />
+        </video>
       </p>
       <div class="py-10"></div>
     </section>
