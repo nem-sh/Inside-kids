@@ -4,9 +4,7 @@
       <h3>질문 관리 ({{ kid.scripts.length }}/3)</h3>
     </v-card-title>
 
-    <p class="text--primary ml-5">
-      ** 아이의 답변이 등록된 질문은 대화녹화 탭에서 확인하실 수 있습니다.
-    </p>
+    <p class="text--primary ml-5">** 아이의 답변이 등록된 질문은 대화녹화 탭에서 확인하실 수 있습니다.</p>
 
     <v-card-actions v-for="script in kid.scripts" :key="script.id">
       <v-list-item class="grow blue-grey lighten-5">
@@ -46,9 +44,7 @@
 
           <v-btn color="green darken-1" text @click="addScript">add</v-btn>
 
-          <v-btn color="green darken-1" text @click="dialog = false"
-            >close</v-btn
-          >
+          <v-btn color="green darken-1" text @click="dialog = false">close</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -163,6 +159,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

@@ -168,13 +168,13 @@ export default {
       });
     },
     onGoogleSignInError(error) {
-      console.log("OH NOES", error);
+      console.error(error);
     },
     kakaoLogin() {
       window.Kakao.Auth.login({
         success: this.kakaoLoginSuccess,
         fail: function (error) {
-          console.log(error);
+          console.error(error);
         },
       });
     },
@@ -214,4 +214,3 @@ export default {
 };
 </script>
 
-<style></style>
