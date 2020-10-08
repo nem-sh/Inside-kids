@@ -25,7 +25,7 @@
                 <img
                   class="content-image"
                   :src="contentImg"
-                  alt="content-image"
+                  alt="contentImage"
                   width="100%"
                   height="auto"
                 />
