@@ -18,24 +18,17 @@
         z-index: 2;
       "
     >
-      <v-btn
-        @click="backHome"
-        class="blue"
-        style="font-size: 2em"
-        height="70"
-        v-if="!isStart"
-      >
+      <v-btn @click="backHome" class="blue" style="font-size: 2em" height="70" v-if="!isStart">
         <i class="fas fa-home"></i>
       </v-btn>
       <v-btn
         @click="music1"
-        class="green mt-4"
+        class="orange mt-4"
         style="font-size: 2em"
         height="70"
         v-if="!isStart"
         width="100%"
-        >싹이 싹이 나네요 ♪</v-btn
-      >
+      >싹이 싹이 나네요 ♪</v-btn>
       <v-btn
         @click="music2"
         class="orange mt-4"
@@ -43,8 +36,7 @@
         height="70"
         v-if="!isStart"
         width="100%"
-        >하루 ♪</v-btn
-      >
+      >하루 ♪</v-btn>
       <v-btn
         @click="music3"
         class="orange mt-4"
@@ -52,8 +44,7 @@
         height="70"
         v-if="!isStart"
         width="100%"
-        >세상은 놀이터 ♪</v-btn
-      >
+      >세상은 놀이터 ♪</v-btn>
       <div>
         <div @click="back" style="font-size: 2em" height="60" v-if="isStart">
           <i class="fas fa-home"></i>

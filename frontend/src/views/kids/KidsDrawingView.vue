@@ -109,12 +109,7 @@
         src="../../assets/icons/save.png"
         alt="download"
       />
-      <img
-        class="save-btn"
-        @click="reset()"
-        src="../../assets/icons/trashcan.png"
-        alt="save"
-      />
+      <img class="save-btn" @click="reset()" src="../../assets/icons/trashcan.png" alt="save" />
     </div>
   </div>
 </template>
