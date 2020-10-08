@@ -12,9 +12,9 @@ from .serializers import VideoSerializer, PaintSerializer, PaintListSerializer, 
 
 import random
 
-# from .tts.infer import save_wav
+from .tts.infer import save_wav
 # video
-# from .lie_detector import lie_detector
+from .lie_detector import lie_detector
 
 
 @api_view(['DELETE'])
@@ -49,15 +49,15 @@ def video_create(request, kid_id, script_id):
 def video_analysis(request, video_id):
     video = get_object_or_404(Video, id=video_id)
     path = video.file_source
-    # res = lie_detector.get('media/'+str(path))
-    # if res['true']==0 and res['lie']==0:
-    #     video.analysis = 'nature'
-    # elif res['true']<res['lie']:
-    #     video.analysis = 'lie'
-    # else:
-    #     video.analysis = 'true'
+    res = lie_detector.get('media/'+str(path))
+    if res['true']==0 and res['lie']==0:
+        video.analysis = 'nature'
+    elif res['true']<res['lie']:
+        video.analysis = 'lie'
+    else:
+        video.analysis = 'true'
 
-    # video.save()
+    video.save()
 
     return Response({'status': 'ok'})
 # paint
@@ -142,7 +142,7 @@ def music_list(request):
 
 
 @api_view(['POST', 'GET'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def script_list_or_create(request, kid_id):
     kid = get_object_or_404(Kid, pk=kid_id)
     if request.user == kid.user:
@@ -159,7 +159,7 @@ def script_list_or_create(request, kid_id):
             serializer = ScriptCreateSerializer(data=request.data)
             if serializer.is_valid(raise_exception=True):
                 script = serializer.save(kid=kid)
-                # save_wav(script.content, str(script.id))
+                save_wav(script.content, str(script.id))
                 return Response(serializer.data)
             else:
                 return HttpResponse(status=400)
