@@ -118,7 +118,7 @@ export default {
     },
     changeCheck2() {
       this.check = false;
-      location.reload();
+      this.$router.go();
     },
     gokidhome() {
       this.$router.push({
