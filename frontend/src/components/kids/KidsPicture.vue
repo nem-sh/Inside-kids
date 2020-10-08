@@ -23,11 +23,13 @@
       <!-- // -->
       <img
         id="arrowLeft"
+        alt="arrowLeft"
         src="../../assets/images/arrow-left.png"
         @click="left"
       />
       <img
         id="arrowRight"
+        alt="arrowRight"
         src="../../assets/images/arrow-right.png"
         @click="right"
       />
@@ -52,6 +54,7 @@
               @click="changeCheck2()"
             >
               <img
+                v-if="check"
                 src="../../assets/icons/back.png"
                 alt="back_btn"
                 style="width: 120x; width: 120px"
@@ -68,7 +71,7 @@
               <v-img
                 class="phtoimg"
                 src="../../assets/icons/camera2.png"
-                alt
+                alt="camera2"
                 style="width: 120x; width: 120px"
               />
             </button>
@@ -100,6 +103,10 @@
         ></a>
       </div>
     </div>
+    <audio
+      id="camera-sound"
+      src="../../assets/characterSounds/camera.mp3"
+    ></audio>
   </div>
 </template>
 <script>
@@ -130,9 +137,12 @@ export default {
     },
     changeCheck() {
       this.check = true;
+      var camera_audio = document.getElementById(`camera-sound`);
+      camera_audio.play();
     },
     changeCheck2() {
       this.check = false;
+      this.$router.go();
     },
     gokidhome() {
       this.$router.push({
