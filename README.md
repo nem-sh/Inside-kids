@@ -41,11 +41,13 @@
     python manage.py migrate
     ```
     
-- 실행
+  - 실행
   
-  ```bash
+    ```bash
     python manage.py runserver
     ```
+  
+    
   
 - Frontend
 
