@@ -5,21 +5,39 @@
     </v-btn>
     <div class="canvas-wrapper" ref="canvasWrapper">
       <div class="draw-area">
-        <canvas id="canvas" ref="canvas" :width="width" :height="height"></canvas>
-        <canvas id="cursor" ref="cursor" :width="width" :height="height"></canvas>
+        <canvas
+          id="canvas"
+          ref="canvas"
+          :width="width"
+          :height="height"
+        ></canvas>
+        <canvas
+          id="cursor"
+          ref="cursor"
+          :width="width"
+          :height="height"
+        ></canvas>
       </div>
       <ul class="tools">
-        <li id="tool-pencil" :class="{ active: selectedToolIdx === 0 }" @click="changeTool(0)">
-          <img src="@/assets/edit.svg" />
+        <li
+          id="tool-pencil"
+          :class="{ active: selectedToolIdx === 0 }"
+          @click="changeTool(0)"
+        >
+          <img src="@/assets/edit.svg" alt="edit" />
         </li>
-        <li id="tool-eraser" :class="{ active: selectedToolIdx === 1 }" @click="changeTool(1)">
-          <img src="@/assets/eraser.svg" />
+        <li
+          id="tool-eraser"
+          :class="{ active: selectedToolIdx === 1 }"
+          @click="changeTool(1)"
+        >
+          <img src="@/assets/eraser.svg" alt="eraser" />
         </li>
         <li id="tool-color-palette" @click="showColorPalette()">
-          <img src="@/assets/color-palette.svg" />
+          <img src="@/assets/color-palette.svg" alt="color-palette" />
         </li>
         <li id="tool-download" @click="download()">
-          <img src="@/assets/download.svg" />
+          <img src="@/assets/download.svg" alt="download" />
         </li>
       </ul>
     </div>
