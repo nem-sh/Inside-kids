@@ -1,6 +1,9 @@
 <template>
   <div>
-    <v-card-title class="text-h4 d-flex justify-center deep-orange--text font-weight-bold">LOG IN</v-card-title>
+    <v-card-title
+      class="text-h4 d-flex justify-center deep-orange--text font-weight-bold"
+      >LOG IN</v-card-title
+    >
     <div class="pa-5">
       <v-text-field
         label="email"
@@ -36,10 +39,18 @@
           @success="onGoogleSignInSuccess"
           @error="onGoogleSignInError"
         >
-          <img src="../../assets/google.png" alt style="max-width: 220px; max-height: 50px" />
+          <img
+            src="../../assets/google.png"
+            alt="google"
+            style="max-width: 220px; max-height: 50px"
+          />
         </g-signin-button>
         <button @click="kakaoLogin">
-          <img src="../../assets/kakao.png" alt style="max-width: 220px; max-height: 50px" />
+          <img
+            src="../../assets/kakao.png"
+            alt="kakao"
+            style="max-width: 220px; max-height: 50px"
+          />
         </button>
       </div>
     </div>

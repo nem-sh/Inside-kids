@@ -9,9 +9,6 @@
           alt="back_btn"
           width="80px"
         />
-        <!-- <v-btn @click="gokidhome" class="red mb-2">
-          <i class="fas fa-home fa-2x"></i>
-        </v-btn>-->
       </div>
       <div class="controls__colors" id="jsColors">
         <div
@@ -22,7 +19,7 @@
             changeTool(0);
           "
         >
-          <img src="@/assets/icons/eraser.png" width="100%" />
+          <img src="@/assets/icons/eraser.png" alt="eraser" width="100%" />
         </div>
         <div
           class="controls__color jsColor"
@@ -32,11 +29,6 @@
             changeTool(0);
           "
         ></div>
-        <!-- <div
-          class="controls__color jsColor"
-          style="background-color: white"
-          @click="chooseColor(colors.white);changeTool(0)"
-        ></div>-->
         <div
           class="controls__color jsColor"
           style="background-color: #ff3b30"
@@ -103,7 +95,6 @@
         :width="width"
         :height="height"
       ></canvas>
-      <!-- <canvas id="cursor" ref="cursor"></canvas> -->
     </div>
     <div class="d-flex justify-center mt-5">
       <img
@@ -118,12 +109,7 @@
         src="../../assets/icons/save.png"
         alt="download"
       />
-      <img
-        class="save-btn"
-        @click="reset()"
-        src="../../assets/icons/trashcan.png"
-        alt="save"
-      />
+      <img class="save-btn" @click="reset()" src="../../assets/icons/trashcan.png" alt="save" />
     </div>
   </div>
 </template>
@@ -144,7 +130,6 @@ export default {
       height: "500rem",
       outputName: "canvas",
       canvasContext: null,
-      // cursorContext: null,
       isDrawing: false,
       lastX: 0,
       lastY: 0,
@@ -190,7 +175,6 @@ export default {
       this.canvasContext.lineCap = "round";
       this.canvasContext.lineWidth = this.brushSize;
       this.canvasContext.strokeStyle = this.tools[this.selectedToolIdx].color;
-      // this.cursorContext = this.$refs.cursor.getContext("2d");
     },
     bindEvents() {
       this.$refs.canvas.addEventListener("mousedown", (event) => {
@@ -212,7 +196,6 @@ export default {
 
       // 아이패드, 모바일 붓 위치
       var canvas = this.$refs.canvas;
-      // var rect = this.$refs.canvas.getBoundingClientRect();
       this.$refs.canvas.addEventListener("touchstart", function (event) {
         event.preventDefault();
         canvasContext.beginPath();

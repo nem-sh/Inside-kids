@@ -1,6 +1,9 @@
 <template>
   <div>
-    <v-card-title class="text-h4 d-flex justify-center deep-orange--text font-weight-bold">SIGN UP</v-card-title>
+    <v-card-title
+      class="text-h4 d-flex justify-center deep-orange--text font-weight-bold"
+      >SIGN UP</v-card-title
+    >
     <div class="pa-5">
       <v-text-field
         label="email"
@@ -40,7 +43,7 @@
     <v-card-actions
       @click="submit"
       class="d-flex justify-center mx-5 my-2 form-btn"
-      style="background-color:#FF8A65; cursor:pointer"
+      style="background-color: #ff8a65; cursor: pointer"
     >
       <v-btn color="white" text>Signup</v-btn>
     </v-card-actions>
@@ -52,10 +55,18 @@
           @success="onGoogleSignInSuccess"
           @error="onGoogleSignInError"
         >
-          <img src="../../assets/google.png" alt style="max-width: 220px; max-height: 50px" />
+          <img
+            src="../../assets/google.png"
+            alt="google"
+            style="max-width: 220px; max-height: 50px"
+          />
         </g-signin-button>
         <button @click="kakaoLogin">
-          <img src="../../assets/kakao.png" alt style="max-width: 220px; max-height: 50px" />
+          <img
+            src="../../assets/kakao.png"
+            alt="kakao"
+            style="max-width: 220px; max-height: 50px"
+          />
         </button>
       </div>
     </div>
@@ -188,27 +199,43 @@ export default {
   computed: {
     emailErrors() {
       const errors = [];
-      if (!this.$v.email.$dirty) return errors;
-      !this.$v.email.email && errors.push("이메일 형식을 바르게 입력헤주세요.");
-      !this.$v.email.required && errors.push("이메일을 입력해주세요.");
-      return errors;
+      let ret = [];
+      if (!this.$v.email.$dirty) {
+        ret = errors;
+      } else {
+        !this.$v.email.email &&
+          errors.push("이메일 형식을 바르게 입력헤주세요.");
+        !this.$v.email.required && errors.push("이메일을 입력해주세요.");
+        ret = errors;
+      }
+      return ret;
     },
     passwordErrors() {
       const errors = [];
-      if (!this.$v.password.$dirty) return errors;
-      !this.$v.password.minLength &&
-        errors.push(
-          `비밀번호는 최소 ${this.$v.password.$params.minLength.min}자리 이상 입력해야 합니다.`
-        );
-      !this.$v.password.required && errors.push("비밀번호를 입력해주세요.");
-      return errors;
+      let ret = [];
+      if (!this.$v.password.$dirty) {
+        ret = errors;
+      } else {
+        !this.$v.password.minLength &&
+          errors.push(
+            `비밀번호는 최소 ${this.$v.password.$params.minLength.min}자리 이상 입력해야 합니다.`
+          );
+        !this.$v.password.required && errors.push("비밀번호를 입력해주세요.");
+        ret = errors;
+      }
+      return ret;
     },
     repeatPasswordErrors() {
       const errors = [];
-      if (!this.$v.password.$dirty) return errors;
-      !this.$v.repeatPassword.sameAsPassword &&
-        errors.push("비밀번호가 같지 않습니다.");
-      return errors;
+      let ret = [];
+      if (!this.$v.password.$dirty) {
+        ret = errors;
+      } else {
+        !this.$v.repeatPassword.sameAsPassword &&
+          errors.push("비밀번호가 같지 않습니다.");
+        ret = errors;
+      }
+      return ret;
     },
   },
 };

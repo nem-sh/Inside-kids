@@ -1,58 +1,16 @@
 # Inside kids - 이모삼촌들
 
 ## 목차
-- [sub3 1주차 진행정도](#sub3 1주차 진행정도)
-
 - [개요](#개요)
-
 - [팀원 소개](#팀원-소개)
-
+- [사용법](#사용법)
 - [기능](#기능)
-
-- [향후 계획](#향후-계획)
-
 - [기술 스택](#기술-스택)
-
 - [기술 설명](#기술-설명)
-	
 	- [ERD](#erd)
 	- [디렉토리 구조도](#디렉토리-구조도)
 	- [기타](#기타)
-	
 - [테스트 방법](#테스트-방법)
-
-
-## sub3 1주차 진행정도
-
-### AI
-
-- TTS - /tts , 스크립트로 저장한 텍스트를 tts 로 변환해 wav 파일로 저장가능
-- 영상분석 - /Al/study/eye detection , 눈동자의 움직임으로 현재 상상력 기반으로 말하는지, 기억 기반으로 말하는지 구분
-
-### 회원가입
-
-- 회원가입, 로그인, 로그아웃 기능
-- 아이 계정 복수 설정 가능
-- 아이 계정 수정 가능
-
-### 부모
-
-- 아이가 캐릭터와 대화한 내용을 녹화한 영상 시청 및 관리 가능
-- 캐릭터가 아이에게 질문 할 내용을 부모가 작성하고 관리 가능
-- 아이 관리 페이지 구현 완료
-
-### 아이
-
-- 캐릭터 대화기능 개발 중
-- 동요 부르기
-- 그림그리기 탭 사용가능
-- 사진찍기 개발중
-- 캐릭터 밥주기 및 씻기기 기능 가능
-
-### 캐릭터
-
-- 다양한 캐릭터 행동 제작 및 시각화 가능
-- javascript 알고리즘을 통해 일정 시간이 지나면 캐릭터가 배고픔, 더러움, 잠자기 행동 시각화 가능
 
 
 ## 개요
@@ -64,13 +22,69 @@
 
 ![image-20200918095212600](README.assets/image-20200918095212600.png)
 
+## 사용법
 
+- Backend
+
+  - 파이썬 패키지 설치
+
+    ```bash
+    pip install -r requirements.txt
+    # 개발환경
+    pip install -r requirements_local.txt
+    ```
+
+  - DB 모델링
+
+    ```bash
+    python manage.py makemigration
+    python manage.py migrate
+    ```
+    
+  - 실행
+  
+    ```bash
+    python manage.py runserver
+    ```
+  
+    
+  
+- Frontend
+
+  - 디렉토리 이동
+
+    ```bash
+    cd frontend
+    ```
+
+  - 필요한 라이브러리 설치 및 실행
+
+    ```bash
+    npm install
+    npm run serve
+    ```
+
+  - 빌드
+
+    ```bash
+    npm run build
+    ```
+
+    
 
 ## 기능
 
 #### 주요 기능 (FOR 부모)
 
-![image-20200918094113948](README.assets/image-20200918094113948.png)
+- 아이에게 물어볼 질문 등록
+
+- 아이의 대화 영상 기록 확인
+
+- 아이의 그림 확인 및 공유
+
+- 아이의 사진 확인 및 공유
+
+  
 
 #### 부가 기능 (FOR 아이)
 
@@ -84,17 +98,11 @@
 
   ![image-20200918094737855](README.assets/image-20200918094737855.png)
 
+![image-20201008100502038](README.assets/image-20201008100502038.png)
 
 
-## 향후 계획
 
-- AI를 웹에 적용(TTS, EMOTION CLASSIFICATION)
 
-- 캐릭터 애니메이션 추가
-
-- 아이를 위한 기능 구현(그림 그리기, 사진 찍기, 동요 부르기)
-
-  
 
 ## 기술 스택
 ![KakaoTalk_20200917_160232066](README.assets/KakaoTalk_20200917_160232066.png)
@@ -104,19 +112,28 @@
 ## 기술 설명
 
 ### ERD
+
+![image-20201008103721302](README.assets/image-20201008103721302.png)
+
 https://www.erdcloud.com/d/Sp7M42wxDDvtge6pi
+
+
 
 
 ### 디렉토리 구조도
 
-- study : 프로젝트 수행을 위한 사전 학습 및 테스트
-- backend : django project 설정
-- accounts : 계정 관리 dajngo app
-- contents : 컨텐츠 관리 django app
-- contents/tts : 텍스트 음성 합성 처리 ai 모듈
-- contents/lie_detector: 눈동자의 움직임을 통한 거짓말 판단 ai  모듈
-- frontend : vue.js 
-- deployments: 배포 설정 파일 ( gunicorn, supervisor, nginx )
+- 학습 : AI 학습
+  - study : 프로젝트 수행을 위한 사전 학습 및 테스트
+- 백엔드 : django
+  - backend: django project 설정
+  - accounts : 계정 관리 dajngo app
+  - contents : 컨텐츠 관리 django app
+  - contents/tts : 텍스트 음성 합성 처리 ai 모듈
+  - contents/lie_detector: 눈동자의 움직임을 통한 거짓말 판단 ai  모듈
+- 프론트엔드 : vue.js
+  - frontend
+- 배포
+  - deployments: 배포 설정 파일 ( gunicorn, supervisor, nginx )
 
 
 
@@ -184,6 +201,10 @@ https://www.erdcloud.com/d/Sp7M42wxDDvtge6pi
   - [임시]Study
 
     Ai 및 프로젝트에 필요한 신규 기술을 학습한 내용을 커밋할 시
+    
+  - Release
+
+    배포를 위한 작업
 
 - Message
 
@@ -201,17 +222,23 @@ https://www.erdcloud.com/d/Sp7M42wxDDvtge6pi
 
 ##### API Documentation
 
+![image-20201008103245688](README.assets/image-20201008103245688.png)
+
 https://docs.google.com/spreadsheets/d/13YrPIV2G8iPM4RlGT9UtUlvjRybJrfWg3j3Yb12O6ok/edit#gid=0
+
+
+
+##### 테스트 결과
+
+https://docs.google.com/spreadsheets/d/133PqrZhbj-TFiVM6CMsT_qQjCFjCstHZTXJhErsCuSQ/edit
 
 
 
 
 ## 테스트 방법
-- url : http://j3b106.p.ssafy.io/
+- url : https://j3b106.p.ssafy.io/
 
 - TEST 계정
-
-    테스트 계정에 추가되어 있는 데이터는 같이 볼수 있도록 삭제하지 말아주세요!
-    ID : test@test.com
+ID : pin954562@gmail.com
     PW : test1234!
 

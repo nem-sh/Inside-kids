@@ -4,7 +4,7 @@
       <div class="container d-flex">
         <v-toolbar-title>
           <v-btn text dark @click="moveToMain">
-            <img src="../assets/logo.png" alt width="80" />
+            <img src="../assets/logo.png" alt="logo" width="80" />
           </v-btn>
         </v-toolbar-title>
         <v-spacer></v-spacer>
@@ -38,11 +38,14 @@
                 width="600px"
                 height="400px"
                 allowfullscreen
+                title="service_tutorial"
               ></iframe>
             </div>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+              <v-btn color="blue darken-1" text @click="dialog = false"
+                >Close</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-dialog>

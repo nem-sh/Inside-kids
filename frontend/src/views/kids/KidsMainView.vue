@@ -15,14 +15,14 @@
           >
             <v-img
               src="../../assets/icons/draw.png"
-              alt
+              alt="draw"
               style="width: 120x; width: 120px"
             />
           </button>
           <div v-else style="margin: 50px">
             <v-img
               src="../../assets/icons/drawBlack.png"
-              alt
+              alt="drawBlack"
               style="width: 120x; width: 120px"
             />
           </div>
@@ -34,14 +34,14 @@
           >
             <v-img
               src="../../assets/icons/photo.png"
-              alt
+              alt="photo"
               style="width: 120x; width: 120px"
             />
           </button>
           <div v-else style="margin: 50px">
             <v-img
               src="../../assets/icons/photoBlack.png"
-              alt
+              alt="photoBlack"
               style="width: 120x; width: 120px"
             />
           </div>
@@ -53,14 +53,14 @@
           >
             <v-img
               src="../../assets/icons/sing.png"
-              alt
+              alt="sing"
               style="width: 120x; width: 120px"
             />
           </button>
           <div v-else style="margin: 50px">
             <v-img
               src="../../assets/icons/singBlack.png"
-              alt
+              alt="singBlack"
               style="width: 120x; width: 120px"
             />
           </div>
@@ -88,6 +88,7 @@
               src="../../assets/characters/wantTalk.png"
               height="140px"
               width="150px"
+              alt="wantTalk"
               style="position: absolute; top: -350px; right: -250px"
             />
           </div>
@@ -101,6 +102,7 @@
             <img
               v-if="!sleep && hungry && actionNum != 1 && actionNum != 2"
               src="../../assets/characters/wantEat.png"
+              alt="wantEat"
               height="140px"
               width="150px"
               style="position: absolute; top: -200px; right: -250px"
@@ -110,6 +112,7 @@
                 !sleep && dirty && !hungry && actionNum != 1 && actionNum != 2
               "
               src="../../assets/characters/wantDirty.png"
+              alt="wantDirty"
               height="140px"
               width="150px"
               style="position: absolute; top: -200px; right: -250px"
@@ -120,6 +123,7 @@
               v-if="actionNum == 2"
               src="../../assets/characters/bath.png"
               width="350px"
+              alt="bath"
               style="position: absolute; top: -35px; right: -180px"
             />
           </div>
@@ -140,14 +144,14 @@
           >
             <v-img
               src="../../assets/icons/eat.png"
-              alt
+              alt="eat"
               style="width: 120x; width: 120px"
             />
           </button>
           <div v-else style="margin: 50px">
             <v-img
               src="../../assets/icons/eatBlack.png"
-              alt
+              alt="eatBlack"
               style="width: 120x; width: 120px"
             />
           </div>
@@ -159,14 +163,14 @@
           >
             <v-img
               src="../../assets/icons/talk.png"
-              alt
+              alt="talk"
               style="width: 120x; width: 120px"
             />
           </button>
           <div v-else style="margin: 50px">
             <v-img
               src="../../assets/icons/talkBlack.png"
-              alt
+              alt="talkBlack"
               style="width: 120x; width: 120px"
             />
           </div>
@@ -178,14 +182,14 @@
           >
             <v-img
               src="../../assets/icons/wash.png"
-              alt
+              alt="wash"
               style="width: 120x; width: 120px"
             />
           </button>
           <div v-else style="margin: 50px">
             <v-img
               src="../../assets/icons/washBlack.png"
-              alt
+              alt="washBlack"
               style="width: 120x; width: 120px"
             />
           </div>
