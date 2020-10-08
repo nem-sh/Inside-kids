@@ -129,7 +129,6 @@ https://www.erdcloud.com/d/Sp7M42wxDDvtge6pi
   - accounts : 계정 관리 dajngo app
   - contents : 컨텐츠 관리 django app
   - contents/tts : 텍스트 음성 합성 처리 ai 모듈
-  - contents/lie_detector: 눈동자의 움직임을 통한 거짓말 판단 ai  모듈
 - 프론트엔드 : vue.js
   - frontend
 - 배포
