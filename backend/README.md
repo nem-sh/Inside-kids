@@ -19,9 +19,9 @@
   - 파이썬 패키지 설치
   
     ```bash
-  pip install -r requirements.txt
+    pip install -r requirements.txt
     # 개발환경
-  pip install -r requirements_local.txt
+    pip install -r requirements_local.txt
     ```
   
   - DB 모델링
