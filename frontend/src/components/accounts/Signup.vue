@@ -188,27 +188,43 @@ export default {
   computed: {
     emailErrors() {
       const errors = [];
-      if (!this.$v.email.$dirty) return errors;
-      !this.$v.email.email && errors.push("이메일 형식을 바르게 입력헤주세요.");
-      !this.$v.email.required && errors.push("이메일을 입력해주세요.");
-      return errors;
+      let ret = [];
+      if (!this.$v.email.$dirty) {
+        ret = errors;
+      } else {
+        !this.$v.email.email &&
+          errors.push("이메일 형식을 바르게 입력헤주세요.");
+        !this.$v.email.required && errors.push("이메일을 입력해주세요.");
+        ret = errors;
+      }
+      return ret;
     },
     passwordErrors() {
       const errors = [];
-      if (!this.$v.password.$dirty) return errors;
-      !this.$v.password.minLength &&
-        errors.push(
-          `비밀번호는 최소 ${this.$v.password.$params.minLength.min}자리 이상 입력해야 합니다.`
-        );
-      !this.$v.password.required && errors.push("비밀번호를 입력해주세요.");
-      return errors;
+      let ret = [];
+      if (!this.$v.password.$dirty) {
+        ret = errors;
+      } else {
+        !this.$v.password.minLength &&
+          errors.push(
+            `비밀번호는 최소 ${this.$v.password.$params.minLength.min}자리 이상 입력해야 합니다.`
+          );
+        !this.$v.password.required && errors.push("비밀번호를 입력해주세요.");
+        ret = errors;
+      }
+      return ret;
     },
     repeatPasswordErrors() {
       const errors = [];
-      if (!this.$v.password.$dirty) return errors;
-      !this.$v.repeatPassword.sameAsPassword &&
-        errors.push("비밀번호가 같지 않습니다.");
-      return errors;
+      let ret = [];
+      if (!this.$v.password.$dirty) {
+        ret = errors;
+      } else {
+        !this.$v.repeatPassword.sameAsPassword &&
+          errors.push("비밀번호가 같지 않습니다.");
+        ret = errors;
+      }
+      return ret;
     },
   },
 };

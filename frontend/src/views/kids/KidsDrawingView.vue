@@ -96,13 +96,7 @@
       </div>
     </div>
     <div class="content" ref="canvasWrapper">
-      <canvas
-        id="canvas"
-        class="canvas"
-        ref="canvas"
-        :width="width"
-        :height="height"
-      ></canvas>
+      <canvas id="canvas" class="canvas" ref="canvas" :width="width" :height="height"></canvas>
       <!-- <canvas id="cursor" ref="cursor"></canvas> -->
     </div>
     <div class="d-flex justify-center mt-5">
@@ -118,12 +112,7 @@
         src="../../assets/icons/save.png"
         alt="download"
       />
-      <img
-        class="save-btn"
-        @click="reset()"
-        src="../../assets/icons/trashcan.png"
-        alt="save"
-      />
+      <img class="save-btn" @click="reset()" src="../../assets/icons/trashcan.png" alt="save" />
     </div>
   </div>
 </template>
