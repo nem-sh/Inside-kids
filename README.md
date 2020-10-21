@@ -1,4 +1,4 @@
-# Inside kids - 이모삼촌들
+# Inside kids
 
 ## 목차
 - [개요](#개요)
