@@ -1,38 +1,80 @@
-# Inside kids
+# Inside kids - 이모삼촌들
 
 ## 목차
+
 - [개요](#개요)
+- [팀원 소개](#팀원-소개)
 - [사용법](#사용법)
 - [기능](#기능)
 - [기술 스택](#기술-스택)
 - [기술 설명](#기술-설명)
-	- [ERD](#erd)
-	- [디렉토리 구조도](#디렉토리-구조도)
-	- [기타](#기타)
+  - [ERD](#erd)
+  - [디렉토리 구조도](#디렉토리-구조도)
+  - [기타](#기타)
 - [테스트 방법](#테스트-방법)
 
 
 ## 개요
+
 > AI 캐릭터를 통해 아이의 속마음을 들어보는 서비스 
 
+![1](https://user-images.githubusercontent.com/60123152/109253825-ef657100-7833-11eb-8d87-23ff6019c794.PNG)
+![2](https://user-images.githubusercontent.com/60123152/109253826-f0969e00-7833-11eb-9872-0dc7987701a8.PNG)
 
+
+## 팀원 소개
+
+![image-20200918095212600](README.assets/image-20200918095212600.png)
 
 ## 사용법
 
-```bash
-cd frontend
-npm install
-npm run build
-cd ..
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py runserver
-```
+- Backend
 
+  - 파이썬 패키지 설치
 
+    ```bash
+    pip install -r requirements.txt
+    # 개발환경
+    pip install -r requirements_local.txt
+    ```
 
-​    
+  - DB 모델링
 
+    ```bash
+    python manage.py makemigration
+    python manage.py migrate
+    ```
+
+  - 실행
+
+    ```bash
+    python manage.py runserver
+    ```
+
+    
+
+- Frontend
+
+  - 디렉토리 이동
+
+    ```bash
+    cd frontend
+    ```
+
+  - 필요한 라이브러리 설치 및 실행
+
+    ```bash
+    npm install
+    npm run serve
+    ```
+
+  - 빌드
+
+    ```bash
+    npm run build
+    ```
+
+    
 
 ## 기능
 
@@ -67,6 +109,7 @@ python manage.py runserver
 
 
 ## 기술 스택
+
 ![KakaoTalk_20200917_160232066](README.assets/KakaoTalk_20200917_160232066.png)
 
 
@@ -91,7 +134,6 @@ https://www.erdcloud.com/d/Sp7M42wxDDvtge6pi
   - accounts : 계정 관리 dajngo app
   - contents : 컨텐츠 관리 django app
   - contents/tts : 텍스트 음성 합성 처리 ai 모듈
-  - contents/lie_detector: 눈동자의 움직임을 통한 거짓말 판단 ai  모듈
 - 프론트엔드 : vue.js
   - frontend
 - 배포
@@ -100,6 +142,7 @@ https://www.erdcloud.com/d/Sp7M42wxDDvtge6pi
 
 
 ### 기타
+
 ##### 개발 환경
 
 - OS : ubuntu 18.04
@@ -121,14 +164,14 @@ https://www.erdcloud.com/d/Sp7M42wxDDvtge6pi
   JS : ES Lint (vs code extention)
 
   Python : pep8
-  
+
   
 
 
 ##### Git commit 정책 (Angular Git Commit Coventions 참조)
 
 - Jira Key는 1 commit 당 1 key 원칙 (단, sub Task의 경우 복수 키 허용)
-  
+
 - Commit 형식
 
   `git commit -m '[<Tag>] <Message>, <Option> <Jira Key>'`
@@ -136,7 +179,7 @@ https://www.erdcloud.com/d/Sp7M42wxDDvtge6pi
   ex) 
 
   `git commit -m '[Feat] signup with email instead of username, resolves S03P22B106-76`
-  
+
 - Tag
 
   - Feat(feature)
@@ -163,7 +206,7 @@ https://www.erdcloud.com/d/Sp7M42wxDDvtge6pi
   - [임시]Study
 
     Ai 및 프로젝트에 필요한 신규 기술을 학습한 내용을 커밋할 시
-    
+
   - Release
 
     배포를 위한 작업
@@ -193,8 +236,3 @@ https://docs.google.com/spreadsheets/d/13YrPIV2G8iPM4RlGT9UtUlvjRybJrfWg3j3Yb12O
 ##### 테스트 결과
 
 https://docs.google.com/spreadsheets/d/133PqrZhbj-TFiVM6CMsT_qQjCFjCstHZTXJhErsCuSQ/edit
-
-
-
-
-
